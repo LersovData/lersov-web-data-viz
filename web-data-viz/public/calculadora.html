@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lersov Data - Calculadora Financeira</title>
+
+    <link rel="stylesheet" href="css/calculadora.css">
+
+    <!-- fonte utilizada na pagina -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div id="div_inicio">
+        <div class="container">
+            <header id="cabecalho">
+                <div class="container">
+                    <div>
+                        <h1>Calculadora financeira</h1>
+                        <button class="btn2" onclick="mediaDiaria()">></button>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <section class="areaPrincipal" id="areaPrincipal">
+
+            <div class="container" id="div_main">
+
+            </div>
+
+        </section>
+    </div>
+
+    <div id="div_totalPessoas">
+        <div class="container">
+            <header id="cabecalho">
+                <div class="container">
+                    <div id="contHeader">
+                        <h1>Qual o número médio de clientes que você recebe por dia em seu supermercado?</h1>
+                        <div id="btn_ms">
+                            <input type="text" id="input_media" oninput="insertDados()">
+                            <button onclick="corredores()" id="botaoMedia">></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="areaPrincipal" id="areaPrincipal">
+
+                <div class="container" id="div_main">
+
+                </div>
+
+            </section>
+        </div>
+    </div>
+
+    <div id="div_corredores">
+        <div class="container">
+            <header id="cabecalho">
+                <div class="container">
+                    <div id="contHeader">
+                        <h1>Clique nos setores e preencha algumas informações importantes...</h1>
+                        <div>
+                            <button class="btn2" onclick="resultado()" id="botaoResultado">></button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <section class="areaPrincipal" id="areaPrincipal">
+
+            <div class="container" id="div_main">
+                <div class="areaPrateleira" id="areaPrateleira">
+                    <button onclick="setor()" class="prateleira">
+                        <div class="titlePrat">
+                            <p>Hortifruti</p>
+                        </div>
+                        <img
+                            src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-supermarket-with-products-shelves-and-fridges-with-food-stuff-png-image_12590068.png">
+                    </button>
+                    <button onclick="setor1()" class="prateleira">
+                        <div class="titlePrat">
+                            <p>Massas</p>
+                        </div>
+                        <img
+                            src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-supermarket-with-products-shelves-and-fridges-with-food-stuff-png-image_12590068.png">
+                    </button>
+                    <button onclick="setor2()" class="prateleira">
+                        <div class="titlePrat">
+                            <p>Limpeza</p>
+                        </div>
+                        <img
+                            src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-supermarket-with-products-shelves-and-fridges-with-food-stuff-png-image_12590068.png">
+                    </button>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <div id="div_corredorHortifruti">
+        <section class="areaPrincipal" id="areaPrincipal">
+
+            <div class="container" id="div_main">
+                <div class="areaPrateleira" id="areaPrateleira">
+                    <div onclick="corredores()" class="prateleira">
+                        <div class="titlePrat">
+                            <p>Hortifruti</p>
+                        </div>
+
+                        <img src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-supermarket-with-products-shelves-and-fridges-with-food-stuff-png-image_12590068.png"
+                            id="img" height="450px">
+                    </div>
+                    <div class="formulario">
+                        <h1>Hortifruti</h1>
+
+                        <div class="areaInputs">
+                            <p>Quantas pessoas passaram pelo corredor?</p>
+                            <input type="text" id="input_qtdPessCorredorHorti" oninput="insertDados()">
+                        </div>
+                        <div class="areaInputs">
+                            <p>Qual o preço médio dos produtos nesse corredor?</p>
+                            <input type="text" id="input_precoMedioHortiCorredor" oninput="insertDados()">
+                        </div>
+                        <div class="areaInputs">
+                            <p>Quantos produtos foram vendidos desse corredor?</p>
+                            <input type="text" id="input_vendaCorredorHorti" oninput="insertDados()">
+                        </div>
+
+                        <button onclick="corredores()">OK</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+    </div>
+
+    <div id="div_corredorMassas">
+        <section class="areaPrincipal" id="areaPrincipal">
+            <div class="container" id="div_main">
+                <div class="areaPrateleira" id="areaPrateleira">
+                    <div onclick="corredores()" class="prateleira">
+                        <div class="titlePrat">
+                            <p>Massas</p>
+                        </div>
+
+                        <img src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-supermarket-with-products-shelves-and-fridges-with-food-stuff-png-image_12590068.png"
+                            id="img" height="450px">
+                    </div>
+                    <div class="formulario">
+                        <h1>Massas</h1>
+
+                        <div class="areaInputs">
+                            <p>Quantas pessoas passaram pelo corredor?</p>
+                            <input type="text" id="input_qtdPessCorredorMassas" oninput="insertDados()">
+                        </div>
+                        <div class="areaInputs">
+                            <p>Qual o preço médio dos produtos nesse corredor?</p>
+                            <input type="text" id="input_precoMedioMassasCorredor" oninput="insertDados()">
+                        </div>
+                        <div class="areaInputs">
+                            <p>Quantos produtos foram vendidos desse corredor?</p>
+                            <input type="text" id="input_vendaCorredorMassas" oninput="insertDados()">
+                        </div>
+
+                        <button onclick="corredores()">OK</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+    </div>
+
+    <div id="div_corredorLimpeza">
+        <section class="areaPrincipal" id="areaPrincipal">
+            <div class="container" id="div_main">
+                <div class="areaPrateleira" id="areaPrateleira">
+                    <div onclick="corredores()" class="prateleira">
+                        <div class="titlePrat">
+                            <p>Limpeza</p>
+                        </div>
+
+                        <img src="https://png.pngtree.com/png-vector/20240601/ourmid/pngtree-supermarket-with-products-shelves-and-fridges-with-food-stuff-png-image_12590068.png"
+                            id="img" height="450px">
+                    </div>
+                    <div class="formulario">
+                        <h1>Limpeza</h1>
+
+                        <div class="areaInputs">
+                            <p>Quantas pessoas passaram pelo corredor?</p>
+                            <input type="text" id="input_qtdPessCorredorLimp" oninput="insertDados()">
+                        </div>
+                        <div class="areaInputs">
+                            <p>Qual o preço médio dos produtos nesse corredor?</p>
+                            <input type="text" id="input_precoMedioLimpCorredor" oninput="insertDados()">
+                        </div>
+                        <div class="areaInputs">
+                            <p>Quantos produtos foram vendidos desse corredor?</p>
+                            <input type="text" id="input_vendaCorredorLimp" oninput="insertDados()">
+                        </div>
+
+                        <button onclick="corredores()">OK</button>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+    </div>
+
+    <div id="div_resultado">
+        <section class="areaPrincipal" id="areaPrincipal">
+
+            <div class="container">
+                <div id="div_relatorio" class="fundoResultado">
+                    <div class="topoResultado">
+                        <button onclick="novamente()" class="btn2">Nova consulta</button>
+            
+                        <h1>RELATORIO</h1>
+
+                        <a href="index.html"><button class="btn2">Retornar ao site</button></a>
+                    </div>
+
+                    <div class="cardsResultado">
+                        <div class="cartao">
+                            <div class="conteudoCartao">
+                                <h1>HORTIFRUTI</h1>
+
+                                <div>
+                                    <h3>FLUXO</h3>
+                                    <h2 id="textFluxoHorti"></h2>
+                                </div>
+
+                                <div id="div_lucroHorti">
+                                    <h3>LUCRO</h3>
+                                    <h2 id="textLucroHorti"></h2>
+                                </div>
+
+                                <div id="div_prodHorti">
+                                    <h3>PRODUTOS VENDIDOS</h3>
+                                    <h2 id="textProdHorti"></h2>
+                                </div>
+
+                                <div>
+                                    <h3>TAXA DE CONVERSÃO</h3>
+                                    <h2 id="textConvHorti"></h2>
+                                    <h2 id="textTpConvHorti"></h2>
+                                </div>
+
+                                <div id="div_sugestaoHorti">
+                                    <h3 id="textSugHorti"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cartao">
+                            <div class="conteudoCartao">
+                                <h1>MASSAS</h1>
+
+                                <div>
+                                    <h3>FLUXO</h3>
+                                    <h2 id="textFluxoMassas"></h2>
+                                </div>
+
+                                <div id="div_lucroMassas">
+                                    <h3>LUCRO</h3>
+                                    <h2 id="textLucroMassas"></h2>
+                                </div>
+
+                                <div id="div_prodMassas">
+                                    <h3>PRODUTOS VENDIDOS</h3>
+                                    <h2 id="textProdMassas"></h2>
+                                </div>
+
+                                <div>
+                                    <h3>TAXA DE CONVERSÃO</h3>
+                                    <h2 id="textConvMassas"></h2>
+                                    <h2 id="textTpConvMassas"></h2>
+                                </div>
+
+                                <div id="div_sugestaoMassas">
+                                    <h3 id="textSugMassas"></h3>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="cartao">
+                            <div class="conteudoCartao">
+                                <h1>LIMPEZA</h1>
+
+                                <div>
+                                    <h3>FLUXO</h3>
+                                    <h2 id="textFluxoLimp"></h2>
+                                </div>
+
+                                <div id="div_lucroLimp">
+                                    <h3>LUCRO</h3>
+                                    <h2 id="textLucroLimp"></h2>
+                                </div>
+
+                                <div id="div_prodLimp">
+                                    <h3>PRODUTOS VENDIDOS</h3>
+                                    <h2 id="textProdLimp"></h2>
+                                </div>
+
+                                <div>
+                                    <h3>TAXA DE CONVERSÃO</h3>
+                                    <h2 id="textConvLimp"></h2>
+                                    <h2 id="textTpConvLimp"></h2>
+                                </div>
+
+                                <div id="div_sugestaoLimp">
+                                    <h3 id="textSugLimp"></h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="baixoResultado">
+                        <button onclick="relatorio()" class="btn2">Relatorio</button>
+                        <button onclick="sugestao()" class="btn2">Sugestões</button>
+                    </div>
+                </div>
+
+              
+
+        </section>
+    </div>
+
+</body>
+
+</html>
+
+<script src="js/calculadora.js"></script>

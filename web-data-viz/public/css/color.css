@@ -1,0 +1,14 @@
+:root {
+    --background-color: #F6F8FB;
+    --background-color-home: #0B091B;
+    --background-color-produto: #FFFFFF;
+    --background-color-produto2: #000000;
+
+    --items-color: #2720EC;
+
+    --line-gradient: linear-gradient(#2720EC, #9A98D8);
+
+    --color-home: #FFFFFF;
+
+    --sombra: 0px 5px 5px rgba(0, 0, 0, 0.158);
+}

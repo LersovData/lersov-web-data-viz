@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/cadastro.css">
+    <title>Lersov Data - Cadastrar</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="left">
+            <div class="cadastrarLogin">
+                <div class="conteudoRight">
+                    <p class="bemvindoP2">Seja-Bem Vindo!</p>
+                    <div class="textoRight">
+                        <p>Nosso compromisso é garantir a eficiência!</p>
+                    </div>
+                </div>
+                <img class="imgDash" src="assets/cadastro/dashboard-capa.webp" alt="">
+            </div>
+        </div>
+        <div class="right">
+            <div class="container">
+                <div class="logo">
+                    <img src="assets/cadastro/carrinho-de-compras (1).png" alt="">
+                </div>
+                <div class="titulo">
+                    <p class="subtitulo">Coloque suas informações</p>
+                </div>
+                <div class="container-inputs">
+                    <div class="inputs">
+                        <p>Nome</p>
+                        <input id="nome" placeholder="Insira seu nome" type="text" style="background-color: #1e1e1e; color: #ccc; border: 1px solid #ccc;">
+                    </div>
+                    <div class="inputs">
+                        <p>Email</p>
+                        <input id="email" placeholder="Insira seu email" type="email" style="background-color: #1e1e1e; color: #ccc; border: 1px solid #ccc;" oninput="validarEmail()">
+                    </div>
+                    <div class="inputs">
+                        <p>CNPJ</p>
+                        <input id="cnpj" placeholder="Insira seu CNPJ" type="text" style="background-color: #1e1e1e; color: #ccc; border: 1px solid #ccc;" oninput="validarCNPJ()">
+                    </div>
+                    <div class="inputs">
+                        <p>Senha</p>
+                        <input id="senha" placeholder="Insira sua senha" type="password" 
+                               style="background-color: #1e1e1e; color: #ccc; border: 1px solid #ccc;" 
+                               onfocus="mostrarRequisitosSenha()" 
+                               onblur="ocultarRequisitosSenha()" 
+                               oninput="validarSenha()">
+                        
+                        <!-- Mensagens de Validação da Senha -->
+                        <div id="senhaRequisitos" style="display: none;">
+                            <p id="letraMinuscula" style="color: red;">Deve conter uma letra minúscula</p>
+                            <p id="letraMaiuscula" style="color: red;">Deve conter uma letra maiúscula</p>
+                            <p id="numero" style="color: red;">Deve conter um número</p>
+                            <p id="caractereEspecial" style="color: red;">Deve conter um caractere especial</p>
+                        </div>
+                    </div>
+                    <div class="inputs">
+                        <p>Confirmar senha</p>
+                        <input id="confirmar_senha" placeholder="Confirme sua senha" type="password" style="background-color: #1e1e1e; color: #ccc; border: 1px solid #ccc;" oninput="validarConfirmarSenha()">
+                    </div>
+                    <div class="inputs">
+                        <p>Tipo de Mercado</p>
+                        <select id="tipo">
+                            <option value="atacadista">Atacadista</option>
+                            <option value="varejista">Varejista</option>
+                            <option value="misto">Misto</option>
+                            <option value="ecommerce">E-commerce</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="login">
+                    <button onclick="validarInformacoes()">
+                        <h2>Cadastrar</h2>
+                    </button>
+                </div>
+                <div class="semconta">
+                    <p>Já tem conta ? <a href="./login.html">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/cadastrar.js"></script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lersvov Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div class="sidebar">
+    <div class="menu">
+      <a href="#">
+        <span class="material-icons">home</span>
+      </a>
+      <a href="#">
+        <span class="material-icons">dashboard</span>
+      </a>
+      <a href="#">
+        <span class="material-icons">settings_applications</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="header">
+      <div class="cabecalho">
+        <div class="perfil">
+          <img src="https://t4.ftcdn.net/jpg/05/89/93/27/240_F_589932782_vQAEAZhHnq1QCGu5ikwrYaQD0Mmurm0N.jpg"
+            alt="Foto de perfil">
+          <p>Olá, Frizza!</p>
+
+        </div>
+
+        <div class="titulo">
+          <h1>Lersov Dashboard</h1>
+        </div>
+
+      </div>
+
+
+      
+    <div class="charts">
+      <div class="kpis">
+
+        <div class="card">
+          <span class="material-icons">people</span>
+          <h3 class="cardsFormatacao">Total de pessoas no estabelecimento (dia)</h3>
+          <p class="cardsFormatacao">10.140</p>
+        </div>
+
+        <div class="card">
+          <span class="material-icons">storefront</span>
+          <h3 class="cardsFormatacao">Setor mais popular (dia)</h3>
+          <p class="cardsFormatacao">Higiene e Limpeza</p>
+        </div>
+
+        <div class="card">
+          <span class="material-icons">local_grocery_store</span>
+          <h3 class="cardsFormatacao">Corredor com mais fluxo de pessoas (dia)</h3>
+          <p class="cardsFormatacao">Corredor 3</p>
+        </div>
+      </div>
+
+      <div class="graficos">
+
+        <div class="cardLineBar">
+          <div class="graficoLinhaBarra">
+            <h4>Número de pessoas nos setores (hora)</h4>
+            <canvas id="barChart" class="chart"></canvas>
+          </div>
+
+          <div class="graficoLinhaBarra">
+            <h4>Número de pessoas no corredor selecionado (hora)</h4>
+            <canvas id="lineChart" class="chart"></canvas>
+          </div>
+        </div>
+
+        <div class="graficoCalorConteudo">
+          <div class="descricao">
+            <div class="selecaoSetores">
+              <h4>Corredor mais popular do setor</h4>
+              <select name="setoresGrafico" id="">
+                <option>Hortifruti</option>
+                <option>Massas</option>
+                <option>Adega</option>
+              </select>
+            </div>
+            <p>
+              <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png"> Região com fluxo alto
+            </p>
+            <p>
+              <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" />Região com fluxo mediano
+            </p>
+            <p>
+              <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" />Região com fluxo baixo
+            </p>
+          </div>
+          <div id="heatmapContainer" class="graficoCalor">
+            <div class="areaCorredor">
+              <div class="corredor"></div>
+              <div class="corredor"></div>
+              <div class="corredor"></div>
+              <div class="corredor"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
+
+  <script>
+    // Gráfico de Barras
+    const ctxBar = document.getElementById('barChart');
+    new Chart(ctxBar, {
+      type: 'bar',
+      data: {
+        labels: ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+        datasets: [{
+          label: 'Hortifruti',
+          data: [500, 250, 550, 600, 500, 300],
+          borderWidth: 1,
+          backgroundColor: 'rgb(13,26,64)'
+        },
+        {
+          label: 'Massas',
+          data: [400, 450, 430, 500, 550, 500],
+          borderWidth: 1,
+          backgroundColor: 'rgb(0,202,255)'
+        },
+        {
+          label: 'Adega',
+          data: [300, 350, 400, 500, 600, 450],
+          borderWidth: 1,
+          backgroundColor: 'rgb(63,157,236)'
+        },
+
+
+        ]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Gráfico de Linhas
+    const labelsLine = ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
+    const dataLine = {
+      labels: labelsLine,
+      datasets: [{
+        label: 'Número de pessoas',
+        data: [400, 550, 658, 600, 300, 240],
+        fill: false,
+        backgroundColor: 'rgb(18,26,81)',
+        borderColor: 'rgb(18,26,81)',
+        tension: 0.1
+      }]
+    };
+
+    const configLine = {
+      type: 'line',
+      data: dataLine,
+    };
+
+    const ctxLine = document.getElementById('lineChart');
+    new Chart(ctxLine, configLine);
+
+    var heatmapInstance = h337.create({
+      container: document.getElementById('heatmapContainer'),
+      radius: 50,
+      maxOpacity: 0.6,
+      blur: 1,
+    });
+
+    // dados (x, y, valor de intensidade)
+    const data = {
+      max: 100,
+      data: [
+        // Corredor 1 (x = 100)
+        { x: 125, y: 50, value: 70 },
+        { x: 125, y: 100, value: 70 },
+        { x: 125, y: 150, value: 70 },
+        { x: 125, y: 200, value: 70 },
+        { x: 125, y: 250, value: 70 },
+        { x: 125, y: 300, value: 70 },
+        { x: 125, y: 350, value: 70 },
+
+        // Corredor 2 (x = 300)
+        { x: 300, y: 50, value: 100 },
+        { x: 300, y: 100, value: 100 },
+        { x: 300, y: 150, value: 100 },
+        { x: 300, y: 200, value: 100 },
+        { x: 300, y: 250, value: 100 },
+        { x: 300, y: 300, value: 100 },
+        { x: 300, y: 350, value: 100 },
+
+        // Corredor 3 (x = 500)
+        { x: 475, y: 50, value: 50 },
+        { x: 475, y: 100, value: 50 },
+        { x: 475, y: 150, value: 50 },
+        { x: 475, y: 200, value: 50 },
+        { x: 475, y: 250, value: 50 },
+        { x: 475, y: 300, value: 50 },
+        { x: 475, y: 350, value: 50 }
+      ]
+    };
+
+    // adicionando os dados ao heatmap
+    heatmapInstance.setData(data);
+  </script>
+</body>
+
+</html>

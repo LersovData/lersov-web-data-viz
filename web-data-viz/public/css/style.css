@@ -1,0 +1,961 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-optical-sizing: auto;
+    line-height: 1.6;
+
+    background-color: #F6F8FB;
+    
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.areaHome,
+.areaSobreNos,
+.areaProjeto,
+.areaFerramenta,
+.areaEquipe {
+    margin-bottom: 50px;
+}
+
+/* animação */
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+/* ----- HEADER ----- */
+header {
+    color: #FFF;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    z-index: 2;
+    transition: color 0.3s ease;
+    /* Para suavizar a mudança de cor */
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(51 51 51 / 30%);
+    backdrop-filter: blur(10px);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navbar h1 {
+    color: #FFF;
+}
+
+.navbar .barra {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+}
+
+.navbar .navegacao {
+    position: relative;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+}
+
+.navbar .navegacao::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background-color: #2720EC;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.navbar .navegacao:hover {
+    color: #ffffff;
+}
+
+.navbar .navegacao:hover::after {
+    width: 100%;
+}
+
+header.scrolled .navbar .navegacao {
+    color: black;
+}
+
+header.scrolled .navbar .navegacao:hover::after {
+    background-color: #2720EC;
+}
+
+
+
+/* ----- FIM HEADER ----- */
+
+/* ----- INICIO ----- */
+
+.areaHome {
+    background-color: #0B091B;
+    height: 90vh;
+    color: rgb(255, 255, 255);
+    text-align: start;
+
+    position: relative;
+    overflow: hidden;
+
+    border-radius: 0 0 0 100px;
+}
+
+.areaHome .container {
+    height: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.areaHome a {
+    text-decoration: none;
+}
+
+.textoHome {
+    font-size: 58px;
+    font-weight: 400;
+}
+
+.spanHome {
+    font-weight: bold;
+    position: relative;
+
+    padding-bottom: 8px;
+}
+
+.spanHome::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: blue;
+}
+
+.spanBotaoHome {
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.botaoHome {
+    width: 340px;
+    height: 70px;
+
+    border-radius: 10px;
+    margin-top: 40px;
+    padding: 7px 10px;
+
+    background-color: #ffffff;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    display: flex;
+    
+}
+
+.dentroBotao {
+    width: 80%;
+    height: 100%;
+
+    background-color: #2720EC;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    border-radius: 5px;
+
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+}
+
+.dentroBotaoIcon {
+    width: 20%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #000;
+}
+
+.spanBotaoHome:hover {
+    font-size: 1.7rem;
+}
+
+.icon-size {
+    font-size: 35px;
+}
+
+.iconFundo {
+    font-size: 700px;
+}
+
+.iconFundoHome {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 1;
+
+    color: #2720EC;
+}
+
+.iconFundoHome .alinharIcon {
+    display: grid;
+    justify-content: start;
+    align-items: start;
+}
+
+.iconFundoHome .icon-size {
+    font-size: 700px;
+}
+
+/* ----- FIM INICIO ----- */
+
+/* ----- SOBRE NOS ----- */
+.areaSobreNos {
+    height: 90vh;
+    text-align: center;
+}
+
+.areaCards {
+    height: 40%;
+
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.areaCards .card {
+    height: 225px;
+    width: 300px;
+
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    background-color: #F6F8FB;
+    border: solid 5px #fff;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+}
+
+.cardCima {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cardCima .fundoIcone {
+    height: 70px;
+    width: 70px;
+    background-color: #FFF;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 100%;
+    color: #2720EC;
+
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+}
+
+.cardBaixo {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.spanDestaq {
+    color: #2720EC;
+}
+
+.areaSobre {
+    height: 55%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tituloSobre {
+    font-size: 50px;
+    position: relative;
+}
+
+.tituloSobre::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: #2720EC;
+}
+
+.areaSobre p {
+    margin-top: 20px;
+    font-size: 23px;
+}
+
+/* ----- FIM SOBRE NOS ----- */
+
+/* ----- PROJETO ----- */
+.areaProjeto {
+    height: fit-content;
+
+
+    position: relative;
+    overflow: hidden;
+}
+
+.areaProjeto .prjCima {
+    height: 90vh;
+    background-color: #fff;
+    text-align: end;
+    border-radius: 100px 0 0 0;
+}
+
+.prjCima h1 {
+    font-size: 60px;
+}
+
+.prjCima .icon-size {
+    font-size: 50px;
+    margin-right: 10px;
+}
+
+.prjCima .subTexto {
+    color: #555;
+    font-weight: bold;
+}
+
+.areaProjeto .btnPrj {
+    height: 70px;
+    width: 280px;
+    margin-top: 25px;
+    color: #FFF;
+    background-color: #2720EC;
+    border-radius: 10px;
+    border: 0;
+    font-size: 25px;
+    font-weight: bold;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+    cursor: pointer;
+}
+
+.areaProjeto .prjBaixo {
+    height: 100vh;
+    background-color: #000;
+    border-radius: 0 0 100px 0;
+
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #FFF;
+}
+
+.prjBaixo h1 {
+    font-size: 35px;
+}
+
+.prjBaixo span {
+    font-size: 18px;
+}
+
+.prjBaixo .card {
+    height: 200px;
+    background-color: #000;
+    border: none;
+    margin-top: 20px;
+}
+
+.prjBaixo .icon-size {
+    font-size: 45px;
+}
+
+.iconFundoProjeto {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 45%;
+    height: 57%;
+
+    z-index: 1;
+    transform: scaleX(-1);
+}
+
+.iconFundoProjeto .icon-size {
+    font-size: 650px;
+    color: #2720EC;
+}
+
+.iconFundoProjeto .alinIcon {
+    display: grid;
+    justify-content: start;
+    align-content: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+.iconFundoProjeto2 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    width: 7%;
+    height: 50%;
+
+    z-index: 1;
+}
+
+.iconFundoProjeto2 .alinIcon {
+    display: grid;
+    justify-content: end;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+}
+
+.iconFundoProjeto2 .icon-size {
+    font-size: 270px;
+    color: #FFF;
+}
+
+.iconFundoProjeto3 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    width: 8%;
+    height: 50%;
+
+    z-index: 1;
+}
+
+.iconFundoProjeto3 .alinIcon {
+    display: grid;
+    justify-content: start;
+    align-items: start;
+
+    height: 100%;
+    width: 100%;
+}
+
+.iconFundoProjeto3 .icon-size {
+    font-size: 270px;
+    color: #FFF;
+}
+
+
+/* ----- FIM PROJETO ----- */
+
+/* ----- FERRAMENTA ----- */
+.areaFerramenta {
+    height: 50vh;
+}
+
+.fundoFerramenta {
+    width: 100%;
+    height: 80%;
+
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fundoFerramenta h1 {
+    font-size: 4em;
+    margin-left: 25px;
+}
+
+.fundoCalc {
+    height: 90%;
+    width: 50%;
+
+    background-color: #F6F8FB;
+
+    border-radius: 10px;
+    margin-right: 25px;
+}
+
+.calc1 {
+    display: flex;
+    align-items: center;
+
+    height: 30%;
+    margin: 20px;
+    gap: 20px;
+}
+
+.calc1 .icon-size {
+    font-size: 4em;
+}
+
+.calc1 h1 {
+    font-size: 2em;
+    margin: 0px;
+}
+
+.calc2 {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+
+    height: 45%;
+    margin: 0 20px;
+
+}
+
+.calc2 .icon-size {
+    font-size: 1.5em;
+    margin-right: 10px;
+    color: #2720EC;
+}
+
+.calcEspac {
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.btnFerramenta {
+    border: solid 1px #2720EC;
+    border-radius: 10px;
+    background-color: #FFF;
+    margin-bottom: 10px;
+
+    height: 50px;
+    width: 120px;
+
+    font-size: 1em;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* ----- FIM FERRAMENTA ----- */
+
+/* EQUIPE */
+.areaEquipe {
+    height: 90vh;
+}
+
+.areaEquipe .container {
+    width: 100%;
+    height: 100%;
+}
+
+.areaEquipe .areaTitulo {
+    height: 20%;
+}
+
+.areaEquipe .areaTitulo .container {
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.areaEquipe .areaCards {
+    display: flex;
+    height: 85%;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.158);
+}
+
+.areaEquipe .areaCards .card {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    border: none;
+    border-radius: 0px;
+    box-shadow: none;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    overflow: hidden; 
+}
+
+.areaEquipe .areaCards .card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.areaEquipe .areaCards .card img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.areaEquipe .areaCards .card:hover img {
+    filter: grayscale(0%);
+}
+
+.areaEquipe .areaCards .card .info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: white;
+    text-align: center;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.areaEquipe .areaCards .card:hover .info {
+    transform: translateY(0);
+}
+
+.tituloEquipe {
+    font-size: 50px;
+    position: relative;
+}
+
+.tituloEquipe::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    border-radius: 10px;
+    background: #2720EC;
+}
+
+/* FIM EQUIPE */
+
+/* FOOTER */
+footer {
+    height: 60vh;
+    background-color: #000;
+}
+
+footer .container {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+footer .contato {
+    width: 40%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+    flex-direction: column;
+
+    color: #FFF;
+}
+
+.contato .inputs {
+    row-gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.contato .input {
+    height: 35px;
+    width: 210px;
+    border-radius: 10px;
+    border: solid 2px #FFF;
+    background-color: #000;
+    padding-left: 10px;
+    color: #FFF;
+}
+
+.contato .select {
+    width: 225px;
+    height: 39px;
+}
+
+.contato .inputMensagem {
+    width: 97%;
+    height: 100px;
+    padding-top: 10px;
+}
+
+.contato .btnContato {
+    height: 35px;
+    width: 225px;
+    border-radius: 100px;
+    border: solid 2px #FFF;
+    background-color: #000;
+    color: #FFF;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+footer .areaCards {
+    width: 60%;
+    height: 100%;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+footer .areaCards .card {
+    height: 80%;
+    width: 200px;
+    text-align: start;
+    border: none;
+    background-color: #000;
+    box-shadow: none;
+}
+
+footer .areaCards .card .title {
+    font-weight: bold;
+    color: #FFF;
+}
+
+footer .areaCards .card p {
+    color: #949494;
+}
+
+/* CELULAR */
+@media (max-width: 768px) {
+
+    /* ----- HEADER ----- */
+    header {
+        position: relative;
+        background-color: #0B091B;
+    }
+
+    header .container {
+        display: block;
+        text-align: center;
+    }
+
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* ----- FIM HEADER ----- */
+
+    /* ----- INICIO ----- */
+    .areaHome {
+        padding: 20px;
+    }
+
+    .textoHome {
+        font-size: 35px;
+    }
+
+    .botaoHome {
+        width: 100%;
+    }
+
+    .iconFundoHome {
+        display: none;
+    }
+
+    /* ----- FIM INICIO ----- */
+
+    /* ----- SOBRE NOS ----- */
+    .areaSobreNos {
+        height: 200vh;
+    }
+
+    .areaCards {
+        flex-direction: column;
+        gap: 20px;
+
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    /* ----- FIM SOBRE NOS ----- */
+
+    /* ----- PROJETO ----- */
+    .areaProjeto .prjCima {
+        height: 100vh;
+    }
+
+    .prjCima h1 {
+        font-size: 50px;
+    }
+
+    .prjCima .icon-size {
+        font-size: 40px;
+    }
+
+    .areaProjeto .prjBaixo {
+        height: 100vh;
+    }
+
+    .prjCima .subTexto {
+        margin-top: 10px;
+    }
+
+    .areaProjeto .prjBaixo {
+        height: 200vh;
+    }
+
+    .iconFundoProjeto,
+    .iconFundoProjeto2,
+    .iconFundoProjeto3 {
+        display: none;
+    }
+
+    .fundoFerramenta {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: fit-content;
+    }
+
+    .fundoCalc {
+        width: 90%;
+        margin: 0;
+    }
+
+    .fundoFerramenta h1 {
+        font-size: 40px;
+        text-align: start;
+    }
+
+    .calc1 h1 {
+        font-size: 25px;
+        margin: 0px;
+    }
+
+    .calc2 {
+        flex-direction: column;
+    }
+
+    .btnFerramenta {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .areaFerramenta {
+        height: 90vh;
+    }
+
+    footer {
+        height: 120vh;
+        padding-top: 20px;
+    }
+
+    footer .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    footer .contato {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .contato .input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+/* TABLET */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .navbar a {
+        padding: 10px;
+    }
+
+    .iconFundoHome {
+        display: none;
+    }
+
+    .areaSobreNos {
+        height: 50vh;
+    }
+
+    .areaCards {
+        gap: 20px;
+    }
+
+    .areaProjeto .prjCima {
+        height: 50vh;
+    }
+
+    .areaProjeto .prjBaixo {
+        height: 60vh;
+    }
+
+    .prjBaixo .cardBaixo span {
+        font-size: 15px;
+    }
+
+    .iconFundoProjeto,
+    .iconFundoProjeto2,
+    .iconFundoProjeto3 {
+        display: none;
+    }
+}
