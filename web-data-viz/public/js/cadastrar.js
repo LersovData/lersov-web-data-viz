@@ -65,25 +65,12 @@ function validarConfirmarSenha() {
     }
 }
 
-// Função para validar o tipo de mercado
-function validarMercado() {
-    var tipoMercado = document.getElementById("tipo").value;
-    if (tipoMercado !== "atacadista") {
-        alert("Agradecemos a preferência, mas trabalhamos apenas com mercados atacadistas");
-        return false;
-    }
-    return true;
-}
-
 // Função para validar todas as informações no cadastro
 function validarInformacoes() {
     validarEmail();
     validarCNPJ();
     validarSenha();
     validarConfirmarSenha();
-    if (!validarMercado()) {
-        return;
-    }
 
     // Verifica se todos os campos estão verdes (válidos)
     var camposValidos = document.getElementById('email').style.borderColor === "green" &&
@@ -92,8 +79,44 @@ function validarInformacoes() {
                         document.getElementById('confirmar_senha').style.borderColor === "green";
 
     if (camposValidos) {
-        // Redireciona para a página de login
-        window.location.href = "./login.html";
+        // Recuperar os valores dos campos
+        var nomeVar = document.getElementById('nome').value;
+        var emailVar = document.getElementById('email').value;
+        var cnpjVar = document.getElementById('cnpj').value;
+        var senhaVar = document.getElementById('senha').value;
+        var confirmarSenhaVar = document.getElementById('confirmar_senha').value;
+
+        // Enviando os dados via fetch
+        fetch("/usuarios/cadastrar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeServer: nomeVar,
+                cnpjServer: cnpjVar,
+                emailServer: emailVar,
+                senhaServer: senhaVar,
+                confirmarSenhaServer: confirmarSenhaVar
+            }),
+        })
+        .then(function (resposta) {
+            console.log("Resposta: ", resposta);
+
+            if (resposta.ok) {
+                alert("Cadastro realizado com sucesso! Redirecionando para a tela de Login...");
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 2000);
+            } else {
+                throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+        })
+        .catch(function (erro) {
+            console.log(`#ERRO: ${erro}`);
+            alert("Ocorreu um erro durante o cadastro. Tente novamente.");
+        });
+
     } else {
         alert("Por favor, corrija os erros e tente novamente.");
     }
