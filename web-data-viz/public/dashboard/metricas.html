@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lersov Dashboard</title>
+
+    <script src="../js/sessao.js"></script>
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="listarMetrica()">
+    <div class="sidebar">
+        <div class="menu">
+            <a href="#">
+                <span class="material-icons">home</span>
+            </a>
+            <a href="#">
+                <span class="material-icons">dashboard</span>
+            </a>
+            <a href="metricas.html">
+                <span class="material-icons">Métricas</span>
+            </a>
+            <a href="#">
+                <span class="material-icons">settings_applications</span>
+            </a>
+        </div>
+    </div>
+
+    <section class="content">
+        <div>
+            <h1>Métricas</h1>
+        </div>
+        <div class="areaFormulario">
+            <div>
+                <p>Alto</p>
+                <input type="number" name="alto" id="input_alto">
+            </div>
+            <div>
+                <p>Médio</p>
+                <input type="number" name="medio" id="input_medio">
+            </div>
+            <div>
+                <p>Baixo</p>
+                <input type="number" name="baixo" id="input_baixo">
+            </div>
+
+            <div id="div_botao">
+
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+<script>
+    function listarMetrica() {
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+
+        fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
+                    
+                    div_botao.innerHTML = `<button onclick="cadastrarMetrica()">Salvar</button>`;
+
+                    div.appendChild(mensagem);
+                    throw "Nenhum resultado encontrado!!";
+                } else {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                        var metrica = resposta[0];
+
+                        input_alto.value = metrica.alto;
+                        input_medio.value = metrica.medio;
+                        input_baixo.value = metrica.baixo;
+
+                        div_botao.innerHTML = `<button onclick="atualizarMetrica()">Atualizar</button>`;
+
+                        // finalizarAguardar();
+                    });
+                }
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+            finalizarAguardar();
+        });
+    }
+
+    function cadastrarMetrica() {
+        var altoVar = input_alto.value;
+        var medioVar = input_medio.value;
+        var baixoVar = input_baixo.value;
+
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+
+        if (altoVar == '' || medioVar == '' || baixoVar == '') {
+            return false;
+        } else {
+            fetch(`/metricas/cadastrar/${idEmpresa}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    altoServer: altoVar,
+                    medioServer: medioVar,
+                    baixoServer: baixoVar
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        console.log("Métrica realizado com sucesso! Redirecionando para tela atualizada...");
+
+                        setTimeout(() => {
+                            window.location = "./dashboard.html";
+                        }, "2000");
+
+                        // limparFormulario();
+                        // finalizarAguardar();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o salvamento das métricas!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    // finalizarAguardar();
+                });
+
+            return false;
+        }
+    }
+
+    function atualizarMetrica() {
+        var altoVar = input_alto.value;
+        var medioVar = input_medio.value;
+        var baixoVar = input_baixo.value;
+
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+        var idMetricaVar = 1;
+
+        if (altoVar == '' || medioVar == '' || baixoVar == '') {
+            return false;
+        } else {
+            fetch(`/metricas/atualizar/${idEmpresa}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    altoServer: altoVar,
+                    medioServer: medioVar,
+                    baixoServer: baixoVar,
+                    idMetricaServer: idMetricaVar
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        console.log("Métrica atualizada com sucesso! Redirecionando para tela atualizada...");
+
+                        setTimeout(() => {
+                            window.location = "./dashboard.html";
+                        }, "2000");
+
+                        // limparFormulario();
+                        // finalizarAguardar();
+                    } else {
+                        throw "Houve um erro ao tentar realizar a atualização das métricas!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    // finalizarAguardar();
+                });
+
+            return false;
+        }
+    }
+</script>

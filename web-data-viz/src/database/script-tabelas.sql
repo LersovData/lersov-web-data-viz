@@ -1,14 +1,6 @@
-CREATE DATABASE sprint2b_;
-USE sprint2b_;
+CREATE DATABASE lersov;
+USE lersov;
 
-
- create table cadastroEmpresa(
-idEmpresa int primary key auto_increment,
-nome varchar(45)not null,
-cnpj char(18)not null,
-senha varchar(45) not null,
-confirmarSenha varchar(45)
-);
 
 CREATE TABLE empresa(
 	id int primary key,
@@ -46,6 +38,19 @@ CREATE TABLE empresa(
     END as 'Motivo de aprovação e reprovação'
     FROM empresa;
 	
+    
+CREATE TABLE metricas(
+	idMetrica INT AUTO_INCREMENT,
+    alto INT,
+    medio INT,
+    baixo INT,
+    fkEmpresa INT,
+    PRIMARY KEY(idMetrica, fkEmpresa),
+    CONSTRAINT fkMetricaEmpresa
+		FOREIGN KEY (fkEmpresa) REFERENCES empresa(id)
+);
+
+    
 CREATE TABLE formulario(
 	idFormulario int primary key auto_increment,
     qtdCorredoresComSensor varchar(10) not null,
@@ -266,7 +271,6 @@ FROM dadosSensor as D
 JOIN alertas as A
 ON D.fkAlerta = A.idAlerta
 WHERE idDados = 1 and fkSensor = 1;
-    
     
 
 

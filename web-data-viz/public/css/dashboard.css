@@ -1,6 +1,9 @@
-body {
+* {
     margin: 0;
     padding: 0;
+}
+
+body {
     display: flex;
     flex-direction: row;
     height: 165vh;
@@ -36,7 +39,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 95%;
-    margin-left: 63px;
+    margin-left: 65px;
 }
 
 .header {
@@ -234,4 +237,11 @@ body {
     border: 2px solid #000;
 }
 
+
+/* MÉTRICAS */
+
+.areaFormulario {
+    height: 90%;
+    width: 100%;
+}
 
