@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lersov Dashboard</title>
+
+    <script src="../js/sessao.js"></script>
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="listarFormulario()">
+    <div class="sidebar">
+        <div class="menu">
+            <a href="dashboard.html">
+                <span class="material-icons">home</span>
+              </a>
+              <a href="#">
+                <span class="material-icons">dashboard</span>
+              </a>
+              <a href="metricas.html">
+                <span class="material-icons">leaderboard</span>
+              </a>
+              <a href="formulario.html">
+                <span class="material-icons">description</span>
+              </a>
+              <a href="#">
+                <span class="material-icons">settings_applications</span>
+              </a>
+        </div>
+    </div>
+
+    <section class="content">
+        <div>
+            <button onclick="abrirModal()">Novo</button>
+            
+            <div id="">
+                <table border="1" id="div_tabela">
+                
+                </table>
+            </div>
+        </div>
+
+
+        <div id="div_modal" class="modal">
+            <div>
+                <p>Quantidade de corredores com sensor</p>
+                <input type="number" name="qtdCorredor" id="input_qtdCorredor">
+            </div>
+            <div>
+                <p>Data de implementação</p>
+                <input type="date" name="dtImplementacao" id="input_dtImplementacao">
+            </div>
+            <div>
+                <button onclick="fecharModal()">Cancelar</button>
+                <button onclick="cadastrarFormulario()">Salvar</button>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+
+<script>
+    function listarFormulario() {
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+
+        fetch(`/formularios/listar/${idEmpresa}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) { // se não tiver formulario dessa empresa entra aqui
+                    div_modal.style.display = 'flex';
+                    throw "Nenhum resultado encontrado!!";
+                } else {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        var mensagem = ``;
+
+                        for (let i = 0; i < resposta.length; i++) {
+                            var formularios = resposta[i];
+                            console.log(formularios.dtImplementacao);
+
+                            mensagem += `
+                                <tr>
+                                    <td>${formularios.idFormulario}</td>
+                                    <td>${formularios.qtdCorredoresComSensor}</td>
+                                    <td>${formularios.dtImplementacaoFormatada}</td>
+                                </tr>
+                            `;
+                        }
+                        
+                        div_tabela.innerHTML = `
+                            <tr>
+                                <th>ID</th>
+                                <th>Corredores</th>
+                                <th>Data</th>
+                            </tr>
+                            ${mensagem}
+                        `;
+                        // finalizarAguardar();
+                    });
+                }
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+            finalizarAguardar();
+        });
+    }
+
+    function cadastrarFormulario() {
+        var qtdCorredorVar = input_qtdCorredor.value;
+        var dtImplementacaoVar = input_dtImplementacao.value;
+
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+
+        if (qtdCorredorVar == '' || dtImplementacaoVar == '') {
+            return false;
+        } else {
+            fetch(`/formularios/cadastrar/${idEmpresa}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    qtdCorredorServer: qtdCorredorVar,
+                    dtImplementacaoServer: dtImplementacaoVar
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+
+                    if (resposta.ok) {
+                        console.log("Formulario realizado com sucesso! Redirecionando para tela atualizada...");
+
+                        listarFormulario();
+
+                        setTimeout(() => {
+                            fecharModal();
+                        }, "2000");
+
+                        // limparFormulario();
+                        // finalizarAguardar();
+                    } else {
+                        throw "Houve um erro ao tentar realizar o salvamento do formulario!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    // finalizarAguardar();
+                });
+
+            return false;
+        }
+    }
+
+    function abrirModal() {
+        div_modal.style.display = 'flex';
+    }
+
+    function fecharModal() {
+        div_modal.style.display = 'none';
+    }
+</script>

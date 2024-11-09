@@ -6,7 +6,6 @@
 body {
     display: flex;
     flex-direction: row;
-    height: 165vh;
     font-family: "inter", sans-serif;
 }
 
@@ -25,6 +24,7 @@ body {
     justify-content: space-evenly;
     align-items: center;
     height: 100%;
+    position: relative;
 }
 
 .sidebar .menu a {
@@ -39,6 +39,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 95%;
+    height: fit-content;
     margin-left: 65px;
 }
 
@@ -245,3 +246,14 @@ body {
     width: 100%;
 }
 
+.modal {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    height: 100%;
+    width: 95%;
+    align-self: flex-end;
+    background-color: rgba(18, 26, 81, 0.301);
+    justify-content: center;
+    align-items: center;
+}
