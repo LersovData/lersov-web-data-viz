@@ -144,7 +144,7 @@ body {
     padding: 10px 15px 10px 15px;
 }
 
-.graficos .graficoLinhaBarra{
+.graficos .graficoLinhaBarra {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -161,14 +161,14 @@ body {
     width: 500px;
 }
 
-.graficoCalorConteudo{
+.graficoCalorConteudo {
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
     padding: 10px 49px;
 }
 
-.graficoCalor{
+.graficoCalor {
     width: 47%;
     padding: 10px;
     background-color: #f9f9f9;
@@ -177,7 +177,7 @@ body {
 }
 
 
-.descricao{
+.descricao {
     display: flex;
     flex-direction: column;
     width: 45%;
@@ -187,13 +187,13 @@ body {
     border-radius: 10px;
 }
 
-.graficoCalorConteudo .descricao .selecaoSetores{
+.graficoCalorConteudo .descricao .selecaoSetores {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.graficoCalorConteudo .descricao .selecaoSetores select{
+.graficoCalorConteudo .descricao .selecaoSetores select {
     width: 85px;
     height: 30px;
     padding: 5px;
@@ -205,15 +205,15 @@ body {
     border-radius: 20px;
 }
 
-.graficoCalorConteudo .descricao img{
+.graficoCalorConteudo .descricao img {
     height: 30px;
     opacity: 50%;
 }
 
-.graficoCalorConteudo .descricao p{
+.graficoCalorConteudo .descricao p {
     display: flex;
     align-items: center;
-    
+
 }
 
 #heatmapContainer {
@@ -229,7 +229,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-   
+
 }
 
 .corredor {
@@ -238,6 +238,126 @@ body {
     border: 2px solid #000;
 }
 
+/* TESTE */
+.areaTela {
+    height: 100vh;
+    width: 100vw;
+    background-color: #ff0000;
+    display: flex;
+}
+
+.sidebar1 {
+    height: 100vh;
+    width: 5vw;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    background-image: url("https://i.pinimg.com/originals/31/87/3f/31873f581c7b05768d662fee1fa7b8c6.jpg");
+}
+
+.sidebar1 .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+    position: relative;
+}
+
+.sidebar1 .menu a {
+    color: #d3d3d3;
+}
+
+.sidebar1 .menu .material-icons {
+    font-size: 30px;
+}
+
+.content1 {
+    height: 100vh;
+    width: 95vw;
+    align-self: flex-end;
+    background-color: #fff;
+    position: relative;
+}
+
+.areaCabecalho {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tabelaCabecalho {
+    height: 100%;
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    font-size: 1.5rem;
+}
+
+.tabelaCabecalho button {
+    height: 40px;
+    width: 150px;
+    background-color: #121A51;
+    border-radius: 25px;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+.areaTabela {
+    height: 90%;
+}
+
+table {
+    width: 95%;
+    margin: auto;
+    border-spacing: 0;
+}
+
+td {
+    border: solid #00000048 1px;
+}
+
+thead,
+tfoot {
+    background-color: #121A51;
+    color: #FFF;
+    height: 2.5rem;
+    border: none;
+}
+
+.esq {
+    border-top-left-radius: 15px;
+}
+
+.dir {
+    border-top-right-radius: 15px;
+}
+
+tbody tr {
+    height: 2.5rem;
+    text-align: center;
+}
+
+tr:nth-of-type(even) {
+    background-color: rgb(237 238 242);
+}
+
+tfoot {
+    text-align: center;
+}
+
+tfoot th {
+    border-bottom-left-radius: 15px;
+}
+
+tfoot td {
+    border-bottom-right-radius: 15px;
+}
 
 /* MÉTRICAS */
 
@@ -251,9 +371,98 @@ body {
     display: none;
     flex-direction: column;
     height: 100%;
-    width: 95%;
+    width: 95vw;
+    margin-left: 5vw;
     align-self: flex-end;
-    background-color: rgba(18, 26, 81, 0.301);
+    background-color: rgba(0, 0, 0, 0.300);
     justify-content: center;
     align-items: center;
+}
+
+.cardModal {
+    height: 80%;
+    width: 80%;
+    background-color: #fff;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.150);
+}
+
+.mainModal {
+    height: 83%;
+    width: 95%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mainModal .colunaForm {
+    width: 49%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.rowForm {
+    display: flex;
+    justify-content: space-between;
+}
+
+.rowForm .inputText {
+    width: 230px;
+}
+
+.calendario {
+    height: 40px;
+    font-size: 20px;
+    width: 250px;
+    padding-left: 10px;
+    margin-top: 5px;
+    background-color: hsla(0, 0%, 0%, 0.050);
+    border-radius: 10px;
+    border: solid 1px #000;
+}
+
+.inputText {
+    height: 40px;
+    width: 250px;
+    border-radius: 10px;
+    border: solid 1px #000;
+    margin-top: 5px;
+    padding-left: 10px;
+    background-color: hsla(0, 0%, 0%, 0.050);
+}
+
+.footerModal {
+    width: 95%;
+    height: 15%;
+    margin: auto;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 20px;
+}
+
+.footerModal button {
+    height: 45px;
+    width: 100px;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+#btnSalvar {
+    background-color: #121A51;
+    color: #fff;
+}
+
+#btnFechar {
+    border: solid 3px #00000160;
+    background: none;
 }

@@ -18,53 +18,121 @@
 </head>
 
 <body onload="listarFormulario()">
-    <div class="sidebar">
-        <div class="menu">
-            <a href="dashboard.html">
-                <span class="material-icons">home</span>
-              </a>
-              <a href="#">
-                <span class="material-icons">dashboard</span>
-              </a>
-              <a href="metricas.html">
-                <span class="material-icons">leaderboard</span>
-              </a>
-              <a href="formulario.html">
-                <span class="material-icons">description</span>
-              </a>
-              <a href="#">
-                <span class="material-icons">settings_applications</span>
-              </a>
+    <div class="areaTela">
+        <div class="sidebar1">
+            <div class="menu">
+                <a href="dashboard.html">
+                    <span class="material-icons">home</span>
+                </a>
+                <a href="#">
+                    <span class="material-icons">dashboard</span>
+                </a>
+                <a href="metricas.html">
+                    <span class="material-icons">leaderboard</span>
+                </a>
+                <a href="formulario.html">
+                    <span class="material-icons">description</span>
+                </a>
+                <a href="#">
+                    <span class="material-icons">settings_applications</span>
+                </a>
+            </div>
         </div>
-    </div>
 
-    <section class="content">
-        <div>
-            <button onclick="abrirModal()">Novo</button>
+        <section class="content1">
+            <div class="areaCabecalho">
+                <div class="tabelaCabecalho">
+                    <h1>Formulários</h1>
+                    <button onclick="abrirModal()">Novo formulário</button>
+                </div>
+            </div>
             
-            <div id="">
-                <table border="1" id="div_tabela">
-                
+            <div class="areaTabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="esq">ID</th>
+                            <th>Corredores</th>
+                            <th class="dir">Data</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="div_tabela">
+
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th scope="row" colspan="2">Average age</th>
+                            <td>33</td>
+                          </tr>
+                    </tfoot>
                 </table>
             </div>
-        </div>
-
+        </section>
 
         <div id="div_modal" class="modal">
-            <div>
-                <p>Quantidade de corredores com sensor</p>
-                <input type="number" name="qtdCorredor" id="input_qtdCorredor">
-            </div>
-            <div>
-                <p>Data de implementação</p>
-                <input type="date" name="dtImplementacao" id="input_dtImplementacao">
-            </div>
-            <div>
-                <button onclick="fecharModal()">Cancelar</button>
-                <button onclick="cadastrarFormulario()">Salvar</button>
+            <div class="cardModal">
+                <div class="mainModal">
+                    <div class="colunaForm">
+                        <h1>Implementação</h1>
+                        <div>
+                            <p>Quantidade de corredores com sensor</p>
+                            <input type="number" name="qtdCorredor" id="input_qtdCorredor" class="inputText">
+                        </div>
+
+                        <div>
+                            <p>Data de implementação</p>
+                            <input type="date" name="dtImplementacao" id="input_dtImplementacao" class="calendario">
+                        </div>
+                    </div>
+
+                    <div class="colunaForm">
+                        <h1>Endereço</h1>
+                        <div class="rowForm">
+                            <div>
+                                <p>Logradouro</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                            <div>
+                                <p>Número</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                        </div>
+                            <div>
+                                <p>Complemento</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                        <div class="rowForm">
+                            <div>
+                                <p>CEP</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                            <div>
+                                <p>Bairro</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                        </div>
+                        <div class="rowForm">
+                            <div>
+                                <p>Cidade</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                            <div>
+                                <p>Estado</p>
+                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footerModal">
+                    <button onclick="fecharModal()" id="btnFechar">Cancelar</button>
+                    <button onclick="cadastrarFormulario()" id="btnSalvar">Salvar</button>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
 </body>
 
 </html>
@@ -79,6 +147,7 @@
             if (resposta.ok) {
                 if (resposta.status == 204) { // se não tiver formulario dessa empresa entra aqui
                     div_modal.style.display = 'flex';
+                    btnFechar.style.display = 'none';
                     throw "Nenhum resultado encontrado!!";
                 } else {
                     resposta.json().then(function (resposta) {
@@ -97,13 +166,9 @@
                                 </tr>
                             `;
                         }
-                        
+
                         div_tabela.innerHTML = `
-                            <tr>
-                                <th>ID</th>
-                                <th>Corredores</th>
-                                <th>Data</th>
-                            </tr>
+                            
                             ${mensagem}
                         `;
                         // finalizarAguardar();
@@ -149,6 +214,8 @@
 
                         setTimeout(() => {
                             fecharModal();
+                            input_qtdCorredor.value = '';
+                            input_dtImplementacao.value = '';
                         }, "2000");
 
                         // limparFormulario();
@@ -172,5 +239,7 @@
 
     function fecharModal() {
         div_modal.style.display = 'none';
+        input_qtdCorredor.value = '';
+        input_dtImplementacao.value = '';
     }
 </script>
