@@ -15,6 +15,8 @@ var HOST_APP = process.env.APP_HOST;
 
 var app = express();
 
+
+
 var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var avisosRouter = require("./src/routes/avisos");
@@ -23,6 +25,7 @@ var aquariosRouter = require("./src/routes/aquarios");
 var empresasRouter = require("./src/routes/empresas");
 var metricasRouter = require("./src/routes/metricas");
 var formulariosRouter = require("./src/routes/formularios");
+var dadosRouter = require("./src/routes/dados");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -38,6 +41,7 @@ app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
 app.use("/metricas", metricasRouter);
 app.use("/formularios", formulariosRouter);
+app.use("/dados", dadosRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

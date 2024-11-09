@@ -1,0 +1,28 @@
+var database = require("../database/config");
+
+function listarDados() {
+    var instrucao = `
+        SELECT * FROM dadosSensor ORDER BY idDados DESC LIMIT 7;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+
+
+function atualizarDados() {
+    
+    var instrucaoSql = `SELECT 
+    fluxoDePessoas,
+                    dtHora,
+                    DATE_FORMAT(dtHora, '%H:%i:%s')
+                FROM dadosSensor
+                ORDER BY idDados DESC LIMIT 1`;
+
+console.log("Executando a instrução SQL: \n" + instrucaoSql);
+return database.executar(instrucaoSql);
+}
+module.exports = {
+    listarDados,
+    atualizarDados
+};
