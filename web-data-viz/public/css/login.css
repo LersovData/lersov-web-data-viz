@@ -1,17 +1,4 @@
-@font-face {
-    font-family: Lato;
-    src: url(../../src/font/Lato/Lato-Light.ttf);
-}
 
-@font-face {
-    font-family: Ubunto;
-    src: url(../../src/font/Ubuntu/Ubuntu-Bold.ttf);
-}
-
-@font-face {
-    font-family: Ubunto-Medio;
-    src: url(../../src/font/Ubuntu/Ubuntu-Medium.ttf);
-}
 
 
 * {
@@ -59,17 +46,20 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    font-family: Lato;
+    font-family: 'Inter', sans-serif;
+    
 }
 
 .titulo h1 {
     font-size: 46px;
     font-weight: bold;
+    font-family: 'Inter', sans-serif;
 }
 
 .titulo p {
     margin-top: 23px;
     font-size: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .right {
@@ -87,7 +77,7 @@
     border-radius: 10px;
     background: rgb(77, 20, 199);
     background: linear-gradient(177deg, rgba(77, 20, 199, 1) 0%, rgb(55, 91, 211) 44%, rgba(23, 93, 243, 0.884) 98%);
-   font-family: Lato;
+   
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -132,7 +122,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    font-family: Lato;
+    font-family: 'Inter', sans-serif;
     font-weight: bold;
     width: auto;
 }
@@ -144,7 +134,7 @@
     width: 500px;
     border: 0.8px solid #9598C1;
     color: #9598C1;
-    font-family: Lato;
+    font-family: 'Inter', sans-serif;
     font-size: 18px;
     font-style: normal;
     font-weight: bold;
@@ -154,10 +144,12 @@
 
 .inputs {
     margin-top: 20px;
+    font-family: 'Inter', sans-serif;
 }
 
 .inputs p {
     margin-bottom: 15px;
+    font-family: 'Inter', sans-serif;
 }
 
 .esqueceu_senha {
@@ -174,7 +166,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    font-family: Lato;
+    
     margin-top: 15%;
 }
 
@@ -194,7 +186,7 @@
 .login button {
     width: 530px;
     height: 50px;
-    font-family: Ubunto;
+    font-family: 'Inter', sans-serif;
     background-color: #2720EC;
     border: none;
     transition: transform 0.5s;
@@ -223,7 +215,7 @@
         display: flex;
         flex-direction: column;
         text-align: center;
-        font-family: Lato;
+        
 
     }
 
@@ -241,6 +233,7 @@
         width: 50%;
         height: 100%;
         background-color: #111111;
+        font-family: 'Inter', sans-serif;
     }
 
     .container-inputs {
@@ -248,7 +241,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        font-family: Lato;
+        
         font-weight: bold;
         width: auto;
     }
@@ -260,7 +253,7 @@
         width: 450px;
         border: 0.8px solid #9598C1;
         color: #9598C1;
-        font-family: Lato;
+        
         font-size: 18px;
         font-style: normal;
         font-weight: bold;
@@ -290,7 +283,7 @@
         display: flex;
         width: 100%;
         justify-content: center;
-        font-family: Lato;
+        font-family: 'Inter', sans-serif;
         margin-top: 15%;
     }
 
@@ -298,6 +291,7 @@
         color: #3594BB;
         text-decoration: none;
         margin-left: 2px;
+        font-family: 'Inter', sans-serif;
     }
 
     .login {
@@ -310,7 +304,7 @@
     .login button {
         width: 480px;
         height: 50px;
-        font-family: Ubunto;
+        font-family: 'Inter', sans-serif;
         background-color: #7449EB;
         border: none;
         transition: transform 0.5s;
