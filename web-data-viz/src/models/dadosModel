@@ -2,7 +2,9 @@ var database = require("../database/config");
 
 function listarDados() {
     var instrucao = `
-        SELECT * FROM dadosSensor ORDER BY idDados DESC LIMIT 7;
+        SELECT D.idDados, D. fluxoDePessoas, D.dtHora 
+         FROM dadosSensor as D JOIN sensor as S ON D.fkSensor = S.idSensor ORDER BY idDados DESC LIMIT 7;
+
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -22,7 +24,22 @@ function atualizarDados() {
 console.log("Executando a instrução SQL: \n" + instrucaoSql);
 return database.executar(instrucaoSql);
 }
+
+
+function atualizarDadosSetor() {
+
+    var instrucaoSqlSetor = `
+        SELECT C.setor, SUM(D.fluxoDePessoas) as totalFluxo
+        FROM dadosSensor AS D
+        JOIN sensor AS S ON D.fkSensor = S.idSensor
+        JOIN corredor AS C ON S.fkCorredor = C.idCorredor
+        GROUP BY C.setor;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSqlSetor);
+    return database.executarSetor(instrucaoSqlSetor);
+}
 module.exports = {
     listarDados,
-    atualizarDados
+    atualizarDados,
+    atualizarDadosSetor
 };
