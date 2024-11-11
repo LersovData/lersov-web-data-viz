@@ -46,13 +46,14 @@
                     <button onclick="abrirModal()">Novo formulário</button>
                 </div>
             </div>
-            
+
             <div class="areaTabela">
                 <table>
                     <thead>
                         <tr>
                             <th class="esq">ID</th>
                             <th>Corredores</th>
+                            <th>Logradouro</th>
                             <th class="dir">Data</th>
                         </tr>
                     </thead>
@@ -63,9 +64,9 @@
 
                     <tfoot>
                         <tr>
-                            <th scope="row" colspan="2">Average age</th>
+                            <th scope="row" colspan="3">Average age</th>
                             <td>33</td>
-                          </tr>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -92,35 +93,35 @@
                         <div class="rowForm">
                             <div>
                                 <p>Logradouro</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                                <input type="text" name="qtdCorredor" id="input_logradouro" class="inputText">
                             </div>
                             <div>
                                 <p>Número</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                                <input type="number" name="qtdCorredor" id="input_numero" class="inputText">
                             </div>
                         </div>
-                            <div>
-                                <p>Complemento</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
+                        <div>
+                            <p>Complemento</p>
+                            <input type="text" name="qtdCorredor" id="input_complemento" class="inputText">
+                        </div>
                         <div class="rowForm">
                             <div>
                                 <p>CEP</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                                <input type="number" name="qtdCorredor" id="input_cep" class="inputText">
                             </div>
                             <div>
                                 <p>Bairro</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                                <input type="text" name="qtdCorredor" id="input_bairro" class="inputText">
                             </div>
                         </div>
                         <div class="rowForm">
                             <div>
                                 <p>Cidade</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                                <input type="text" name="qtdCorredor" id="input_cidade" class="inputText">
                             </div>
                             <div>
                                 <p>Estado</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
+                                <input type="text" name="qtdCorredor" id="input_estado" class="inputText">
                             </div>
                         </div>
                     </div>
@@ -162,6 +163,7 @@
                                 <tr>
                                     <td>${formularios.idFormulario}</td>
                                     <td>${formularios.qtdCorredoresComSensor}</td>
+                                    <td>${formularios.logradouro}</td>
                                     <td>${formularios.dtImplementacaoFormatada}</td>
                                 </tr>
                             `;
@@ -186,6 +188,13 @@
     function cadastrarFormulario() {
         var qtdCorredorVar = input_qtdCorredor.value;
         var dtImplementacaoVar = input_dtImplementacao.value;
+        var logradouroVar = input_logradouro.value
+        var numeroVar = input_numero.value
+        var complementoVar = input_complemento.value
+        var cepVar = input_cep.value
+        var bairroVar = input_bairro.value
+        var cidadeVar = input_cidade.value
+        var estadoVar = input_estado.value
 
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
@@ -201,7 +210,14 @@
                 },
                 body: JSON.stringify({
                     qtdCorredorServer: qtdCorredorVar,
-                    dtImplementacaoServer: dtImplementacaoVar
+                    dtImplementacaoServer: dtImplementacaoVar,
+                    logradouroServer: logradouroVar,
+                    numeroServer: numeroVar,
+                    complementoServer: complementoVar,
+                    cepServer: cepVar,
+                    bairroServer: bairroVar,
+                    cidadeServer: cidadeVar,
+                    estadoServer: estadoVar,
                 }),
             })
                 .then(function (resposta) {
