@@ -21,7 +21,6 @@
     <div class="areaTela">
         <div class="sidebar1">
             <div class="menu">
-                
                 <a href="dashboard.html">
                     <span class="material-icons">home</span>
                 </a>
@@ -46,18 +45,18 @@
         <section class="content1">
             <div class="areaCabecalho">
                 <div class="tabelaCabecalho">
-                    <h1>Formulários</h1>
-                    <button onclick="abrirModal()">Novo formulário</button>
+                    <h1>Funcionários</h1>
+                    <button onclick="abrirModal()">Novo funcionário</button>
                 </div>
             </div>
-            
+
             <div class="areaTabela">
                 <table>
                     <thead>
                         <tr>
                             <th class="esq">ID</th>
-                            <th>Corredores</th>
-                            <th class="dir">Data</th>
+                            <th>Nome</th>
+                            <th class="dir">Email</th>
                         </tr>
                     </thead>
 
@@ -69,7 +68,7 @@
                         <tr>
                             <th scope="row" colspan="2">Average age</th>
                             <td>33</td>
-                          </tr>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -78,54 +77,20 @@
         <div id="div_modal" class="modal">
             <div class="cardModal">
                 <div class="mainModal">
-                    <div class="colunaForm">
-                        <h1>Implementação</h1>
-                        <div>
-                            <p>Quantidade de corredores com sensor</p>
-                            <input type="number" name="qtdCorredor" id="input_qtdCorredor" class="inputText">
-                        </div>
 
+                    <div class="colunaCadastro">
+                        <h1>Cadastro Funcionário</h1>
                         <div>
-                            <p>Data de implementação</p>
-                            <input type="date" name="dtImplementacao" id="input_dtImplementacao" class="calendario">
+                            <p>Nome</p>
+                            <input type="text" name="qtdCorredor" id="#" class="inputText">
                         </div>
-                    </div>
-
-                    <div class="colunaForm">
-                        <h1>Endereço</h1>
-                        <div class="rowForm">
-                            <div>
-                                <p>Logradouro</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
-                            <div>
-                                <p>Número</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
+                        <div>
+                            <p>Email</p>
+                            <input type="text" name="qtdCorredor" id="#" class="inputText">
                         </div>
-                            <div>
-                                <p>Complemento</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
-                        <div class="rowForm">
-                            <div>
-                                <p>CEP</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
-                            <div>
-                                <p>Bairro</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
-                        </div>
-                        <div class="rowForm">
-                            <div>
-                                <p>Cidade</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
-                            <div>
-                                <p>Estado</p>
-                                <input type="number" name="qtdCorredor" id="#" class="inputText">
-                            </div>
+                        <div>
+                            <p>Senha</p>
+                            <input type="text" name="qtdCorredor" id="#" class="inputText">
                         </div>
                     </div>
                 </div>
@@ -136,6 +101,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
