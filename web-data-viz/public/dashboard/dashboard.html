@@ -628,7 +628,7 @@
       function listarMetrica() {
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 2;
+        var idEmpresa = 1;
 
         fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
