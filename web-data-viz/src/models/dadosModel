@@ -29,11 +29,11 @@ return database.executar(instrucaoSql);
 function atualizarDadosSetor() {
 
     var instrucaoSqlSetor = `
-        SELECT C.setor, SUM(D.fluxoDePessoas) as totalFluxo
-        FROM dadosSensor AS D
+        SELECT D.idDados, C.setor, SUM(D.fluxoDePessoas) as totalFluxo
         JOIN sensor AS S ON D.fkSensor = S.idSensor
+        FROM dadosSensor AS D
         JOIN corredor AS C ON S.fkCorredor = C.idCorredor
-        GROUP BY C.setor;`;
+        GROUP BY C.setor, D.idDados ORDER BY idDados DESC LIMIT 7;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSqlSetor);
     return database.executarSetor(instrucaoSqlSetor);
