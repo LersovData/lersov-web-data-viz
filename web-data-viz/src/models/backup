@@ -1,0 +1,59 @@
+// router.get("/tempo-real-setor", function(req, res){
+//     dadosController.atualizarDadosPorSetor(req, res);
+// });
+ROTA
+
+// function atualizarDadosPorSetor(req, res) {
+
+
+//     console.log(`Recuperando medidas em tempo real`);
+
+//     dadosModel.atualizarDadosSetor().then(function (resultadoSetor) {
+//         if (resultadoSetor.length > 0) {
+//             res.status(200).json(resultadoSetor);
+//         } else {
+//             res.status(204).send("Nenhum resultado encontrado!")
+//         }
+//     }).catch(function (erro) {
+//         console.log(erro);
+//         console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+//         res.status(500).json(erro.sqlMessage);
+//     });
+// } CONTROLLER
+
+// function atualizarDadosSetor() {
+
+//     var instrucaoSqlSetor = `
+//         SELECT C.fkEmpresa, C.setor, SUM(D.fluxoDePessoas)
+//         FROM dadosSensor AS D
+//         JOIN sensor AS S ON D.fkSensor = S.idSensor
+//         JOIN corredor AS C ON S.fkCorredor = C.idCorredor
+//         GROUP BY C.setor, C.fkEmpresa;`;
+
+//     console.log("Executando a instrução SQL: \n" + instrucaoSqlSetor);
+//     return database.executarSetor(instrucaoSqlSetor);
+// } MODEL
+
+// function executarSetor(instrucaoSqlSetor) {
+
+//     if (process.env.AMBIENTE_PROCESSO !== "producao" && process.env.AMBIENTE_PROCESSO !== "desenvolvimento") {
+//         console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM .env OU dev.env OU app.js\n");
+//         return Promise.reject("AMBIENTE NÃO CONFIGURADO EM .env");
+//     }
+
+//     return new Promise(function (resolve, reject) {
+//         var conexao = mysql.createConnection(mySqlConfig);
+//         conexao.connect();
+//         conexao.query(instrucaoSqlSetor, function (erro, resultados) {
+//             conexao.end();
+//             if (erro) {
+//                 reject(erro);
+//             }
+//             console.log(resultados);
+//             resolve(resultados);
+//         });
+//         conexao.on('error', function (erro) {
+//             return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
+//         });
+//     });
+// }CONFIG. JS

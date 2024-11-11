@@ -3,20 +3,17 @@ USE lersov;
 
 
 CREATE TABLE empresa(
-	id int primary key,
+	id int primary key auto_increment,
     nome varchar(45) not null,
     cnpj char(18) not null,
     email varchar(45) not null,
     senha varchar(45) not null,
-    situacao varchar(45) not null,
-    constraint chkSituacao
-		check (situacao in('aprovado', 'reprovado', 'em aguardo'))
+    confirmarSenha varchar(45) not null
 ); 
-	INSERT INTO empresa VALUES
-		(1,'Assaí', '06.057.223/0001-71', 'assai@empresa', '123456ASSAI', 'aprovado'),
-        (2,'Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '090909CARREFOUR', 'reprovado'),
-        (3,'Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '76767ATACADAO', 'aprovado');
 	
+	
+    
+    
     
 	select*from empresa;
 
@@ -55,6 +52,7 @@ CREATE TABLE formulario(
     constraint fkFormularioEmpresa
 		foreign key (fkEmpresa) references empresa(id)
 );
+
 desc formulario;
 
 INSERT INTO formulario VALUES
