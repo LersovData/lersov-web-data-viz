@@ -30,6 +30,13 @@ function cadastrar(req, res) {
     var idEmpresa = req.params.idEmpresa;
     var qtdCorredor = req.body.qtdCorredorServer;
     var dtImplementacao = req.body.dtImplementacaoServer;
+    var logradouro = req.body.logradouroServer;
+    var numero = req.body.numeroServer;
+    var complemento = req.body.complementoServer;
+    var cep = req.body.cepServer;
+    var bairro = req.body.bairroServer;
+    var cidade = req.body.cidadeServer;
+    var estado = req.body.estadoServer;
 
     // valiações para saber se tudo esta preenchido
     if (qtdCorredor == undefined) {
@@ -39,7 +46,7 @@ function cadastrar(req, res) {
     } else if (idEmpresa == undefined) {
         res.status(400).send("Sua data de implementação está undefined!");
     } else {
-        formularioModel.cadastrar(idEmpresa, qtdCorredor, dtImplementacao)
+        formularioModel.cadastrar(idEmpresa, qtdCorredor, dtImplementacao, logradouro, numero, complemento, cep, bairro, cidade, estado)
             .then(
                 function (resultado) {
                     res.json(resultado);
