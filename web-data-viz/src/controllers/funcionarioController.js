@@ -1,4 +1,4 @@
-var usuarioModel = require("../models/funcionarioModel.js");
+var funcionarioModel = require("../models/funcionarioModel.js");
 
 
 function autentificar(req, res) {
@@ -55,10 +55,10 @@ function autentificar(req, res) {
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var nome = req.body.nomeServer;
-    
+    var idEmpresa = req.params.idEmpresa;
     var email = req.body.emailServer;
     var senha = req.body.senhaServer;
-    
+    console.log(nome, idEmpresa, email, senha)
 
     // Faça as validações dos valores
     if (nome == undefined) {
@@ -70,7 +70,7 @@ function cadastrar(req, res) {
     } else {
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        funcionarioModel.cadastrar(nome, email, senha)
+        funcionarioModel.cadastrar(nome, email, senha, idEmpresa)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -88,7 +88,33 @@ function cadastrar(req, res) {
     }
 }
 
+function listar(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+
+    funcionarioModel.listar(idEmpresa)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "Houve um erro ao buscar os avisos: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     autentificar,
-    cadastrar
+    cadastrar,
+    listar
 }
