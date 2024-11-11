@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload='obterDadosGrafico()'>
+<body onload='obterDadosGrafico(), listarMetrica()'>
   <div class="sidebar">
     <div class="menu">
       <a href="dashboard.html">
@@ -101,13 +101,13 @@
                 </select>
               </div>
               <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png"> Região com fluxo alto
+                <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png"> Região com fluxo alto <span id="metrica_alto"></span>
               </p>
               <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" />Região com fluxo mediano
+                <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" />Região com fluxo mediano <span id="metrica_medio"></span>
               </p>
               <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" />Região com fluxo baixo
+                <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" />Região com fluxo baixo <span id="metrica_baixo"></span>
               </p>
             </div>
             <div id="heatmapContainer" class="graficoCalor">
@@ -624,6 +624,40 @@
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
       }
+
+      function listarMetrica() {
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 2;
+
+        fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
+
+                    window.location = "./metricas.html";
+
+                    throw "Nenhum resultado encontrado!!";
+                } else {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                        var metrica = resposta[0];
+
+                        metrica_alto.innerText = `- ${metrica.alto}`;
+                        metrica_medio.innerText = `- ${metrica.medio}`;
+                        metrica_baixo.innerText = `- ${metrica.baixo}`;
+
+                        // finalizarAguardar();
+                    });
+                }
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+            finalizarAguardar();
+        });
+    }
 
     </script>
 </body>
