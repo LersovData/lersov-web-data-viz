@@ -18,46 +18,51 @@
 </head>
 
 <body onload="listarMetrica()">
-    <div class="sidebar">
+    <div class="sidebar1">
         <div class="menu">
             <a href="dashboard.html">
                 <span class="material-icons">home</span>
-              </a>
-              <a href="#">
+            </a>
+            <a href="#">
                 <span class="material-icons">dashboard</span>
-              </a>
-              <a href="metricas.html">
+            </a>
+            <a href="metricas.html">
                 <span class="material-icons">leaderboard</span>
-              </a>
-              <a href="formulario.html">
+            </a>
+            <a href="formulario.html">
                 <span class="material-icons">description</span>
-              </a>
-              <a href="#">
+            </a>
+            <a href="#">
                 <span class="material-icons">settings_applications</span>
-              </a>
+            </a>
         </div>
     </div>
 
-    <section class="content">
-        <div>
-            <h1>Métricas</h1>
+    <section class="content1">
+        <div class="areaCabecalho">
+            <div class="tabelaCabecalho">
+                <h1>Métricas</h1>
+            </div>
         </div>
+
         <div class="areaFormulario">
-            <div>
-                <p>Alto</p>
-                <input type="number" name="alto" id="input_alto">
-            </div>
-            <div>
-                <p>Médio</p>
-                <input type="number" name="medio" id="input_medio">
-            </div>
-            <div>
-                <p>Baixo</p>
-                <input type="number" name="baixo" id="input_baixo">
-            </div>
+            <div class="formularioMetrica">
+                <div>
+                    <p>Alto</p>
+                    <input type="number" name="alto" id="input_alto">
+                </div>
+                <div>
+                    <p>Médio</p>
+                    <input type="number" name="medio" id="input_medio">
+                </div>
+                <div>
+                    <p>Baixo</p>
+                    <input type="number" name="baixo" id="input_baixo">
+                </div>
 
-            <div id="div_botao">
+                <div id="div_botao">
 
+                </div>
             </div>
         </div>
     </section>
@@ -74,8 +79,8 @@
         fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
-                    
-                    div_botao.innerHTML = `<button onclick="cadastrarMetrica()">Salvar</button>`;
+
+                    div_botao.innerHTML = `<button onclick="cadastrarMetrica()" id="btnSalvar">Salvar</button>`;
 
                     div.appendChild(mensagem);
                     throw "Nenhum resultado encontrado!!";
@@ -89,7 +94,7 @@
                         input_medio.value = metrica.medio;
                         input_baixo.value = metrica.baixo;
 
-                        div_botao.innerHTML = `<button onclick="atualizarMetrica()">Atualizar</button>`;
+                        div_botao.innerHTML = `<button onclick="atualizarMetrica()" id="btnSalvar">Atualizar</button>`;
 
                         // finalizarAguardar();
                     });

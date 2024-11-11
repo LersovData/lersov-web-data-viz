@@ -363,7 +363,29 @@ tfoot td {
 
 .areaFormulario {
     height: 90%;
-    width: 100%;
+    width: 95%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formularioMetrica {
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.areaFormulario input {
+    height: 40px;
+    width: 250px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border: solid 1px #000;
+    margin-top: 5px;
+    background-color: hsla(0, 0%, 0%, 0.050);
 }
 
 .modal {
@@ -448,7 +470,7 @@ tfoot td {
     gap: 20px;
 }
 
-.footerModal button {
+.footerModal, .areaFormulario button {
     height: 45px;
     width: 100px;
     border-radius: 25px;
