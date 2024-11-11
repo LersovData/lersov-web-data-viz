@@ -55,6 +55,7 @@ CREATE TABLE formulario(
     constraint fkFormularioEmpresa
 		foreign key (fkEmpresa) references empresa(id)
 );
+
 desc formulario;
 
 INSERT INTO formulario VALUES
