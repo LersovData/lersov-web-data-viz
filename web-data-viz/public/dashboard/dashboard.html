@@ -81,12 +81,12 @@
           <div class="cardLineBar">
             <div class="graficoLinhaBarra">
               <h4>Número de pessoas nos setores (hora)</h4>
-              <canvas id="barChart" class="chart"></canvas>
+              <canvas id="lineChartSetor" class="chart"></canvas>
             </div>
 
             <div class="graficoLinhaBarra">
               <h4>Número de pessoas no corredor selecionado (hora)</h4>
-              <canvas id="lineChart" class="chart"></canvas>
+              <canvas id="lineChartCorredor" class="chart"></canvas>
             </div>
           </div>
 
@@ -101,13 +101,16 @@
                 </select>
               </div>
               <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png"> Região com fluxo alto <span id="metrica_alto"></span>
+                <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png"> Região com fluxo alto <span
+                  id="metrica_alto"></span>
               </p>
               <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" />Região com fluxo mediano <span id="metrica_medio"></span>
+                <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" />Região com fluxo mediano <span
+                  id="metrica_medio"></span>
               </p>
               <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" />Região com fluxo baixo <span id="metrica_baixo"></span>
+                <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" />Região com fluxo baixo <span
+                  id="metrica_baixo"></span>
               </p>
             </div>
             <div id="heatmapContainer" class="graficoCalor">
@@ -131,66 +134,6 @@
 
     <script>
 
-
-
-      // Gráfico de Barras
-      // const ctxBar = document.getElementById('barChart');
-      // new Chart(ctxBar, {
-      //   type: 'bar',
-      //   data: {
-      //     labels: ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
-      //     datasets: [{
-      //       label: 'Hortifruti',
-      //       data: [500, 250, 550, 600, 500, 300],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(13,26,64)'
-      //     },
-      //     {
-      //       label: 'Massas',
-      //       data: [400, 450, 430, 500, 550, 500],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(0,202,255)'
-      //     },
-      //     {
-      //       label: 'Adega',
-      //       data: [300, 350, 400, 500, 600, 450],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(63,157,236)'
-      //     },
-
-
-      //     ]
-      //   },
-      //   options: {
-      //     scales: {
-      //       y: {
-      //         beginAtZero: true
-      //       }
-      //     }
-      //   }
-      // });
-
-      // Gráfico de Linhas
-      // const labelsLine = ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
-      // const dataLine = {
-      //   labels: labelsLine,
-      //   datasets: [{
-      //     label: 'Número de pessoas',
-      //     data: [400, 550, 658, 600, 300, 240],
-      //     fill: false,
-      //     backgroundColor: 'rgb(18,26,81)',
-      //     borderColor: 'rgb(18,26,81)',
-      //     tension: 0.1
-      //   }]
-      // };
-
-      // const configLine = {
-      //   type: 'line',
-      //   data: dataLine,
-      // };
-
-      // const ctxLine = document.getElementById('lineChart');
-      // new Chart(ctxLine, configLine);
 
       var heatmapInstance = h337.create({
         container: document.getElementById('heatmapContainer'),
@@ -282,87 +225,10 @@
           .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
-
-
-
       }
 
+      
 
-
-      // function plotarGrafico1(respostaSensor, id1) {
-
-      //   console.log('iniciando plotagem do gráfico...');
-
-      //   // Criando estrutura para plotar gráfico - labels
-      //   let labels = [];
-
-      //   // Criando estrutura para plotar gráfico - dados
-      //   let dados = {
-      //     labels: labels,
-      //     datasets: [{
-      //       label: 'Hortifruti',
-      //       data: [],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(13,26,64)',
-      //       tension: 0.1
-      //     },
-      //     {
-      //       label: 'Massas',
-      //       data: [],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(0,202,255)',
-      //       tension: 0.1
-      //     },
-      //     {
-      //       label: 'Adega',
-      //       data: [],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(63,157,236)',
-      //       tension: 0.1
-      //     }],
-
-      //   };
-
-      //   console.log('----------------------------------------------')
-      //   console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-      //   console.log(respostaSensor)
-
-      //   // Inserindo valores recebidos em estrutura para plotar o gráfico
-      //   for (i = 0; i < respostaSensor.length; i++) {
-      //     var registro = respostaSensor[i];
-
-      //     labels.push(registro.dtHora);
-
-
-      //     dados.datasets[0].data.push(registro.fluxoDePessoas);
-      //     dados.datasets[1].data.push(registro.fluxoDePessoas);
-      //     dados.datasets[2].data.push(registro.fluxoDePessoas);
-      //   }
-
-      //   console.log('----------------------------------------------')
-      //   console.log('O gráfico será plotado com os respectivos valores:')
-      //   console.log('Labels:')
-      //   console.log(labels)
-      //   console.log('Dados:')
-      //   console.log(dados.datasets)
-      //   console.log('----------------------------------------------')
-
-      //   // Criando estrutura para plotar gráfico - config
-      //   const config = {
-      //     type: 'bar',
-      //     data: dados,
-      //   };
-
-      //   // Adicionando gráfico criado em div na tela
-      //   let myChart = new Chart(
-      //     document.getElementById(`barChart`),
-      //     config
-      //   );
-
-      //   setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-
-
-      // }
 
       function plotarGrafico1(respostaSensor, id1) {
 
@@ -379,7 +245,8 @@
               label: 'Congelados',
               data: [],
               borderWidth: 1,
-              backgroundColor: 'rgb(13,26,64)',  // Cor da barra para Hortifruti
+              backgroundColor: 'rgb(13,26,155)',
+              borderColor: 'rgb(18,26,81)',
               tension: 0.1
             }
           ]
@@ -416,12 +283,12 @@
 
         // Criando estrutura para plotar gráfico - config
         const config = {
-          type: 'bar',
+          type: 'line',
           data: dados,
         };
 
         // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(document.getElementById(`barChart`), config);
+        let myChart = new Chart(document.getElementById(`lineChartSetor`), config);
 
         // Atualizando o gráfico a cada 2 segundos
         setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
@@ -476,7 +343,7 @@
 
         // Adicionando gráfico criado em div na tela
         let myChart = new Chart(
-          document.getElementById(`lineChart`),
+          document.getElementById(`lineChartCorredor`),
           config
         );
 
@@ -485,88 +352,54 @@
 
       }
 
-      // function atualizarGraficoSetor(id1, dados, myChart) {
-
-      //   fetch(`/dados/tempo-real`, { cache: 'no-store' }).then(function (response) {
-      //     if (response.ok) {
-      //       response.json().then(function (novoRegistroSetor) {
-
-      //         obterDadosGrafico(id1);
-      //         // alertar(novoRegistro, idAquario);
-      //         console.log(`Dados recebidos: ${JSON.stringify(novoRegistroSetor)}`);
-      //         console.log(`Dados atuais do gráfico:`);
-      //         console.log(dados);
-
-      //         // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
-      //         // avisoCaptura.innerHTML = ""
-
-
-      //         if (novoRegistroSetor[0].dtHora == dados.labels[dados.labels.length - 1]) {
-      //           console.log("---------------------------------------------------------------")
-      //           console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-      //           // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-      //           console.log("Horário do novo dado capturado:")
-      //           console.log(novoRegistroSetor[0].dtHora)
-      //           console.log("Horário do último dado capturado:")
-      //           console.log(dados.labels[dados.labels.length - 1])
-      //           console.log("---------------------------------------------------------------")
-      //         } else {
-      //           // tirando e colocando valores no gráfico
-      //           dados.labels.shift(); // apagar o primeiro
-      //           dados.labels.push(novoRegistroSetor[0].dtHora); // incluir um novo momento
-
-      //           dados.datasets[0].data.shift();  // apagar o primeiro de umidade
-      //           dados.datasets[0].data.push(novoRegistroSetor[0].fluxoDePessoas); // incluir uma nova medida de umidade
-
-
-
-      //           myChart.update();
-      //         }
-
-      //         // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-      //         proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-      //       });
-      //     } else {
-      //       console.error('Nenhum dado encontrado ou erro na API');
-      //       // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-      //       proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-      //     }
-      //   })
-      //     .catch(function (error) {
-      //       console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-      //     });
-      // }
 
       function atualizarGraficoSetor(id1, dados, myChart) {
-        fetch(`/dados/tempo-real-setor`, { cache: 'no-store' })
-          .then(function (response) {
-            if (response.ok) {
-              response.json().then(function (novoRegistroSetor) {
-                console.log(`Dados recebidos para o gráfico: ${JSON.stringify(novoRegistroSetor)}`);
 
-                // Atualizando os valores das barras com os novos fluxos de cada setor
-                novoRegistroSetor.forEach(function (setor) {
-                  // Encontrar o índice do setor e atualizar o fluxo de pessoas
-                  if (setor.setor === 'Congelados') {
-                    dados.datasets[0].data.push(setor.totalFluxo);
-                  } else if (setor.setor === 'Massas') {
-                    dados.datasets[1].data.push(setor.totalFluxo);
-                  } else if (setor.setor === 'Adega') {
-                    dados.datasets[2].data.push(setor.totalFluxo);
-                  }
-                });
+        fetch(`/dados/tempo-real-setor`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+            response.json().then(function (novoRegistroSetor) {
 
-                // Atualizando o gráfico com os novos dados
+              obterDadosGrafico(id1);
+              // alertar(novoRegistro, idAquario);
+              console.log(`Dados recebidos: ${JSON.stringify(novoRegistroSetor)}`);
+              console.log(`Dados atuais do gráfico:`);
+              console.log(dados);
+
+              // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
+              // avisoCaptura.innerHTML = ""
+
+
+              if (novoRegistroSetor[0].dtHora == dados.labels[dados.labels.length - 1]) {
+                console.log("---------------------------------------------------------------")
+                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
+                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
+                console.log("Horário do novo dado capturado:")
+                console.log(novoRegistroSetor[0].dtHora)
+                console.log("Horário do último dado capturado:")
+                console.log(dados.labels[dados.labels.length - 1])
+                console.log("---------------------------------------------------------------")
+              } else {
+                // tirando e colocando valores no gráfico
+                dados.labels.shift(); // apagar o primeiro
+                dados.labels.push(novoRegistroSetor[0].dtHora); // incluir um novo momento
+
+                dados.datasets[0].data.shift();
+                dados.datasets[0].data.push(novoRegistroSetor[0].totalFluxo);
+
+
+
                 myChart.update();
+              }
 
-                // Agendar a próxima atualização
-                proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-              });
-            } else {
-              console.error('Erro ao obter dados do setor.');
+              // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
               proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-            }
-          })
+            });
+          } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+            proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
+          }
+        })
           .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
@@ -631,33 +464,33 @@
         var idEmpresa = 1;
 
         fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
-            if (resposta.ok) {
-                if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
+          if (resposta.ok) {
+            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
 
-                    window.location = "./metricas.html";
+              window.location = "./metricas.html";
 
-                    throw "Nenhum resultado encontrado!!";
-                } else {
-                    resposta.json().then(function (resposta) {
-                        console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                        var metrica = resposta[0];
-
-                        metrica_alto.innerText = `- ${metrica.alto}`;
-                        metrica_medio.innerText = `- ${metrica.medio}`;
-                        metrica_baixo.innerText = `- ${metrica.baixo}`;
-
-                        // finalizarAguardar();
-                    });
-                }
+              throw "Nenhum resultado encontrado!!";
             } else {
-                throw ('Houve um erro na API!');
+              resposta.json().then(function (resposta) {
+                console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                var metrica = resposta[0];
+
+                metrica_alto.innerText = `- ${metrica.alto}`;
+                metrica_medio.innerText = `- ${metrica.medio}`;
+                metrica_baixo.innerText = `- ${metrica.baixo}`;
+
+                // finalizarAguardar();
+              });
             }
+          } else {
+            throw ('Houve um erro na API!');
+          }
         }).catch(function (resposta) {
-            console.error(resposta);
-            finalizarAguardar();
+          console.error(resposta);
+          finalizarAguardar();
         });
-    }
+      }
 
     </script>
 </body>

@@ -28,7 +28,7 @@ function atualizarDados(req, res) {
     });
 }
 
-function atualizarDadosPorSetor(req, res) {
+function atualizarDadosSetor(req, res) {
 
 
     console.log(`Recuperando medidas em tempo real`);
@@ -46,8 +46,27 @@ function atualizarDadosPorSetor(req, res) {
     });
 }
 
+function atualizarDadosCalor(req, res) {
+
+
+    console.log(`Recuperando medidas em tempo real`);
+
+    dadosModel.atualizarDadosCalor().then(function (resultadoCalor) {
+        if (resultadoCalor.length > 0) {
+            res.status(200).json(resultadoCalor);
+        } else {
+            res.status(204).send("Nenhum resultado encontrado!")
+        }
+    }).catch(function (erro) {
+        console.log(erro);
+        console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+        res.status(500).json(erro.sqlMessage);
+    });
+}
+
 module.exports = {
     listarDados,
     atualizarDados,
-    atualizarDadosPorSetor
+    atualizarDadosSetor,
+    atualizarDadosCalor
 }

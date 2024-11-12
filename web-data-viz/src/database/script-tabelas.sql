@@ -8,25 +8,18 @@ CREATE TABLE empresa(
     cnpj char(18) not null,
     email varchar(45) not null,
     senha varchar(45) not null,
-    tipo varchar(45) not null,
-    cep char(9) not null,
-    bairro varchar(45) not null,
-    cidade varchar(45) not null,
-    numEnd varchar(45) not null,
     situacao varchar(45) not null,
     constraint chkSituacao
 		check (situacao in('aprovado', 'reprovado', 'em aguardo'))
 ); 
 	INSERT INTO empresa VALUES
-		(1,'Assaí', '06.057.223/0001-71', 'assai@empresa', '123456ASSAI',
-        'Atacadista', '06703-000', 'São Paulo', 'São Paulo', '1635', 'aprovado'),
-        (2,'Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '090909CARREFOUR',
-        'Conveniência', '01311-300', 'São Paulo', 'São Paulo', '2073', 'reprovado'),
-        (3,'Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '76767ATACADAO'
-        ,'Atacadista', '02170-901', 'São Paulo', 'São Paulo', '6169', 'aprovado');
-        
-	select*from empresa;
+		(1,'Assaí', '06.057.223/0001-71', 'assai@empresa', '123456ASSAI', 'aprovado'),
+        (2,'Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '090909CARREFOUR', 'reprovado'),
+        (3,'Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '76767ATACADAO', 'aprovado');
+	
     
+	select*from empresa;
+
     select nome as Empresa,
     cnpj as CNPJ,
     email as Email,
@@ -55,14 +48,22 @@ CREATE TABLE formulario(
 	idFormulario int primary key auto_increment,
     qtdCorredoresComSensor varchar(10) not null,
     dtImplementacao date not null,
+    logradouro varchar(60),
+    numero int,
+    complemento varchar(45),
+    cep char(8),
+    bairro varchar(45),
+    cidade varchar(45),
+    estado varchar(45),
     fkEmpresa int,
     constraint fkFormularioEmpresa
 		foreign key (fkEmpresa) references empresa(id)
 );
 
+desc formulario;
+
 INSERT INTO formulario VALUES
-	(default, '7', '2024-02-12', 1),
-    (default, '5', '2024-02-12', 3);
+	(default, '7', '2024-02-12', 'Avenida Rodolfo Pirani', 200, 'Nenhum', 1);
     
 select*from formulario;
 
@@ -272,5 +273,6 @@ JOIN alertas as A
 ON D.fkAlerta = A.idAlerta
 WHERE idDados = 1 and fkSensor = 1;
     
+
 
 
