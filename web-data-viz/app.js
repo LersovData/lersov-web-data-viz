@@ -26,6 +26,7 @@ var empresasRouter = require("./src/routes/empresas");
 var metricasRouter = require("./src/routes/metricas");
 var formulariosRouter = require("./src/routes/formularios");
 var dadosRouter = require("./src/routes/dados");
+var funcionariosRouter = require("./src/routes/funcionario");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -42,6 +43,7 @@ app.use("/empresas", empresasRouter);
 app.use("/metricas", metricasRouter);
 app.use("/formularios", formulariosRouter);
 app.use("/dados", dadosRouter);
+app.use("/funcionario", funcionariosRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

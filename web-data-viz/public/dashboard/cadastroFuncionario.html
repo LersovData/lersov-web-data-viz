@@ -17,11 +17,10 @@
         rel="stylesheet">
 </head>
 
-<body onload="listarFormulario()">
+<body onload="listar()">
     <div class="areaTela">
         <div class="sidebar1">
             <div class="menu">
-                
                 <a href="dashboard.html">
                     <span class="material-icons">home</span>
                 </a>
@@ -46,8 +45,8 @@
         <section class="content1">
             <div class="areaCabecalho">
                 <div class="tabelaCabecalho">
-                    <h1>Formulários</h1>
-                    <button onclick="abrirModal()">Novo formulário</button>
+                    <h1>Funcionários</h1>
+                    <button onclick="abrirModal()">Novo funcionário</button>
                 </div>
             </div>
 
@@ -56,9 +55,8 @@
                     <thead>
                         <tr>
                             <th class="esq">ID</th>
-                            <th>Corredores</th>
-                            <th>Logradouro</th>
-                            <th class="dir">Data</th>
+                            <th>Nome</th>
+                            <th class="dir">Email</th>
                         </tr>
                     </thead>
 
@@ -68,7 +66,7 @@
 
                     <tfoot>
                         <tr>
-                            <th scope="row" colspan="3">Average age</th>
+                            <th scope="row" colspan="2">Average age</th>
                             <td>33</td>
                         </tr>
                     </tfoot>
@@ -79,76 +77,43 @@
         <div id="div_modal" class="modal">
             <div class="cardModal">
                 <div class="mainModal">
-                    <div class="colunaForm">
-                        <h1>Implementação</h1>
-                        <div>
-                            <p>Quantidade de corredores com sensor</p>
-                            <input type="number" name="qtdCorredor" id="input_qtdCorredor" class="inputText">
-                        </div>
 
+                    <div class="colunaCadastro">
+                        <h1>Cadastro Funcionário</h1>
                         <div>
-                            <p>Data de implementação</p>
-                            <input type="date" name="dtImplementacao" id="input_dtImplementacao" class="calendario">
-                        </div>
-                    </div>
-
-                    <div class="colunaForm">
-                        <h1>Endereço</h1>
-                        <div class="rowForm">
-                            <div>
-                                <p>Logradouro</p>
-                                <input type="text" name="qtdCorredor" id="input_logradouro" class="inputText">
-                            </div>
-                            <div>
-                                <p>Número</p>
-                                <input type="number" name="qtdCorredor" id="input_numero" class="inputText">
-                            </div>
+                            <p>Nome</p>
+                            <input type="text" name="" id="nome_input" class="inputText">
                         </div>
                         <div>
-                            <p>Complemento</p>
-                            <input type="text" name="qtdCorredor" id="input_complemento" class="inputText">
+                            <p>Email</p>
+                            <input type="text" name="" id="email_input" class="inputText">
                         </div>
-                        <div class="rowForm">
-                            <div>
-                                <p>CEP</p>
-                                <input type="number" name="qtdCorredor" id="input_cep" class="inputText">
-                            </div>
-                            <div>
-                                <p>Bairro</p>
-                                <input type="text" name="qtdCorredor" id="input_bairro" class="inputText">
-                            </div>
-                        </div>
-                        <div class="rowForm">
-                            <div>
-                                <p>Cidade</p>
-                                <input type="text" name="qtdCorredor" id="input_cidade" class="inputText">
-                            </div>
-                            <div>
-                                <p>Estado</p>
-                                <input type="text" name="qtdCorredor" id="input_estado" class="inputText">
-                            </div>
+                        <div>
+                            <p>Senha</p>
+                            <input type="password" name="" id="senha_input" class="inputText">
                         </div>
                     </div>
                 </div>
 
                 <div class="footerModal">
                     <button onclick="fecharModal()" id="btnFechar">Cancelar</button>
-                    <button onclick="cadastrarFormulario()" id="btnSalvar">Salvar</button>
+                    <button onclick="cadastrarFuncionario()" id="btnSalvar">Salvar</button>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 
 </html>
 
 <script>
-    function listarFormulario() {
+    function listar() {
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
         var idEmpresa = 1;
 
-        fetch(`/formularios/listar/${idEmpresa}`).then(function (resposta) {
+        fetch(`/funcionario/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) { // se não tiver formulario dessa empresa entra aqui
                     div_modal.style.display = 'flex';
@@ -160,15 +125,13 @@
                         var mensagem = ``;
 
                         for (let i = 0; i < resposta.length; i++) {
-                            var formularios = resposta[i];
-                            console.log(formularios.dtImplementacao);
+                            var funcionario = resposta[i];
 
                             mensagem += `
                                 <tr>
-                                    <td>${formularios.idFormulario}</td>
-                                    <td>${formularios.qtdCorredoresComSensor}</td>
-                                    <td>${formularios.logradouro}</td>
-                                    <td>${formularios.dtImplementacaoFormatada}</td>
+                                    <td>${funcionario.idFuncionario}</td>
+                                    <td>${funcionario.nome}</td>
+                                    <td>${funcionario.email}</td>
                                 </tr>
                             `;
                         }
@@ -189,39 +152,27 @@
         });
     }
 
-    function cadastrarFormulario() {
-        var qtdCorredorVar = input_qtdCorredor.value;
-        var dtImplementacaoVar = input_dtImplementacao.value;
-        var logradouroVar = input_logradouro.value
-        var numeroVar = input_numero.value
-        var complementoVar = input_complemento.value
-        var cepVar = input_cep.value
-        var bairroVar = input_bairro.value
-        var cidadeVar = input_cidade.value
-        var estadoVar = input_estado.value
+    function cadastrarFuncionario() {
+        var nome = nome_input.value;
+        var email = email_input.value;
+        var senha = senha_input.value;
 
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
         var idEmpresa = 1;
 
-        if (qtdCorredorVar == '' || dtImplementacaoVar == '') {
+        if (nome == '' || email == '' || senha == '') {
             return false;
         } else {
-            fetch(`/formularios/cadastrar/${idEmpresa}`, {
+            fetch(`/funcionario/cadastrar/${idEmpresa}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    qtdCorredorServer: qtdCorredorVar,
-                    dtImplementacaoServer: dtImplementacaoVar,
-                    logradouroServer: logradouroVar,
-                    numeroServer: numeroVar,
-                    complementoServer: complementoVar,
-                    cepServer: cepVar,
-                    bairroServer: bairroVar,
-                    cidadeServer: cidadeVar,
-                    estadoServer: estadoVar,
+                    nomeServer: nome,
+                    emailServer: email,
+                    senhaServer: senha,
                 }),
             })
                 .then(function (resposta) {
@@ -230,12 +181,13 @@
                     if (resposta.ok) {
                         console.log("Formulario realizado com sucesso! Redirecionando para tela atualizada...");
 
-                        listarFormulario();
+                        listar();
 
                         setTimeout(() => {
                             fecharModal();
-                            input_qtdCorredor.value = '';
-                            input_dtImplementacao.value = '';
+                            nome_input.value = '';
+                            email_input.value = '';
+                            senha_input.value = '';
                         }, "2000");
 
                         // limparFormulario();
@@ -259,7 +211,8 @@
 
     function fecharModal() {
         div_modal.style.display = 'none';
-        input_qtdCorredor.value = '';
-        input_dtImplementacao.value = '';
+        nome_input.value = '';
+        email_input.value = '';
+        senha_input.value = '';
     }
 </script>
