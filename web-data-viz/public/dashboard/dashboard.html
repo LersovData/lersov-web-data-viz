@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload='obterDadosGrafico(), listarMetrica()'>
+<body onload='obterDadosGraficoSetor(), obterDadosGraficoCorredor(),listarMetrica()'>
   <div class="sidebar">
     <div class="menu">
       
@@ -138,7 +138,7 @@
 
     <script>
 
-
+      
       var heatmapInstance = h337.create({
         container: document.getElementById('heatmapContainer'),
         radius: 50,
@@ -186,16 +186,14 @@
 
       let proximaAtualizacao;
 
-      function obterDadosGrafico() {
+      function obterDadosGraficoSetor() {
         var id1 = 1;
-        var id2 = 2;
-        var id3 = 3;
 
         if (proximaAtualizacao != undefined) {
           clearTimeout(proximaAtualizacao);
         }
 
-        fetch(`/dados/listarDados`, { cache: 'no-store' }).then(function (responseSensor) {
+        fetch(`/dados/listarDadosSetor`, { cache: 'no-store' }).then(function (responseSensor) {
           if (responseSensor.ok) {
             responseSensor.json().then(function (respostaSensor) {
               console.log(`Dados recebidos: ${JSON.stringify(respostaSensor)}`);
@@ -211,9 +209,17 @@
           .catch(function (error) {
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
+        
+      }
 
+      function obterDadosGraficoCorredor() {
+        var id2 = 2;
 
-        fetch(`/dados/listarDados`, { cache: 'no-store' }).then(function (response) {
+        if (proximaAtualizacao != undefined) {
+          clearTimeout(proximaAtualizacao);
+        }
+
+        fetch(`/dados/listarDadosCorredor`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
             response.json().then(function (resposta) {
               console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
@@ -230,6 +236,8 @@
             console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
           });
       }
+
+      
 
       
 
@@ -328,7 +336,7 @@
         for (i = 0; i < resposta.length; i++) {
           var registro = resposta[i];
           labels.push(registro.dtHora);
-          dados.datasets[0].data.push(registro.fluxoDePessoas);
+          dados.datasets[0].data.push(registro.totalFluxo);
         }
 
         console.log('----------------------------------------------')
@@ -361,62 +369,9 @@
 
         fetch(`/dados/tempo-real-setor`, { cache: 'no-store' }).then(function (response) {
           if (response.ok) {
-            response.json().then(function (novoRegistroSetor) {
-
-              obterDadosGrafico(id1);
-              // alertar(novoRegistro, idAquario);
-              console.log(`Dados recebidos: ${JSON.stringify(novoRegistroSetor)}`);
-              console.log(`Dados atuais do gráfico:`);
-              console.log(dados);
-
-              // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
-              // avisoCaptura.innerHTML = ""
-
-
-              if (novoRegistroSetor[0].dtHora == dados.labels[dados.labels.length - 1]) {
-                console.log("---------------------------------------------------------------")
-                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                console.log("Horário do novo dado capturado:")
-                console.log(novoRegistroSetor[0].dtHora)
-                console.log("Horário do último dado capturado:")
-                console.log(dados.labels[dados.labels.length - 1])
-                console.log("---------------------------------------------------------------")
-              } else {
-                // tirando e colocando valores no gráfico
-                dados.labels.shift(); // apagar o primeiro
-                dados.labels.push(novoRegistroSetor[0].dtHora); // incluir um novo momento
-
-                dados.datasets[0].data.shift();
-                dados.datasets[0].data.push(novoRegistroSetor[0].totalFluxo);
-
-
-
-                myChart.update();
-              }
-
-              // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-              proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-            });
-          } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-          }
-        })
-          .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-          });
-      }
-
-
-      function atualizarGraficoCorredor(id2, dados, myChart) {
-
-        fetch(`/dados/tempo-real`, { cache: 'no-store' }).then(function (response) {
-          if (response.ok) {
             response.json().then(function (novoRegistro) {
 
-              obterDadosGrafico(id2);
+              obterDadosGraficoSetor(id1);
               // alertar(novoRegistro, idAquario);
               console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
               console.log(`Dados atuais do gráfico:`);
@@ -441,7 +396,62 @@
                 dados.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
 
                 dados.datasets[0].data.shift();
-                dados.datasets[0].data.push(novoRegistro[0].fluxoDePessoas);
+                dados.datasets[0].data.push(novoRegistro[0].totalFluxo);
+
+
+
+                myChart.update();
+              }
+
+              // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+              proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
+            });
+          } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
+            proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
+          }
+        })
+          .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+          });
+      }
+
+
+      function atualizarGraficoCorredor(id2, dados, myChart) {
+
+        console.log('invocando grafico corredor')
+
+        fetch(`/dados/tempo-real-corredor`, { cache: 'no-store' }).then(function (response) {
+          if (response.ok) {
+            response.json().then(function (novoRegistro) {
+
+              obterDadosGraficoCorredor(id2);
+              // alertar(novoRegistro, idAquario);
+              console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+              console.log(`Dados atuais do gráfico:`);
+              console.log(dados);
+
+              // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
+              // avisoCaptura.innerHTML = ""
+
+
+              if (novoRegistro[0].dtHora == dados.labels[dados.labels.length - 1]) {
+                console.log("---------------------------------------------------------------")
+                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
+                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
+                console.log("Horário do novo dado capturado:")
+                console.log(novoRegistro[0].dtHora)
+                console.log("Horário do último dado capturado:")
+                console.log(dados.labels[dados.labels.length - 1])
+                console.log("---------------------------------------------------------------")
+              } else {
+                // tirando e colocando valores no gráfico
+                dados.labels.shift(); // apagar o primeiro
+                dados.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
+
+                dados.datasets[0].data.shift();
+                dados.datasets[0].data.push(novoRegistro[0].totalFluxo);
 
 
 
