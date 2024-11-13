@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload='obterDadosGraficoSetor(), obterDadosGraficoCorredor(),listarMetrica()'>
+<body onload='obterDadosGrafico(),listarMetrica()'>
   <div class="sidebar">
     <div class="menu">
       
@@ -183,37 +183,10 @@
       heatmapInstance.setData(data);
 
 
-
       let proximaAtualizacao;
 
-      function obterDadosGraficoSetor() {
-        var id1 = 1;
-
-        if (proximaAtualizacao != undefined) {
-          clearTimeout(proximaAtualizacao);
-        }
-
-        fetch(`/dados/listarDadosSetor`, { cache: 'no-store' }).then(function (responseSensor) {
-          if (responseSensor.ok) {
-            responseSensor.json().then(function (respostaSensor) {
-              console.log(`Dados recebidos: ${JSON.stringify(respostaSensor)}`);
-              respostaSensor.reverse();
-
-              plotarGrafico1(respostaSensor, id1);
-
-            });
-          } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-          }
-        })
-          .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-          });
-        
-      }
-
-      function obterDadosGraficoCorredor() {
-        var id2 = 2;
+      function obterDadosGrafico() {
+        var idEmpresa = 1;
 
         if (proximaAtualizacao != undefined) {
           clearTimeout(proximaAtualizacao);
@@ -225,7 +198,7 @@
               console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
               resposta.reverse();
 
-              plotarGrafico2(resposta, id2);
+              plotarGrafico(resposta, idEmpresa);
 
             });
           } else {
@@ -237,85 +210,16 @@
           });
       }
 
-      
-
-      
-
-
-      function plotarGrafico1(respostaSensor, id1) {
-
-        console.log('Iniciando plotagem do gráfico...');
-
-        // Criando estrutura para plotar gráfico - labels
-        let labels = [];
-
-        // Criando estrutura para plotar gráfico - dados
-        let dados = {
-          labels: labels,
-          datasets: [
-            {
-              label: 'Congelados',
-              data: [],
-              borderWidth: 1,
-              backgroundColor: 'rgb(13,26,155)',
-              borderColor: 'rgb(18,26,81)',
-              tension: 0.1
-            }
-          ]
-        };
-
-        console.log('----------------------------------------------');
-        console.log('Estes dados foram recebidos pela função "obterDadosGrafico" e passados para "plotarGrafico":');
-        console.log(respostaSensor);
-
-        // Inserindo valores recebidos em estrutura para plotar o gráfico
-        for (let i = 0; i < respostaSensor.length; i++) {
-          const registro = respostaSensor[i];
-
-          // Adicionando a hora ao gráfico
-          labels.push(registro.dtHora);
-
-          // Atualizando as barras com os valores dos setores
-          if (registro.setor === 'Congelados') {
-            dados.datasets[0].data.push(registro.totalFluxo);
-          } else if (registro.setor === 'Massas') {
-            dados.datasets[1].data.push(registro.totalFluxo);
-          } else if (registro.setor === 'Adega') {
-            dados.datasets[2].data.push(registro.totalFluxo);
-          }
-        }
-
-        console.log('----------------------------------------------');
-        console.log('O gráfico será plotado com os respectivos valores:');
-        console.log('Labels:');
-        console.log(labels);
-        console.log('Dados:');
-        console.log(dados.datasets);
-        console.log('----------------------------------------------');
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-          type: 'line',
-          data: dados,
-        };
-
-        // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(document.getElementById(`lineChartSetor`), config);
-
-        // Atualizando o gráfico a cada 2 segundos
-        setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-      }
-
-
-      function plotarGrafico2(resposta, id2) {
+      function plotarGrafico(resposta, idEmpresa) {
 
         console.log('iniciando plotagem do gráfico...');
 
         // Criando estrutura para plotar gráfico - labels
         let labels = [];
+        let labelsSetor = [];
 
         // Criando estrutura para plotar gráfico - dados
-        let dados = {
+        let dadosCorredor = {
           labels: labels,
           datasets: [{
             label: 'Número de pessoas',
@@ -325,7 +229,18 @@
             borderColor: 'rgb(18,26,81)',
             tension: 0.1
           }]
+        };
 
+        let dadosSetor = {
+          labels: labelsSetor,
+          datasets: [{
+            label: 'Número de pessoas',
+            data: [],
+            fill: false,
+            backgroundColor: 'rgb(18,26,81)',
+            borderColor: 'rgb(18,26,81)',
+            tension: 0.1
+          }]
         };
 
         console.log('----------------------------------------------')
@@ -336,7 +251,10 @@
         for (i = 0; i < resposta.length; i++) {
           var registro = resposta[i];
           labels.push(registro.dtHora);
-          dados.datasets[0].data.push(registro.totalFluxo);
+          dadosCorredor.datasets[0].data.push(registro.totalFluxo);
+
+          labelsSetor.push(registro.dtHora);
+          dadosSetor.datasets[0].data.push(registro.totalFluxo);
         }
 
         console.log('----------------------------------------------')
@@ -344,13 +262,18 @@
         console.log('Labels:')
         console.log(labels)
         console.log('Dados:')
-        console.log(dados.datasets)
+        console.log(dadosCorredor.datasets)
         console.log('----------------------------------------------')
 
         // Criando estrutura para plotar gráfico - config
         const config = {
           type: 'line',
-          data: dados,
+          data: dadosCorredor,
+        };
+
+        const configSetor = {
+          type: 'line',
+          data: dadosSetor,
         };
 
         // Adicionando gráfico criado em div na tela
@@ -359,66 +282,17 @@
           config
         );
 
-        setTimeout(() => atualizarGraficoCorredor(id2, dados, myChart), 2000);
+        let myChartSetor = new Chart(
+          document.getElementById(`lineChartSetor`),
+          configSetor
+        );
+
+        setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor), 2000);
 
 
       }
 
-
-      function atualizarGraficoSetor(id1, dados, myChart) {
-
-        fetch(`/dados/tempo-real-setor`, { cache: 'no-store' }).then(function (response) {
-          if (response.ok) {
-            response.json().then(function (novoRegistro) {
-
-              obterDadosGraficoSetor(id1);
-              // alertar(novoRegistro, idAquario);
-              console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-              console.log(`Dados atuais do gráfico:`);
-              console.log(dados);
-
-              // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
-              // avisoCaptura.innerHTML = ""
-
-
-              if (novoRegistro[0].dtHora == dados.labels[dados.labels.length - 1]) {
-                console.log("---------------------------------------------------------------")
-                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                console.log("Horário do novo dado capturado:")
-                console.log(novoRegistro[0].dtHora)
-                console.log("Horário do último dado capturado:")
-                console.log(dados.labels[dados.labels.length - 1])
-                console.log("---------------------------------------------------------------")
-              } else {
-                // tirando e colocando valores no gráfico
-                dados.labels.shift(); // apagar o primeiro
-                dados.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
-
-                dados.datasets[0].data.shift();
-                dados.datasets[0].data.push(novoRegistro[0].totalFluxo);
-
-
-
-                myChart.update();
-              }
-
-              // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-              proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-            });
-          } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoSetor(id1, dados, myChart), 2000);
-          }
-        })
-          .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-          });
-      }
-
-
-      function atualizarGraficoCorredor(id2, dados, myChart) {
+      function atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor) {
 
         console.log('invocando grafico corredor')
 
@@ -426,45 +300,50 @@
           if (response.ok) {
             response.json().then(function (novoRegistro) {
 
-              obterDadosGraficoCorredor(id2);
+              obterDadosGrafico(idEmpresa);
               // alertar(novoRegistro, idAquario);
               console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
               console.log(`Dados atuais do gráfico:`);
-              console.log(dados);
+              console.log(dadosCorredor);
 
               // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
               // avisoCaptura.innerHTML = ""
 
 
-              if (novoRegistro[0].dtHora == dados.labels[dados.labels.length - 1]) {
+              if (novoRegistro[0].dtHora == dadosCorredor.labels[dadosCorredor.labels.length - 1]) {
                 console.log("---------------------------------------------------------------")
                 console.log("Como não há dados novos para captura, o gráfico não atualizará.")
                 // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
                 console.log("Horário do novo dado capturado:")
                 console.log(novoRegistro[0].dtHora)
                 console.log("Horário do último dado capturado:")
-                console.log(dados.labels[dados.labels.length - 1])
+                console.log(dadosCorredor.labels[dadosCorredor.labels.length - 1])
                 console.log("---------------------------------------------------------------")
               } else {
                 // tirando e colocando valores no gráfico
-                dados.labels.shift(); // apagar o primeiro
-                dados.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
+                dadosCorredor.labels.shift(); // apagar o primeiro
+                dadosCorredor.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
 
-                dados.datasets[0].data.shift();
-                dados.datasets[0].data.push(novoRegistro[0].totalFluxo);
+                dadosCorredor.datasets[0].data.shift();
+                dadosCorredor.datasets[0].data.push(novoRegistro[0].totalFluxo);
 
+                dadosSetor.labels.shift(); // apagar o primeiro
+                dadosSetor.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
 
+                dadosSetor.datasets[0].data.shift();
+                dadosSetor.datasets[0].data.push(novoRegistro[0].totalFluxo);
 
                 myChart.update();
+                myChartSetor.update();
               }
 
               // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-              proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(id2, dados, myChart), 2000);
+              proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor), 2000);
             });
           } else {
             console.error('Nenhum dado encontrado ou erro na API');
             // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(id2, dados, myChart), 2000);
+            proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor), 2000);
           }
         })
           .catch(function (error) {
