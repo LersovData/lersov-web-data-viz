@@ -42,7 +42,7 @@ CREATE TABLE formulario(
 );
 
 CREATE TABLE funcionarios(
-	idFuncionario int,
+	idFuncionario int auto_increment,
     fkEmpresa int,
     primary key(idFuncionario, fkEmpresa),
     constraint fkfuncionariosEmpresa

@@ -140,12 +140,10 @@
     <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
 
     <script>
-
-
       var heatmapInstance = h337.create({
         container: document.getElementById('heatmapContainer'),
-        radius: 50,
-        maxOpacity: 0.6,
+        radius: 70,
+        maxOpacity: 0.5,
         blur: 1,
       });
 
@@ -209,40 +207,42 @@
           }]
         };
 
+        // dados (x, y, valor de intensidade)
+        const dataHeatmap = {
+          min: 0,
+          max: 2,
+          data: []
+        };
+
         console.log('----------------------------------------------')
         console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
         console.log(resposta)
 
-        var valorCalor = 0;
-
-        
         // Inserindo valores recebidos em estrutura para plotar o gráfico
         for (i = 0; i < resposta.length; i++) {
           var registro = resposta[i];
           labels.push(registro.dtHora);
           dadosCorredor.datasets[0].data.push(registro.totalFluxo);
-          
+
           labelsSetor.push(registro.dtHora);
           dadosSetor.datasets[0].data.push(registro.totalFluxo);
-          
-          valorCalor += registro.totalFluxo;
-        }
 
-        // dados (x, y, valor de intensidade)
-        const dataHeatmap = {
-          max: 1,
-          data: [
-            {
-              x: 125,
-              y: parseInt(Math.random() * 400),
-              value: valorCalor
-            }
-          ]
-        };
+          // Informações para o mapa de calor, passando os eixos x,y e o value que possui o dado do banco
+          var x = 125;
+          var y = 100 + (i % 5) * 50;
+          var value = registro.totalFluxo;
+
+          // Aqui ele manda para o data do mapa de calor com as informações acima
+          dataHeatmap.data.push({ x, y, value });
+
+          // Se o valor que vem do banco for MAIOR que o max, ele atualiza pro maxímo ser o valor mais alto
+          if (value > dataHeatmap.max) {
+            dataHeatmap.max = value;
+          }
+        }
 
         // adicionando os dados ao heatmap
         heatmapInstance.setData(dataHeatmap);
-
 
         console.log('----------------------------------------------')
         console.log('O gráfico será plotado com os respectivos valores:')
