@@ -17,13 +17,13 @@
 <body onload='obterDadosGrafico(),listarMetrica()'>
   <div class="sidebar">
     <div class="menu">
-      
+
       <a href="dashboard.html">
         <span class="material-icons">home</span>
       </a>
       <a href="cadastroFuncionario.html">
         <span class="material-icons">person_add</span>
-    </a>
+      </a>
       <a href="#">
         <span class="material-icons">dashboard</span>
       </a>
@@ -141,50 +141,13 @@
 
     <script>
 
-      
+
       var heatmapInstance = h337.create({
         container: document.getElementById('heatmapContainer'),
         radius: 50,
         maxOpacity: 0.6,
         blur: 1,
       });
-
-      // dados (x, y, valor de intensidade)
-      const data = {
-        max: 100,
-        data: [
-          // Corredor 1 (x = 100)
-          { x: 125, y: 50, value: 70 },
-          { x: 125, y: 100, value: 70 },
-          { x: 125, y: 150, value: 70 },
-          { x: 125, y: 200, value: 70 },
-          { x: 125, y: 250, value: 70 },
-          { x: 125, y: 300, value: 70 },
-          { x: 125, y: 350, value: 70 },
-
-          // Corredor 2 (x = 300)
-          { x: 300, y: 50, value: 100 },
-          { x: 300, y: 100, value: 100 },
-          { x: 300, y: 150, value: 100 },
-          { x: 300, y: 200, value: 100 },
-          { x: 300, y: 250, value: 100 },
-          { x: 300, y: 300, value: 100 },
-          { x: 300, y: 350, value: 100 },
-
-          // Corredor 3 (x = 500)
-          { x: 475, y: 50, value: 50 },
-          { x: 475, y: 100, value: 50 },
-          { x: 475, y: 150, value: 50 },
-          { x: 475, y: 200, value: 50 },
-          { x: 475, y: 250, value: 50 },
-          { x: 475, y: 300, value: 50 },
-          { x: 475, y: 350, value: 50 }
-        ]
-      };
-
-      // adicionando os dados ao heatmap
-      heatmapInstance.setData(data);
-
 
       let proximaAtualizacao;
 
@@ -250,15 +213,36 @@
         console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
         console.log(resposta)
 
+        var valorCalor = 0;
+
+        
         // Inserindo valores recebidos em estrutura para plotar o gráfico
         for (i = 0; i < resposta.length; i++) {
           var registro = resposta[i];
           labels.push(registro.dtHora);
           dadosCorredor.datasets[0].data.push(registro.totalFluxo);
-
+          
           labelsSetor.push(registro.dtHora);
           dadosSetor.datasets[0].data.push(registro.totalFluxo);
+          
+          valorCalor += registro.totalFluxo;
         }
+
+        // dados (x, y, valor de intensidade)
+        const dataHeatmap = {
+          max: 1,
+          data: [
+            {
+              x: 125,
+              y: parseInt(Math.random() * 400),
+              value: valorCalor
+            }
+          ]
+        };
+
+        // adicionando os dados ao heatmap
+        heatmapInstance.setData(dataHeatmap);
+
 
         console.log('----------------------------------------------')
         console.log('O gráfico será plotado com os respectivos valores:')
