@@ -1,45 +1,76 @@
 var database = require("../database/config");
 
-function listarDados() {
+function listarDadosSetor() {
     var instrucao = `
-        SELECT D.idDados, D. fluxoDePessoas, D.dtHora 
-         FROM dadosSensor as D JOIN sensor as S ON D.fkSensor = S.idSensor ORDER BY idDados DESC LIMIT 7;
+        SELECT D.idDados, C.setor, D.fluxoDePessoas AS totalFluxo, TIME(dtHora) as dtHora
+        FROM dadosSensor AS D
+        JOIN sensor AS S ON D.fkSensor = S.idSensor
+        JOIN corredor AS C ON S.fkCorredor = C.idCorredor
+        GROUP BY D.idDados, C.setor, dtHora, fluxoDePessoas ORDER BY idDados DESC LIMIT 7;
+
 
     `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
 
+function listarDadosCorredor(){
+    var instrucao = `
+        SELECT D.idDados, C.setor, D.fluxoDePessoas AS totalFluxo, TIME(dtHora) as dtHora
+        FROM dadosSensor AS D
+        JOIN sensor AS S ON D.fkSensor = S.idSensor
+        JOIN corredor AS C ON S.fkCorredor = C.idCorredor
+        GROUP BY D.idDados, C.setor, dtHora, fluxoDePessoas ORDER BY idDados DESC LIMIT 7;
 
 
-function atualizarDados() {
-    
-    var instrucaoSql = `SELECT 
-    fluxoDePessoas,
-                    dtHora,
-                    DATE_FORMAT(dtHora, '%H:%i:%s')
-                FROM dadosSensor
-                ORDER BY idDados DESC LIMIT 1`;
-
-console.log("Executando a instrução SQL: \n" + instrucaoSql);
-return database.executar(instrucaoSql);
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
 }
-
 
 function atualizarDadosSetor() {
 
     var instrucaoSqlSetor = `
-        SELECT C.setor, SUM(D.fluxoDePessoas) as totalFluxo
+         SELECT D.idDados, C.setor, D.fluxoDePessoas AS totalFluxo, TIME(dtHora) as dtHora
         FROM dadosSensor AS D
         JOIN sensor AS S ON D.fkSensor = S.idSensor
         JOIN corredor AS C ON S.fkCorredor = C.idCorredor
-        GROUP BY C.setor;`;
+        GROUP BY D.idDados, C.setor, dtHora, fluxoDePessoas ORDER BY idDados DESC LIMIT 7;`;
 
-    console.log("Executando a instrução SQL: \n" + instrucaoSqlSetor);
+    console.log("SETOOOOOORExecutando a instrução SQL: \n" + instrucaoSqlSetor);
     return database.executarSetor(instrucaoSqlSetor);
 }
+
+
+function atualizarDadosCorredor() {
+    
+    var instrucaoSql = `SELECT D.idDados, D.fluxoDePessoas as totalFluxo, TIME(dtHora) as dtHora
+        FROM dadosSensor as D JOIN sensor as S 
+        ON D.fkSensor = S.idSensor ORDER BY idDados DESC LIMIT 7;`
+
+console.log("CORREDORRRRRxecutando a instrução SQL: \n" + instrucaoSql);
+return database.executar(instrucaoSql);
+}
+
+
+
+
+function atualizarDadosCalor() {
+
+    var instrucaoSqlCalor = `
+         SELECT D.idDados, C.setor, D.fluxoDePessoas AS totalFluxo, TIME(dtHora) as dtHora
+        FROM dadosSensor AS D
+        JOIN sensor AS S ON D.fkSensor = S.idSensor
+        JOIN corredor AS C ON S.fkCorredor = C.idCorredor
+        GROUP BY D.idDados, C.setor, dtHora, fluxoDePessoas ORDER BY idDados LIMIT 7;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSqlCalor);
+    return database.executarSetor(instrucaoSqlCalor);
+}
 module.exports = {
-    listarDados,
-    atualizarDados,
-    atualizarDadosSetor
+    listarDadosSetor,
+    listarDadosCorredor,
+    atualizarDadosCorredor,
+    atualizarDadosSetor,
+    atualizarDadosCalor
 };

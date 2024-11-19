@@ -17,7 +17,7 @@
         rel="stylesheet">
 </head>
 
-<body onload="listarFormulario()">
+<body onload="listarCorredor()">
     <div class="areaTela">
         <div class="sidebar1">
             <div class="menu">
@@ -27,25 +27,24 @@
                   <a href="cadastroFuncionario.html">
                     <span class="material-icons">person_add</span>
                 </a>
-                
-                <a href="metricas.html">
+                  
+                  <a href="metricas.html">
                     <span class="material-icons">leaderboard</span>
                   </a>
                   <a href="formulario.html">
                     <span class="material-icons">description</span>
-                </a>
-                <a href="corredor.html">
+                  </a>
+                  <a href="corredor.html">
                     <span class="material-icons">search</span>
                   </a>
-                
+                  
             </div>
         </div>
 
         <section class="content1">
             <div class="areaCabecalho">
                 <div class="tabelaCabecalho">
-                    <h1>Formulários</h1>
-                    <button onclick="abrirModal()">Novo formulário</button>
+                    <h1>Corredores</h1>
                 </div>
             </div>
 
@@ -54,9 +53,9 @@
                     <thead>
                         <tr>
                             <th class="esq">ID</th>
-                            <th>Corredores</th>
-                            <th>Logradouro</th>
-                            <th class="dir">Data</th>
+                            <th>Setor</th>
+                            <th>Sensor</th>
+                            <th class="dir">Status</th>
                         </tr>
                     </thead>
 
@@ -141,12 +140,12 @@
 </html>
 
 <script>
-    function listarFormulario() {
+    function listarCorredor() {
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
         var idEmpresa = 1;
 
-        fetch(`/formularios/listar/${idEmpresa}`).then(function (resposta) {
+        fetch(`/corredores/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) { // se não tiver formulario dessa empresa entra aqui
                     div_modal.style.display = 'flex';
@@ -159,14 +158,14 @@
 
                         for (let i = 0; i < resposta.length; i++) {
                             var formularios = resposta[i];
-                            console.log(formularios.dtImplementacao);
+                            // console.log(formularios.dtImplementacao);
 
                             mensagem += `
                                 <tr>
-                                    <td>${formularios.idFormulario}</td>
-                                    <td>${formularios.qtdCorredoresComSensor}</td>
-                                    <td>${formularios.logradouro}</td>
-                                    <td>${formularios.dtImplementacaoFormatada}</td>
+                                    <td>${formularios.idCorredor}</td>
+                                    <td>${formularios.setor}</td>
+                                    <td>${formularios.idSensor}</td>
+                                    <td>${formularios.estadoSensor}</td>
                                 </tr>
                             `;
                         }
@@ -185,70 +184,6 @@
             console.error(resposta);
             finalizarAguardar();
         });
-    }
-
-    function cadastrarFormulario() {
-        var qtdCorredorVar = input_qtdCorredor.value;
-        var dtImplementacaoVar = input_dtImplementacao.value;
-        var logradouroVar = input_logradouro.value
-        var numeroVar = input_numero.value
-        var complementoVar = input_complemento.value
-        var cepVar = input_cep.value
-        var bairroVar = input_bairro.value
-        var cidadeVar = input_cidade.value
-        var estadoVar = input_estado.value
-
-        // trocar para valor pelo sessionStorage quando login estiver feito
-        // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
-
-        if (qtdCorredorVar == '' || dtImplementacaoVar == '') {
-            return false;
-        } else {
-            fetch(`/formularios/cadastrar/${idEmpresa}`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    qtdCorredorServer: qtdCorredorVar,
-                    dtImplementacaoServer: dtImplementacaoVar,
-                    logradouroServer: logradouroVar,
-                    numeroServer: numeroVar,
-                    complementoServer: complementoVar,
-                    cepServer: cepVar,
-                    bairroServer: bairroVar,
-                    cidadeServer: cidadeVar,
-                    estadoServer: estadoVar,
-                }),
-            })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
-
-                    if (resposta.ok) {
-                        console.log("Formulario realizado com sucesso! Redirecionando para tela atualizada...");
-
-                        listarFormulario();
-
-                        setTimeout(() => {
-                            fecharModal();
-                            input_qtdCorredor.value = '';
-                            input_dtImplementacao.value = '';
-                        }, "2000");
-
-                        // limparFormulario();
-                        // finalizarAguardar();
-                    } else {
-                        throw "Houve um erro ao tentar realizar o salvamento do formulario!";
-                    }
-                })
-                .catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                    // finalizarAguardar();
-                });
-
-            return false;
-        }
     }
 
     function abrirModal() {
