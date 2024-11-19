@@ -24,17 +24,11 @@
       <a href="cadastroFuncionario.html">
         <span class="material-icons">person_add</span>
     </a>
-      <a href="#">
-        <span class="material-icons">dashboard</span>
-      </a>
       <a href="metricas.html">
         <span class="material-icons">leaderboard</span>
       </a>
       <a href="formulario.html">
         <span class="material-icons">description</span>
-      </a>
-      <a href="#">
-        <span class="material-icons">settings_applications</span>
       </a>
     </div>
   </div>
@@ -135,7 +129,7 @@
 
     <script>
 
-
+     
 
       // Gráfico de Barras
       // const ctxBar = document.getElementById('barChart');
@@ -676,6 +670,24 @@
             finalizarAguardar();
         });
     }
+
+    function buscarPeloId() {
+    fetch(`/usuarios/${buscaInput.value}`, {
+      method: "GET"
+    })
+      .then(res => {
+        res.json().then(json => {
+          const usuario = json[0];
+          container.innerHTML = `<div>
+    <h1>${usuario.nome} - ${usuario.email}</h1>
+    <img src='assets/${usuario.imagem_perfil}' alt="imagem de usuario">
+  </div>`
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
 
     </script>
 </body>
