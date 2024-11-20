@@ -6,7 +6,6 @@ function listarDadosSetor(req, res){
     }).catch(function(erro){
         res.status(500).json(erro.sqlMessage);
     })
-
 }
 
 function listarDadosCorredor(req, res){
@@ -18,9 +17,7 @@ function listarDadosCorredor(req, res){
 }
 
 function atualizarDadosCorredor(req, res) {
-
-    
-    console.log(`Recuperando medidas em tempo real`);
+    console.log(`Recuperando medidas em tempo real do corredor`);
 
     dadosModel.atualizarDadosCorredor().then(function (resultado) {
         if (resultado.length > 0) {
@@ -36,9 +33,7 @@ function atualizarDadosCorredor(req, res) {
 }
 
 function atualizarDadosSetor(req, res) {
-
-
-    console.log(`Recuperando medidas em tempo real`);
+    console.log(`Recuperando medidas em tempo real do setor`);
 
     dadosModel.atualizarDadosSetor().then(function (resultadoSetor) {
         if (resultadoSetor.length > 0) {
@@ -54,8 +49,6 @@ function atualizarDadosSetor(req, res) {
 }
 
 function atualizarDadosCalor(req, res) {
-
-
     console.log(`Recuperando medidas em tempo real`);
 
     dadosModel.atualizarDadosCalor().then(function (resultadoCalor) {

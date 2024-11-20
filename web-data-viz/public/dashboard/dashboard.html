@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload='obterDadosGrafico(),listarMetrica()'>
+<body onload='listarMetrica(), obterDadosGraficoSetor()'>
   <div class="sidebar">
     <div class="menu">
 
@@ -23,7 +23,7 @@
       </a>
       <a href="cadastroFuncionario.html">
         <span class="material-icons">person_add</span>
-    </a>
+      </a>
       <a href="metricas.html">
         <span class="material-icons">leaderboard</span>
       </a>
@@ -132,70 +132,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
+    <script src="../js/dadosSetor.js"></script>
 
     <script>
-
-     
-
-      // Gráfico de Barras
-      // const ctxBar = document.getElementById('barChart');
-      // new Chart(ctxBar, {
-      //   type: 'bar',
-      //   data: {
-      //     labels: ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
-      //     datasets: [{
-      //       label: 'Hortifruti',
-      //       data: [500, 250, 550, 600, 500, 300],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(13,26,64)'
-      //     },
-      //     {
-      //       label: 'Massas',
-      //       data: [400, 450, 430, 500, 550, 500],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(0,202,255)'
-      //     },
-      //     {
-      //       label: 'Adega',
-      //       data: [300, 350, 400, 500, 600, 450],
-      //       borderWidth: 1,
-      //       backgroundColor: 'rgb(63,157,236)'
-      //     },
-
-
-      //     ]
-      //   },
-      //   options: {
-      //     scales: {
-      //       y: {
-      //         beginAtZero: true
-      //       }
-      //     }
-      //   }
-      // });
-
-      // Gráfico de Linhas
-      // const labelsLine = ['16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
-      // const dataLine = {
-      //   labels: labelsLine,
-      //   datasets: [{
-      //     label: 'Número de pessoas',
-      //     data: [400, 550, 658, 600, 300, 240],
-      //     fill: false,
-      //     backgroundColor: 'rgb(18,26,81)',
-      //     borderColor: 'rgb(18,26,81)',
-      //     tension: 0.1
-      //   }]
-      // };
-
-      // const configLine = {
-      //   type: 'line',
-      //   data: dataLine,
-      // };
-
-      // const ctxLine = document.getElementById('lineChart');
-      // new Chart(ctxLine, configLine);
-
       var heatmapInstance = h337.create({
         container: document.getElementById('heatmapContainer'),
         radius: 70,
@@ -236,23 +175,10 @@
 
         // Criando estrutura para plotar gráfico - labels
         let labels = [];
-        let labelsSetor = [];
 
         // Criando estrutura para plotar gráfico - dados
         let dadosCorredor = {
           labels: labels,
-          datasets: [{
-            label: 'Número de pessoas',
-            data: [],
-            fill: false,
-            backgroundColor: 'rgb(18,26,81)',
-            borderColor: 'rgb(18,26,81)',
-            tension: 0.1
-          }]
-        };
-
-        let dadosSetor = {
-          labels: labelsSetor,
           datasets: [{
             label: 'Número de pessoas',
             data: [],
@@ -279,9 +205,6 @@
           var registro = resposta[i];
           labels.push(registro.dtHora);
           dadosCorredor.datasets[0].data.push(registro.totalFluxo);
-
-          labelsSetor.push(registro.dtHora);
-          dadosSetor.datasets[0].data.push(registro.totalFluxo);
 
           // Informações para o mapa de calor, passando os eixos x,y e o value que possui o dado do banco
           var x = 125;
@@ -314,29 +237,19 @@
           data: dadosCorredor,
         };
 
-        const configSetor = {
-          type: 'bar',
-          data: dadosSetor,
-        };
-
         // Adicionando gráfico criado em div na tela
         let myChart = new Chart(
           document.getElementById(`lineChartCorredor`),
           config
         );
 
-        let myChartSetor = new Chart(
-          document.getElementById(`lineChartSetor`),
-          configSetor
-        );
 
-        setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor), 2000);
+        setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart), 2000);
 
 
       }
 
-      function atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor) {
-
+      function atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart) {
         console.log('invocando grafico corredor')
 
         fetch(`/dados/tempo-real-corredor`, { cache: 'no-store' }).then(function (response) {
@@ -345,7 +258,7 @@
 
               obterDadosGrafico(idEmpresa);
               // alertar(novoRegistro, idAquario);
-              console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+              // console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
               console.log(`Dados atuais do gráfico:`);
               console.log(dadosCorredor);
 
@@ -354,15 +267,9 @@
 
 
               if (novoRegistro[0].dtHora == dadosCorredor.labels[dadosCorredor.labels.length - 1]) {
-                console.log("---------------------------------------------------------------")
-                console.log("Como não há dados novos para captura, o gráfico não atualizará.")
-                // avisoCaptura.innerHTML = "<i class='fa-solid fa-triangle-exclamation'></i> Foi trazido o dado mais atual capturado pelo sensor. <br> Como não há dados novos a exibir, o gráfico não atualizará."
-                console.log("Horário do novo dado capturado:")
-                console.log(novoRegistro[0].dtHora)
-                console.log("Horário do último dado capturado:")
-                console.log(dadosCorredor.labels[dadosCorredor.labels.length - 1])
-                console.log("---------------------------------------------------------------")
+                console.log('NAO ATUALIZAAAAAAAAAA')
               } else {
+                console.log('VAI ATUALIZAAAAAAAAAA')
                 // tirando e colocando valores no gráfico
                 dadosCorredor.labels.shift(); // apagar o primeiro
                 dadosCorredor.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
@@ -370,23 +277,16 @@
                 dadosCorredor.datasets[0].data.shift();
                 dadosCorredor.datasets[0].data.push(novoRegistro[0].totalFluxo);
 
-                dadosSetor.labels.shift(); // apagar o primeiro
-                dadosSetor.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
-
-                dadosSetor.datasets[0].data.shift();
-                dadosSetor.datasets[0].data.push(novoRegistro[0].totalFluxo);
-
                 myChart.update();
-                myChartSetor.update();
               }
 
               // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-              proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor), 2000);
+              proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart), 2000);
             });
           } else {
             console.error('Nenhum dado encontrado ou erro na API');
             // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, dadosSetor, myChart, myChartSetor), 2000);
+            proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart), 2000);
           }
         })
           .catch(function (error) {
@@ -428,23 +328,23 @@
         });
       }
 
-    function buscarPeloId() {
-    fetch(`/usuarios/${buscaInput.value}`, {
-      method: "GET"
-    })
-      .then(res => {
-        res.json().then(json => {
-          const usuario = json[0];
-          container.innerHTML = `<div>
+      function buscarPeloId() {
+        fetch(`/usuarios/${buscaInput.value}`, {
+          method: "GET"
+        })
+          .then(res => {
+            res.json().then(json => {
+              const usuario = json[0];
+              container.innerHTML = `<div>
     <h1>${usuario.nome} - ${usuario.email}</h1>
     <img src='assets/${usuario.imagem_perfil}' alt="imagem de usuario">
   </div>`
-        })
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
+            })
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }
 
     </script>
 </body>
