@@ -2,161 +2,161 @@ CREATE DATABASE lersov;
 USE lersov;
 
 CREATE TABLE empresa(
-	id int primary key auto_increment,
-    nome varchar(45) not null,
-    cnpj char(18) not null,
-    email varchar(45) not null,
-    senha varchar(45) not null
+	idEmpresa INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45) NOT NULL,
+    cnpj CHAR(18) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    senha VARCHAR(45) NOT NULL
 ); 
 
-INSERT INTO empresa VALUES
-		(1,'Assaí', '06.057.223/0001-71', 'assai@empresa', '123456ASSAI'),
-        (2,'Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '090909CARREFOUR'),
-        (3,'Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '76767ATACADAO');
+INSERT INTO empresa (nome, cnpj, email, senha) VALUES
+		('Assaí', '06.057.223/0001-71', 'assai@empresa', '123456ASSAI'),
+        ('Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '090909CARREFOUR'),
+        ('Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '76767ATACADAO');
     
 CREATE TABLE metricas(
 	idMetrica INT AUTO_INCREMENT,
+    fkEmpresa INT,
     alto INT,
     medio INT,
     baixo INT,
-    fkEmpresa INT,
     PRIMARY KEY(idMetrica, fkEmpresa),
     CONSTRAINT fkMetricaEmpresa
-		FOREIGN KEY (fkEmpresa) REFERENCES empresa(id)
+		FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE formulario(
-	idFormulario int primary key auto_increment,
-    qtdCorredoresComSensor varchar(10) not null,
-    dtImplementacao date not null,
-    logradouro varchar(60),
-    numero int,
-    complemento varchar(45),
-    cep char(8),
-    bairro varchar(45),
-    cidade varchar(45),
-    estado varchar(45),
-    fkEmpresa int,
-    constraint fkFormularioEmpresa
-		foreign key (fkEmpresa) references empresa(id)
+	idFormulario INT PRIMARY KEY AUTO_INCREMENT,
+    qtdCorredoresComSensor VARCHAR(10) NOT NULL,
+    dtImplementacao DATE NOT NULL,
+    logradouro VARCHAR(60),
+    numero INT,
+    complemento VARCHAR(45),
+    cep CHAR(8),
+    bairro VARCHAR(45),
+    cidade VARCHAR(45),
+    estado VARCHAR(45),
+    fkEmpresa INT,
+    CONSTRAINT fkFormularioEmpresa
+		FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
 CREATE TABLE funcionarios(
-	idFuncionario int auto_increment,
-    fkEmpresa int,
-    primary key(idFuncionario, fkEmpresa),
-    constraint fkfuncionariosEmpresa
-		foreign key (fkEmpresa) references empresa(id),
-    nome varchar(45) not null,
-    email varchar(45) not null,
-    senha varchar(45) not null
+	idFuncionario INT AUTO_INCREMENT,
+    fkEmpresa INT,
+    PRIMARY KEY(idFuncionario, fkEmpresa),
+    CONSTRAINT fkFuncionariosEmpresa
+		FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
+    nome VARCHAR(45) NOT NULL,
+    email VARCHAR(45) NOT NULL,
+    senha VARCHAR(45) NOT NULL
 );
 
-INSERT INTO funcionarios VALUES
-	(1, 1, 'Rafael', 'rafa@assai.atacadista', 'senhaASSAI01'),
-    (2, 1, 'Pedro', 'pedro@assai.atacadista', 'senhaASSAI02'),
-    (3, 1, 'Junior', 'junior@assai.atacadista', 'senhaASSAI03'),
-    (4, 3, 'Marcelo', 'marcelo@atacadao.atacadista', 'senhaATACADAO01'),
-    (5, 3, 'Breno', 'breno@atacadao.atacadista', 'senhaATACADAO02');
+INSERT INTO funcionarios (fkEmpresa, nome, email, senha) VALUES
+	(1, 'Rafael', 'rafa@assai.atacadista', 'senhaASSAI01'),
+    (1, 'Pedro', 'pedro@assai.atacadista', 'senhaASSAI02'),
+    (2, 'Junior', 'junior@assai.atacadista', 'senhaASSAI03'),
+    (3, 'Marcelo', 'marcelo@atacadao.atacadista', 'senhaATACADAO01'),
+    (3, 'Breno', 'breno@atacadao.atacadista', 'senhaATACADAO02');
     
 CREATE TABLE contato(
-	idContato int primary key auto_increment,
-    nome varchar(45),
-    email varchar(45),
-    empresa varchar(450),
-    socioOuCeo varchar(10),
-    mensagem varchar(150)
+	idContato INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(45),
+    email VARCHAR(45),
+    empresa VARCHAR(450),
+    socioOuCeo VARCHAR(10),
+    mensagem VARCHAR(150)
 );
 
-INSERT INTO contato VALUES
-	(default, 'Leandro Agosto', 'leandro@assaiCEO', 'Assaí', 'Ceo','Estou interessado no produto de vocês e gostaria de mais informações! Grato.'),
-    (default, 'Fernando Julhos', 'Fernando@carrefourSOCIO', 'Carrefour Express', 'Sócio','Estou interessado no produto de vocês, quero mais informações por favor.'),
-    (default, 'João Setembros', 'joao@atacadaoCEO', 'Atacadão', 'Ceo','Gostaria de mais informações de como prosseguir para contratá-los, grato.');
+INSERT INTO contato (nome, email, empresa, socioOuCeo, mensagem) VALUES
+	('Leandro Agosto', 'leandro@assaiCEO', 'Assaí', 'Ceo', 'Estou interessado no produto de vocês e gostaria de mais informações! Grato.'),
+    ('Fernando Julhos', 'Fernando@carrefourSOCIO', 'Carrefour Express', 'Sócio','Estou interessado no produto de vocês, quero mais informações por favor.'),
+    ('João Setembros', 'joao@atacadaoCEO', 'Atacadão', 'Ceo', 'Gostaria de mais informações de como prosseguir para contratá-los, grato.');
       
 CREATE TABLE corredor(
-	idCorredor int primary key,
-    setor varchar(60),
+	idCorredor INT PRIMARY KEY AUTO_INCREMENT,
+    setor VARCHAR(60),
     fkEmpresa INT,
     CONSTRAINT fkCorredorEmpresa
-		foreign key (fkEmpresa) REFERENCES empresa(id)
+		FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa)
 );
 
-INSERT INTO corredor VALUES
-	(1,'Limpeza e Higiene', 1),
-    (3,'Adega', 1),
-    (4,'Massas', 1),
-    (7,'Doces', 1),
-    (6,'Utensílios', 1),
-    (5,'Congelados', 1),
-    (2,'Bebidas', 1);    
+INSERT INTO corredor (setor, fkEmpresa) VALUES
+	('Limpeza e Higiene', 1),
+    ('Adega', 1),
+    ('Massas', 1),
+    ('Doces', 1),
+    ('Utensílios', 1),
+    ('Congelados', 1),
+    ('Bebidas', 1);    
 
 CREATE TABLE sensor(
-	idSensor int primary key,
-    tipo varchar(45),
-    estadoSensor varchar(10),
-	constraint chkEstadoSensor
-		check (estadoSensor in('Ativado', 'Desativado')),
-    manutencaoEmDia char(3),
-	constraint chkManutencao
-		check (manutencaoEmDia in('Sim', 'Não')),
+	idSensor INT PRIMARY KEY AUTO_INCREMENT,
+    tipo VARCHAR(45),
+    estadoSensor VARCHAR(10),
+	CONSTRAINT chkEstadoSensor
+		CHECK (estadoSensor IN('Ativado', 'Desativado')),
+    manutencaoEmDia CHAR(3),
+	CONSTRAINT chkManutencao
+		CHECK (manutencaoEmDia IN('Sim', 'Não')),
     fkCorredor INT,
     CONSTRAINT fkSensorCorredor
 		FOREIGN KEY (fkCorredor) REFERENCES corredor(idCorredor)
 );
 
-INSERT INTO sensor VALUES
-	(1,'TCRT5000', 'Ativado', 'Sim', 1),
-    (2,'TCRT5000', 'Ativado', 'Sim', 1),
-    (3,'TCRT5000', 'Ativado', 'Sim', 2),
-    (4,'TCRT5000', 'Ativado', 'Não', 2),
-    (5,'TCRT5000', 'Ativado', 'Sim', 3),
-    (6,'TCRT5000', 'Ativado', 'Sim', 3),
-    (7,'TCRT5000', 'Desativado', 'Não', 4),
-    (8,'TCRT5000', 'Desativado', 'Sim', 4),
-    (9,'TCRT5000', 'Ativado', 'Sim', 5),
-    (10,'TCRT5000', 'Ativado', 'Sim', 5),
-    (11,'TCRT5000', 'Ativado', 'Sim', 6),
-    (12,'TCRT5000', 'Ativado', 'Sim', 6),
-    (13,'TCRT5000', 'Ativado', 'Não', 7),
-    (14,'TCRT5000', 'Ativado', 'Sim', 7);
+INSERT INTO sensor (tipo, estadoSensor, manutencaoEmDia, fkCorredor) VALUES
+	('TCRT5000', 'Ativado', 'Sim', 1),
+    ('TCRT5000', 'Ativado', 'Sim', 1),
+    ('TCRT5000', 'Ativado', 'Sim', 2),
+    ('TCRT5000', 'Ativado', 'Não', 2),
+    ('TCRT5000', 'Ativado', 'Sim', 3),
+    ('TCRT5000', 'Ativado', 'Sim', 3),
+    ('TCRT5000', 'Desativado', 'Não', 4),
+    ('TCRT5000', 'Desativado', 'Sim', 4),
+    ('TCRT5000', 'Ativado', 'Sim', 5),
+    ('TCRT5000', 'Ativado', 'Sim', 5),
+    ('TCRT5000', 'Ativado', 'Sim', 6),
+    ('TCRT5000', 'Ativado', 'Sim', 6),
+    ('TCRT5000', 'Ativado', 'Não', 7),
+    ('TCRT5000', 'Ativado', 'Sim', 7);
 
 CREATE TABLE alertas(
-	idAlerta int primary key,
-    fluxo varchar(45),
-    constraint chkFluxoTipo
-		check(fluxo in('Alto', 'Moderado', 'Baixo'))
+	idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    fluxo VARCHAR(45),
+    CONSTRAINT chkFluxoTipo
+		CHECK(fluxo IN('Alto', 'Moderado', 'Baixo'))
 );
 
-INSERT INTO alertas VALUES
-	(1, 'Alto'),
-    (2, 'Moderado'),
-    (3, 'Baixo');
+INSERT INTO alertas (fluxo) VALUES
+	('Alto'),
+    ('Moderado'),
+    ('Baixo');
     
 CREATE TABLE dadosSensor(
-	idDados int auto_increment,
-    fkSensor int,
-    primary key(idDados, fkSensor),
-    constraint fkDadosSensorSensor
-		foreign key (fkSensor) references sensor(idSensor),
+	idDados INT AUTO_INCREMENT,
+    fkSensor INT,
+    PRIMARY KEY(idDados, fkSensor),
+    CONSTRAINT fkDadosSensorSensor
+		FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor),
 	dtHora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    fluxoDePessoas varchar(45),
-    fkAlerta int,
-    constraint fkDadosSensorAlerta
-		foreign key (fkAlerta) references alertas(idAlerta)
+    fluxoDePessoas VARCHAR(45),
+    fkAlerta INT,
+    CONSTRAINT fkDadosSensorAlerta
+		FOREIGN KEY (fkAlerta) REFERENCES alertas(idAlerta)
 );
 
-INSERT INTO dadosSensor(fkSensor, fluxoDePessoas, fkAlerta) VALUES
-	(1,'1000', 1),
-    (1, '990', 1),
-    (2, '600', 2),
-    (2, '610', 2),
-    (3, '400', 3),
-    (3, '410', 3),
-    (4, '1200', 1),
-    (4, '1235', 1),
-    (5, '650', 2),
-    (5, '630', 2),
-    (6, '310', 3),
-    (6, '300', 3),
-    (7, '2000', 1),
-    (7, '1990', 1);
+INSERT INTO dadosSensor(fkSensor, fluxoDePessoas, fkAlerta, dtHora) VALUES
+	(1, '1', 1, '2024-11-04 08:00:00'),
+    (1, '1', 1, '2024-11-04 08:30:00'),
+    (1, '1', 1, '2024-11-04 09:00:00'),
+    (1, '1', 1, '2024-11-04 09:20:00'),
+    (1, '1', 1, '2024-11-04 09:40:00'),
+    (1, '1', 1, '2024-11-04 10:00:00'),
+    (1, '1', 1, '2024-11-04 10:15:00'),
+    (1, '1', 1, '2024-11-04 10:30:00'),
+    (1, '1', 1, '2024-11-04 10:45:00'),
+    (1, '1', 1, '2024-11-04 11:00:00'),
+    (1, '1', 1, '2024-11-04 11:10:00'),
+    (1, '1', 1, '2024-11-04 11:20:00'),
+    (1, '1', 1, '2024-11-04 11:30:00'),
+    (1, '1', 1, '2024-11-04 11:40:00');

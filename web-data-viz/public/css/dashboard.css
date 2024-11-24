@@ -7,6 +7,29 @@ body {
     display: flex;
     flex-direction: row;
     font-family: "inter", sans-serif;
+    position: relative;
+}
+
+/* ALERTAS */
+#div_alerta {
+    position: fixed;
+    height: 60px;
+    width: fit-content;
+    bottom: 10px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 15px;
+    background-color: #121A51;
+    color: #fff;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.150);
+    z-index: 1;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+#div_alerta span {
+    font-size: 2rem;
 }
 
 .sidebar {

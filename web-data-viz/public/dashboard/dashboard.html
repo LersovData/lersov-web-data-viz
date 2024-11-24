@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload='listarMetrica(), obterDadosGraficoSetor(), obterDadosGrafico()'>
+<body onload="listarMetrica('dashboard'), chamarGraficos()">
   <div class="sidebar">
     <div class="menu">
 
@@ -34,6 +34,10 @@
         <span class="material-icons">search</span>
       </a>
     </div>
+  </div>
+
+  <div id="div_alerta">
+
   </div>
 
   <div class="content">
@@ -132,201 +136,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
-    <script src="../js/dadosSetor.js"></script>
+    <script src="../js/graficos.js"></script>
+    <script src="../js/alerta.js"></script>
+    <script src="../js/metrica.js"></script>
 
     <script>
-      var heatmapInstance = h337.create({
-        container: document.getElementById('heatmapContainer'),
-        radius: 70,
-        maxOpacity: 0.5,
-        blur: 1,
-      });
 
-      let proximaAtualizacao;
-
-      function obterDadosGrafico() {
-        var idEmpresa = 1;
-
-        if (proximaAtualizacao != undefined) {
-          clearTimeout(proximaAtualizacao);
-        }
-
-        fetch(`/dados/listarDadosCorredor`, { cache: 'no-store' }).then(function (response) {
-          if (response.ok) {
-            response.json().then(function (resposta) {
-              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-              resposta.reverse();
-
-              plotarGrafico(resposta, idEmpresa);
-
-            });
-          } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-          }
-        })
-          .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-          });
-      }
-
-      function plotarGrafico(resposta, idEmpresa) {
-
-        console.log('iniciando plotagem do gráfico...');
-
-        // Criando estrutura para plotar gráfico - labels
-        let labels = [];
-
-        // Criando estrutura para plotar gráfico - dados
-        let dadosCorredor = {
-          labels: labels,
-          datasets: [{
-            label: 'Número de pessoas',
-            data: [],
-            fill: false,
-            backgroundColor: 'rgb(18,26,81)',
-            borderColor: 'rgb(18,26,81)',
-            tension: 0.1
-          }]
-        };
-
-        // dados (x, y, valor de intensidade)
-        const dataHeatmap = {
-          min: 0,
-          max: 2,
-          data: []
-        };
-
-        console.log('----------------------------------------------')
-        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-        console.log(resposta)
-
-        // Inserindo valores recebidos em estrutura para plotar o gráfico
-        for (i = 0; i < resposta.length; i++) {
-          var registro = resposta[i];
-          labels.push(registro.dtHora);
-          dadosCorredor.datasets[0].data.push(registro.totalFluxo);
-
-          // Informações para o mapa de calor, passando os eixos x,y e o value que possui o dado do banco
-          var x = 125;
-          var y = 100 + (i % 5) * 50;
-          var value = registro.totalFluxo;
-
-          // Aqui ele manda para o data do mapa de calor com as informações acima
-          dataHeatmap.data.push({ x, y, value });
-
-          // Se o valor que vem do banco for MAIOR que o max, ele atualiza pro maxímo ser o valor mais alto
-          if (value > dataHeatmap.max) {
-            dataHeatmap.max = value;
-          }
-        }
-
-        // adicionando os dados ao heatmap
-        heatmapInstance.setData(dataHeatmap);
-
-        console.log('----------------------------------------------')
-        console.log('O gráfico será plotado com os respectivos valores:')
-        console.log('Labels:')
-        console.log(labels)
-        console.log('Dados:')
-        console.log(dadosCorredor.datasets)
-        console.log('----------------------------------------------')
-
-        // Criando estrutura para plotar gráfico - config
-        const config = {
-          type: 'line',
-          data: dadosCorredor,
-        };
-
-        // Adicionando gráfico criado em div na tela
-        let myChart = new Chart(
-          document.getElementById(`lineChartCorredor`),
-          config
-        );
-
-
-        setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart), 2000);
-
-
-      }
-
-      function atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart) {
-        console.log('invocando grafico corredor')
-
-        fetch(`/dados/tempo-real-corredor`, { cache: 'no-store' }).then(function (response) {
-          if (response.ok) {
-            response.json().then(function (novoRegistro) {
-
-              obterDadosGrafico(idEmpresa);
-              // alertar(novoRegistro, idAquario);
-              // console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
-              console.log(`Dados atuais do gráfico:`);
-              console.log(dadosCorredor);
-
-              // let avisoCaptura = document.getElementById(`avisoCaptura${id}`)
-              // avisoCaptura.innerHTML = ""
-
-
-              if (novoRegistro[0].dtHora == dadosCorredor.labels[dadosCorredor.labels.length - 1]) {
-                console.log('NAO ATUALIZAAAAAAAAAA')
-              } else {
-                console.log('VAI ATUALIZAAAAAAAAAA')
-                // tirando e colocando valores no gráfico
-                dadosCorredor.labels.shift(); // apagar o primeiro
-                dadosCorredor.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
-
-                dadosCorredor.datasets[0].data.shift();
-                dadosCorredor.datasets[0].data.push(novoRegistro[0].totalFluxo);
-
-                myChart.update();
-              }
-
-              // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-              proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart), 2000);
-            });
-          } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-            // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacao = setTimeout(() => atualizarGraficoCorredor(idEmpresa, dadosCorredor, myChart), 2000);
-          }
-        })
-          .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-          });
-      }
-
-      function listarMetrica() {
-        // trocar para valor pelo sessionStorage quando login estiver feito
-        // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
-
-        fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
-          if (resposta.ok) {
-            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
-
-              window.location = "./metricas.html";
-
-              throw "Nenhum resultado encontrado!!";
-            } else {
-              resposta.json().then(function (resposta) {
-                console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                var metrica = resposta[0];
-
-                metrica_alto.innerText = `- ${metrica.alto}`;
-                metrica_medio.innerText = `- ${metrica.medio}`;
-                metrica_baixo.innerText = `- ${metrica.baixo}`;
-
-                // finalizarAguardar();
-              });
-            }
-          } else {
-            throw ('Houve um erro na API!');
-          }
-        }).catch(function (resposta) {
-          console.error(resposta);
-          finalizarAguardar();
-        });
-      }
 
       function buscarPeloId() {
         fetch(`/usuarios/${buscaInput.value}`, {
