@@ -216,6 +216,18 @@ body {
     justify-content: space-between;
 }
 
+.graficoCalorConteudo .legendas {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.graficoCalorConteudo .legendas p .span1{
+    margin-left: 10px;
+    
+}
+
 .graficoCalorConteudo .descricao .selecaoSetores select {
     width: 85px;
     height: 30px;

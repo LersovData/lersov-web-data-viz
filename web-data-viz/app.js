@@ -30,6 +30,7 @@ var formulariosRouter = require("./src/routes/formularios");
 var dadosRouter = require("./src/routes/dados");
 var funcionariosRouter = require("./src/routes/funcionario");
 var corredoresRouter = require("./src/routes/corredores");
+var kpiRouter = require("./src/routes/kpis");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -48,6 +49,7 @@ app.use("/formularios", formulariosRouter);
 app.use("/dados", dadosRouter);
 app.use("/funcionario", funcionariosRouter);
 app.use("/corredores", corredoresRouter);
+app.use("/kpis", kpiRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload="listarMetrica('dashboard'), chamarGraficos()">
+<body onload="listarMetrica('dashboard'), chamarGraficos(),  listarTotalPessoasKpi(), listarSetorPopularKpi(), listarCorredorMaiorFluxoKpi()">
   <div class="sidebar">
     <div class="menu">
 
@@ -65,19 +65,19 @@
           <div class="card">
             <span class="material-icons">people</span>
             <h3 class="cardsFormatacao">Total de pessoas no estabelecimento (dia)</h3>
-            <p class="cardsFormatacao">10.140</p>
+            <p class="cardsFormatacao"><span id="totalPessoasCardKpi"></span></p>
           </div>
 
           <div class="card">
             <span class="material-icons">storefront</span>
             <h3 class="cardsFormatacao">Setor mais popular (dia)</h3>
-            <p class="cardsFormatacao">Higiene e Limpeza</p>
+            <p class="cardsFormatacao"><span id="setorPopular"></span></p>
           </div>
 
           <div class="card">
             <span class="material-icons">local_grocery_store</span>
             <h3 class="cardsFormatacao">Corredor com mais fluxo de pessoas (dia)</h3>
-            <p class="cardsFormatacao">Corredor 3</p>
+            <p class="cardsFormatacao"><span id="corredorMaiorFluxo"></span></p>
           </div>
         </div>
 
@@ -105,18 +105,20 @@
                   <option>Adega</option>
                 </select>
               </div>
-              <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png"> Região com fluxo alto <span
-                  id="metrica_alto"></span>
-              </p>
-              <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" />Região com fluxo mediano <span
-                  id="metrica_medio"></span>
-              </p>
-              <p>
-                <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" />Região com fluxo baixo <span
-                  id="metrica_baixo"></span>
-              </p>
+              <div class="legendas">
+                <p>
+                  <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png" /> <span class="span1">Região com
+                    fluxo alto <span id="metrica_alto"></span></span>
+                </p>
+                <p>
+                  <img src="https://cdn-icons-png.flaticon.com/512/5111/5111178.png" /> <span class="span1">Região com
+                    fluxo mediano <span id="metrica_medio"></span></span>
+                </p>
+                <p>
+                  <img src="https://cdn-icons-png.flaticon.com/512/594/594846.png" /> <span class="span1">Região com
+                    fluxo baixo <span id="metrica_baixo"></span></span>
+                </p>
+              </div>
             </div>
             <div id="heatmapContainer" class="graficoCalor">
               <div class="areaCorredor">
@@ -141,6 +143,123 @@
     <script src="../js/metrica.js"></script>
 
     <script>
+
+function listarTotalPessoasKpi() {
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+        console.log(`/kpis/listarTotalPessoasKpi/${idEmpresa}`); // Verifique no console a URL da requisição
+
+
+        fetch(`/kpis/listarTotalPessoasKpi/${idEmpresa}`).then(function (resposta) {
+          if (resposta.ok) {
+            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
+              console.log('DEU PROBLEMA NA KPI')
+              throw "Nenhum resultado encontrado!!";
+              proximaAtualizacao = setTimeout(listarTotalPessoasKpi(), 2000);
+
+            } else {
+              resposta.json().then(function (resposta) {
+                console.log("Dados recebidos: ", JSON.stringify(resposta));
+
+                var totalKpi = resposta[0].fluxoTotal;
+                totalPessoasCardKpi.innerText = `${totalKpi}`;
+
+
+                // finalizarAguardar();
+              });
+              proximaAtualizacao = setTimeout(listarTotalPessoasKpi, 2000);
+            }
+          } else {
+            throw ('Houve um erro na API!');
+
+
+          }
+        }).catch(function (resposta) {
+          console.error(resposta);
+          // finalizarAguardar();
+          proximaAtualizacao = setTimeout(listarTotalPessoasKpi, 2000);
+        });
+      }
+
+      function listarSetorPopularKpi() {
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+
+        console.log(`/kpis/listarSetorPopularKpi/${idEmpresa}`); // Verifique no console a URL da requisição
+        
+
+        fetch(`/kpis/listarSetorPopularKpi/${idEmpresa}`).then(function (resposta) {
+          if (resposta.ok) {
+            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
+              console.log('DEU PROBLEMA NA KPI SETOR')
+              throw "Nenhum resultado encontrado!!";
+              proximaAtualizacao = setTimeout(listarSetorPopularKpi, 2000);
+
+            } else {
+              resposta.json().then(function (resposta) {
+                console.log("Dados recebidos DO SETOR: ", JSON.stringify(resposta));
+
+                var setorKpi = resposta[0].setor;
+                if (setorPopular.innerText !== `${setorKpi}`) {
+                        setorPopular.innerText = `${setorKpi}`; // Atualiza se o valor mudar
+                    }
+
+                // finalizarAguardar();
+              });
+              proximaAtualizacao = setTimeout(listarSetorPopularKpi, 2000);
+            }
+          } else {
+            throw ('Houve um erro na API!');
+
+
+          }
+        }).catch(function (resposta) {
+          console.error(resposta);
+          // finalizarAguardar();
+          proximaAtualizacao = setTimeout(listarSetorPopularKpi, 2000);
+        });
+      }
+
+      function listarCorredorMaiorFluxoKpi() {
+        // trocar para valor pelo sessionStorage quando login estiver feito
+        // var idEmpresa = sessionStorage.ID_EMPRESA;
+        var idEmpresa = 1;
+
+        console.log(`/kpis/listarCorredorMaiorFluxo/${idEmpresa}`); // Verifique no console a URL da requisição
+
+
+        fetch(`/kpis/listarCorredorMaiorFluxo/${idEmpresa}`).then(function (resposta) {
+          if (resposta.ok) {
+            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
+              console.log('DEU PROBLEMA NA KPI SETOR')
+              throw "Nenhum resultado encontrado!!";
+              proximaAtualizacao = setTimeout(listarCorredorMaiorFluxoKpi, 2000);
+
+            } else {
+              resposta.json().then(function (resposta) {
+                console.log("Dados recebidos DO SETOR: ", JSON.stringify(resposta));
+
+                var corredorKpi = resposta[0].idCorredor;
+                corredorMaiorFluxo.innerText = `${corredorKpi}`;
+                
+
+                // finalizarAguardar();
+              });
+              proximaAtualizacao = setTimeout(listarCorredorMaiorFluxoKpi, 2000);
+            }
+          } else {
+            throw ('Houve um erro na API!');
+
+
+          }
+        }).catch(function (resposta) {
+          console.error(resposta);
+          // finalizarAguardar();
+          proximaAtualizacao = setTimeout(listarCorredorMaiorFluxoKpi, 2000);
+        });
+      }
 
 
       function buscarPeloId() {
