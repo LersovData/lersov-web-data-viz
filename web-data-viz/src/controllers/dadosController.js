@@ -1,7 +1,9 @@
 var dadosModel = require("../models/dadosModel");
 
 function listarDadosSetor(req, res){
-    dadosModel.listarDadosSetor().then(function(resultado){
+    var idEmpresa = req.params.idEmpresa;
+
+    dadosModel.listarDadosSetor(idEmpresa).then(function(resultado){
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -13,7 +15,10 @@ function listarDadosSetor(req, res){
 }
 
 function listarDadosCorredor(req, res){
-    dadosModel.listarDadosCorredor().then(function(resultado){
+    var idEmpresa = req.params.idEmpresa;
+    var idCorredor = req.params.idCorredor;
+
+    dadosModel.listarDadosCorredor(idEmpresa, idCorredor).then(function(resultado){
         if (resultado.length > 0) {
             res.status(200).json(resultado);
         } else {
@@ -25,7 +30,9 @@ function listarDadosCorredor(req, res){
 }
 
 // function listarDadosCalor(req, res){
-//     dadosModel.listarDadosCalor().then(function(resultado){
+//     var idEmpresa = req.params.idEmpresa;
+// 
+//     dadosModel.listarDadosCalor(idEmpresa).then(function(resultado){
 //         if (resultado.length > 0) {
 //             res.status(200).json(resultado);
 //         } else {

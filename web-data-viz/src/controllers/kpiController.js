@@ -2,7 +2,7 @@ var kpiModel = require("../models/kpiModel.js");
 
 function listarTotalPessoasKpi(req, res) {
     var idEmpresa = req.params.idEmpresa;
-
+    console.log(idEmpresa)
     kpiModel.totalPessoasKpi(idEmpresa)
         .then(
             function (resultado) {

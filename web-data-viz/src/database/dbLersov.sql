@@ -83,12 +83,20 @@ CREATE TABLE corredor(
 
 INSERT INTO corredor (setor, fkEmpresa) VALUES
 	('Limpeza e Higiene', 1),
+	('Limpeza e Higiene', 1),
     ('Adega', 1),
     ('Massas', 1),
     ('Doces', 1),
     ('Utensílios', 1),
     ('Congelados', 1),
-    ('Bebidas', 1);    
+    ('Bebidas', 1),
+    ('Limpeza e Higiene', 2),
+    ('Adega', 2),
+    ('Massas', 2),
+    ('Doces', 2),
+    ('Utensílios', 2),
+    ('Congelados', 2),
+    ('Bebidas', 2);    
 
 CREATE TABLE sensor(
 	idSensor INT PRIMARY KEY AUTO_INCREMENT,

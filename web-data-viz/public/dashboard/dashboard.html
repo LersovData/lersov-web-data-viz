@@ -14,7 +14,7 @@
     rel="stylesheet">
 </head>
 
-<body onload="listarMetrica('dashboard'), chamarGraficos(),  listarTotalPessoasKpi(), listarSetorPopularKpi(), listarCorredorMaiorFluxoKpi()">
+<body onload="listarMetrica('dashboard'), chamarGraficos()">
   <div class="sidebar">
     <div class="menu">
 
@@ -143,125 +143,6 @@
     <script src="../js/metrica.js"></script>
 
     <script>
-
-function listarTotalPessoasKpi() {
-        // trocar para valor pelo sessionStorage quando login estiver feito
-        // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
-        console.log(`/kpis/listarTotalPessoasKpi/${idEmpresa}`); // Verifique no console a URL da requisição
-
-
-        fetch(`/kpis/listarTotalPessoasKpi/${idEmpresa}`).then(function (resposta) {
-          if (resposta.ok) {
-            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
-              console.log('DEU PROBLEMA NA KPI')
-              throw "Nenhum resultado encontrado!!";
-              proximaAtualizacao = setTimeout(listarTotalPessoasKpi(), 2000);
-
-            } else {
-              resposta.json().then(function (resposta) {
-                console.log("Dados recebidos: ", JSON.stringify(resposta));
-
-                var totalKpi = resposta[0].fluxoTotal;
-                totalPessoasCardKpi.innerText = `${totalKpi}`;
-
-
-                // finalizarAguardar();
-              });
-              proximaAtualizacao = setTimeout(listarTotalPessoasKpi, 2000);
-            }
-          } else {
-            throw ('Houve um erro na API!');
-
-
-          }
-        }).catch(function (resposta) {
-          console.error(resposta);
-          // finalizarAguardar();
-          proximaAtualizacao = setTimeout(listarTotalPessoasKpi, 2000);
-        });
-      }
-
-      function listarSetorPopularKpi() {
-        // trocar para valor pelo sessionStorage quando login estiver feito
-        // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
-
-        console.log(`/kpis/listarSetorPopularKpi/${idEmpresa}`); // Verifique no console a URL da requisição
-        
-
-        fetch(`/kpis/listarSetorPopularKpi/${idEmpresa}`).then(function (resposta) {
-          if (resposta.ok) {
-            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
-              console.log('DEU PROBLEMA NA KPI SETOR')
-              throw "Nenhum resultado encontrado!!";
-              proximaAtualizacao = setTimeout(listarSetorPopularKpi, 2000);
-
-            } else {
-              resposta.json().then(function (resposta) {
-                console.log("Dados recebidos DO SETOR: ", JSON.stringify(resposta));
-
-                var setorKpi = resposta[0].setor;
-                if (setorPopular.innerText !== `${setorKpi}`) {
-                        setorPopular.innerText = `${setorKpi}`; // Atualiza se o valor mudar
-                    }
-
-                // finalizarAguardar();
-              });
-              proximaAtualizacao = setTimeout(listarSetorPopularKpi, 2000);
-            }
-          } else {
-            throw ('Houve um erro na API!');
-
-
-          }
-        }).catch(function (resposta) {
-          console.error(resposta);
-          // finalizarAguardar();
-          proximaAtualizacao = setTimeout(listarSetorPopularKpi, 2000);
-        });
-      }
-
-      function listarCorredorMaiorFluxoKpi() {
-        // trocar para valor pelo sessionStorage quando login estiver feito
-        // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
-
-        console.log(`/kpis/listarCorredorMaiorFluxo/${idEmpresa}`); // Verifique no console a URL da requisição
-
-
-        fetch(`/kpis/listarCorredorMaiorFluxo/${idEmpresa}`).then(function (resposta) {
-          if (resposta.ok) {
-            if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
-              console.log('DEU PROBLEMA NA KPI SETOR')
-              throw "Nenhum resultado encontrado!!";
-              proximaAtualizacao = setTimeout(listarCorredorMaiorFluxoKpi, 2000);
-
-            } else {
-              resposta.json().then(function (resposta) {
-                console.log("Dados recebidos DO SETOR: ", JSON.stringify(resposta));
-
-                var corredorKpi = resposta[0].idCorredor;
-                corredorMaiorFluxo.innerText = `${corredorKpi}`;
-                
-
-                // finalizarAguardar();
-              });
-              proximaAtualizacao = setTimeout(listarCorredorMaiorFluxoKpi, 2000);
-            }
-          } else {
-            throw ('Houve um erro na API!');
-
-
-          }
-        }).catch(function (resposta) {
-          console.error(resposta);
-          // finalizarAguardar();
-          proximaAtualizacao = setTimeout(listarCorredorMaiorFluxoKpi, 2000);
-        });
-      }
-
-
       function buscarPeloId() {
         fetch(`/usuarios/${buscaInput.value}`, {
           method: "GET"
@@ -269,10 +150,11 @@ function listarTotalPessoasKpi() {
           .then(res => {
             res.json().then(json => {
               const usuario = json[0];
-              container.innerHTML = `<div>
-    <h1>${usuario.nome} - ${usuario.email}</h1>
-    <img src='assets/${usuario.imagem_perfil}' alt="imagem de usuario">
-  </div>`
+              container.innerHTML = `
+                <div>
+                  <h1>${usuario.nome} - ${usuario.email}</h1>
+                  <img src='assets/${usuario.imagem_perfil}' alt="imagem de usuario">
+                </div>`;
             })
           })
           .catch(err => {
