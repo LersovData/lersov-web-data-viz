@@ -1,42 +1,46 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BobIA</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <title>Document</title>
 
-    <div id="container">
-        <h1>BobIA</h1>
-        <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-        <br><br>
-        <button onclick="gerarResposta()">Gerar Resposta</button>
-        <h3>Resposta da IA:</h3>
-        <div id="resposta"></div>
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="menu">
+
+            <a href="dashboard.html">
+                <span class="material-icons">home</span>
+            </a>
+
+        </div>
     </div>
 
-    <script>
-        
-        async function gerarResposta() {
-            const pergunta = document.getElementById('pergunta').value;
+    <div id="div_btnBob" onclick="bobIA()">BobIA</div>
 
-            const response = await fetch('/perguntar', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ pergunta })
-            });
-
-            const data = await response.json();
-
-            resposta.style.display = 'block';
-            document.getElementById('resposta').innerText = data.resultado;
-        }
-
-    </script>
-    
+    <div id="div_bobIa">
+        <div id="containerBob">
+            <h1>BobIA</h1>
+            <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+            <br><br>
+            <button onclick="gerarResposta()">Gerar Resposta</button>
+            <h3>Resposta da IA:</h3>
+            <div id="resposta"></div>
+        </div>
+    </div>
 </body>
+
 </html>
+
+<script src="../js/bobia.js"></script>

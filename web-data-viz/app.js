@@ -88,7 +88,7 @@ async function gerarResposta(mensagem) {
 
     try {
         // gerando conteúdo com base na pergunta
-        const resultado = await modeloIA.generateContent(`Em um paragráfo responda: ${mensagem}`);
+        const resultado = await modeloIA.generateContent(`Em um paragráfo responda, se houver tópico, resuma cada um em poucas palavras: ${mensagem}`);
         const resposta = await resultado.response.text();
         
         console.log(resposta);
