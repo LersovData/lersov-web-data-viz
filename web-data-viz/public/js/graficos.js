@@ -251,7 +251,7 @@ function atualizarGraficoSetor(idEmpresa, dadosSetor, myChartSetor) {
         });
 }
 
-// CONFIGURAÇÃO DOS GRÁFICOS DO >>>CORREDOR<<<
+// CONFIGURAÇÃO DOS GRÁFICOS DO  CORREDOR
 let proximaAtualizacaoCorredor;
 
 function obterDadosGraficoCorredor(idEmpresa, idCorredor) {
