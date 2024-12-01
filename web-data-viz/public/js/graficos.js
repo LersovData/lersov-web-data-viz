@@ -1,12 +1,48 @@
 // Uma função responsável por iniciar os gráficos
+// // variaveis globais
+var idCorredor = ''
+var setor = ''
+
+function selecionarCorredor(corredorSelecionado) {
+
+    if(corredorSelecionado == '1' || !corredorSelecionado ){
+        idCorredor = '1'
+    }else if(corredorSelecionado == '2'){
+        idCorredor = '2'
+    }else if(corredorSelecionado == '3'){
+        idCorredor = '3'
+    }
+
+    console.log(` NUMERO DO IDCORREDOR: ${corredorSelecionado}`)
+    console.log(`Teste Corredor ${corredorSelecionado}`)
+    selecionarSetor()
+
+}
+// CONSETAR OS PARAMETROS QUE É 10
+function selecionarSetor() {
+    
+    console.log(idCorredor)
+    console.log(`TESTE PARAMETRO DO IDCORREDOR:${idCorredor}`)
+
+    if (idCorredor == '1' || !idCorredor) {
+        setor = 'Limpeza e higiêne'
+    } else if (idCorredor == '2') {
+        setor = 'Adega'
+    } else if (idCorredor == '3') {
+        setor = 'Massas'
+    }
+
+    chamarGraficos()
+}
+
 function chamarGraficos() {
     // quando tiver login, substituir o 1 pelo id do sessionStorage
     var idEmpresa = 1;
-    var idCorredor = 1;
+    
 
     obterDadosGraficoSetor(idEmpresa);
-    obterDadosGraficoCorredor(idEmpresa, idCorredor);
-    obterDadosGraficoCalor(idEmpresa, idCorredor);
+    obterDadosGraficoCorredor(idEmpresa, idCorredor, setor);
+    obterDadosGraficoCalor(idEmpresa);
 
     listarTotalPessoasKpi(idEmpresa);
     listarSetorPopularKpi(idEmpresa);
@@ -14,7 +50,6 @@ function chamarGraficos() {
 }
 
 function listarTotalPessoasKpi(idEmpresa) {
-    // console.log(`/kpis/listarTotalPessoasKpi/${idEmpresa}`); // Verifique no console a URL da requisição
 
     fetch(`/kpis/listarTotalPessoasKpi/${idEmpresa}`).then(function (resposta) {
         if (resposta.ok) {
@@ -25,7 +60,7 @@ function listarTotalPessoasKpi(idEmpresa) {
 
             } else {
                 resposta.json().then(function (resposta) {
-                    // console.log("Dados recebidos: ", JSON.stringify(resposta));
+                   
 
                     var totalKpi = resposta[0].fluxoTotal;
                     totalPessoasCardKpi.innerText = `${totalKpi}`;
@@ -41,13 +76,13 @@ function listarTotalPessoasKpi(idEmpresa) {
         }
     }).catch(function (resposta) {
         console.error(resposta);
-        // finalizarAguardar();
+        
         setTimeout(() => listarTotalPessoasKpi(idEmpresa), 2000);
     });
 }
 
 function listarSetorPopularKpi(idEmpresa) {
-    // console.log(`/kpis/listarSetorPopularKpi/${idEmpresa}`); // Verifique no console a URL da requisição
+   
 
     fetch(`/kpis/listarSetorPopularKpi/${idEmpresa}`).then(function (resposta) {
         if (resposta.ok) {
@@ -58,7 +93,7 @@ function listarSetorPopularKpi(idEmpresa) {
 
             } else {
                 resposta.json().then(function (resposta) {
-                    // console.log("Dados recebidos DO SETOR: ", JSON.stringify(resposta));
+                    
 
                     var setorKpi = resposta[0].setor;
                     if (setorPopular.innerText !== `${setorKpi}`) {
@@ -91,8 +126,7 @@ function listarCorredorMaiorFluxoKpi(idEmpresa) {
 
             } else {
                 resposta.json().then(function (resposta) {
-                    // console.log("Dados recebidos DO SETOR: ", JSON.stringify(resposta));
-
+                    
                     var corredorKpi = resposta[0].idCorredor;
                     corredorMaiorFluxo.innerText = `${corredorKpi}`;
 
@@ -126,9 +160,8 @@ function obterDadosGraficoSetor(idEmpresa) {
                 setTimeout(() => obterDadosGraficoSetor(idEmpresa), 2000);
             } else {
                 response.json().then(function (resposta) {
-                    // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
-
+                    
                     plotarGraficoSetor(idEmpresa, resposta);
                 });
             }
@@ -145,8 +178,6 @@ function obterDadosGraficoSetor(idEmpresa) {
 }
 
 function plotarGraficoSetor(idEmpresa, resposta) {
-    // console.log(`AQUI Ó: ${JSON.stringify(resposta)}`);
-    // console.log('iniciando plotagem do gráfico...');
 
     // Criando estrutura para plotar gráfico - labels/legenda
     let labelsSetor = [];
@@ -155,10 +186,26 @@ function plotarGraficoSetor(idEmpresa, resposta) {
     let dadosSetor = {
         labels: labelsSetor,
         datasets: [{
-            label: 'Número de pessoas',
+            label: 'Limpeza e higiêne',
             data: [],
             fill: false,
             backgroundColor: 'rgb(18,26,81)',
+            borderColor: 'rgb(18,26,81)',
+            tension: 0.1
+        },
+        {
+            label: 'Massas',
+            data: ['1', '3', '5', '8', '4', '7', '6', '8', '9'],
+            fill: false,
+            backgroundColor: 'rgb(18,26,230)',
+            borderColor: 'rgb(18,26,81)',
+            tension: 0.1
+        },
+        {
+            label: 'Adega',
+            data: ['1', '2', '1', '1', '2', '4', '5', '2', '3'],
+            fill: false,
+            backgroundColor: 'rgb(18,26,230)',
             borderColor: 'rgb(18,26,81)',
             tension: 0.1
         }]
@@ -168,7 +215,7 @@ function plotarGraficoSetor(idEmpresa, resposta) {
     for (i = 0; i < resposta.length; i++) {
         var registro = resposta[i];
         // console.log(registro.dtHora);
-
+        
         labelsSetor.push(registro.dtHora); // Inserindo as legendas no label
         dadosSetor.datasets[0].data.push(registro.totalFluxo); // Inserindo os dados no data
     }
@@ -253,24 +300,35 @@ function atualizarGraficoSetor(idEmpresa, dadosSetor, myChartSetor) {
 
 // CONFIGURAÇÃO DOS GRÁFICOS DO  CORREDOR
 let proximaAtualizacaoCorredor;
+// VARIÁVEL DO GRÁFICO CORREDOR
+let myChartCorredor
 
-function obterDadosGraficoCorredor(idEmpresa, idCorredor) {
+function obterDadosGraficoCorredor(idEmpresa) {
+    idCorredor = idCorredor;
+    setor = setor;
+
+    if(myChartCorredor){
+        myChartCorredor.destroy()
+    }
     if (proximaAtualizacaoCorredor != undefined) {
         clearTimeout(proximaAtualizacaoCorredor);
     }
 
-    fetch(`/dados/listarDadosCorredor/${idEmpresa}/${idCorredor}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/dados/listarDadosCorredor/${idEmpresa}/${idCorredor}/${setor}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
+
             // se não tiver dado na primeira consulta, ele fica consultando até achar
             if (response.status == 204) {
-                setTimeout(() => obterDadosGraficoCorredor(idEmpresa, idCorredor), 2000);
+                setTimeout(() => obterDadosGraficoCorredor(idEmpresa, idCorredor, setor), 2000);
             } else {
-                response.json().then(function (resposta) {
+                response.json().then((resposta) => {
+                    console.log('RESPOsta OBTER DADOS CORREDOR===========', resposta)
                     // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    
                     resposta.reverse();
-
-                    plotarGraficoCorredor(idEmpresa, idCorredor, resposta);
-
+                    
+                    plotarGraficoCorredor(idEmpresa, idCorredor, setor, resposta)   
+                    console.log(`RESPOSTA OBTER DADOS CORREDOR:`, resposta)
                 });
             }
         } else {
@@ -282,57 +340,66 @@ function obterDadosGraficoCorredor(idEmpresa, idCorredor) {
         });
 }
 
-function plotarGraficoCorredor(idEmpresa, idCorredor, resposta) {
+
+
+function plotarGraficoCorredor(idEmpresa, idCorredor, setor, resposta) {
+    console.log('ENTRANDO NO PLOTAR CORREDOR', idCorredor, setor)
+    
+    
     let labelsCorredor = [];
 
     // Criando estrutura para plotar gráfico - dados
     let dadosCorredor = {
         labels: labelsCorredor,
         datasets: [{
-            label: 'Corredor 1',
+            label: '',
             data: [],
             fill: false,
             backgroundColor: 'rgb(18,26,81)',
             borderColor: 'rgb(18,26,81)',
             tension: 0.1
-        },
-        {
-            label: 'Corredor 2',
-            data: [],
-            fill: false,
-            backgroundColor: 'rgb(227, 61, 148)',
-            borderColor: 'rgb(227, 61, 148)',
-            tension: 0.1
         }]
     };
+
+    
+    if(setor == 'Massas'){
+        dadosCorredor.datasets[0].backgroundColor = 'rgb(18,26,230)'
+        dadosCorredor.datasets[0].borderColor = 'rgb(18,26,230)'
+    }else if(setor == 'Adega'){
+        dadosCorredor.datasets[0].backgroundColor = 'rgb(19,21,231)' 
+        dadosCorredor.datasets[0].borderColor = 'rgb(19,21,231)' 
+    }
 
     // Inserindo valores recebidos em estrutura para plotar o gráfico
     for (i = 0; i < resposta.length; i++) {
         var registro = resposta[i];
         labelsCorredor.push(registro.dtHora);
         dadosCorredor.datasets[0].data.push(registro.totalFluxo);
-
-        dadosCorredor.datasets[1].data.push(registro.totalFluxo);
+        dadosCorredor.datasets[0].label = `Corredor ${registro.idCorredor} - ${registro.setor}`
     }
+
 
     // Criando estrutura para plotar gráfico - config
     const configCorredor = {
         type: 'line',
         data: dadosCorredor,
     };
-
-    // Adicionando gráfico criado em div na tela
-    let myChartCorredor = new Chart(
+    
+    myChartCorredor = new Chart(
         document.getElementById(`lineChartCorredor`),
         configCorredor
     );
 
-    setTimeout(() => atualizarGraficoCorredor(idEmpresa, idCorredor, dadosCorredor, myChartCorredor), 2000);
+    
+    setTimeout(() => atualizarGraficoCorredor(idEmpresa, idCorredor, setor, dadosCorredor, myChartCorredor), 2000);
 }
 
-function atualizarGraficoCorredor(idEmpresa, idCorredor, dadosCorredor, myChartCorredor) {
+function atualizarGraficoCorredor(idEmpresa, idCorredor, setor, dadosCorredor, myChartCorredor) {
+    console.log('ENTRANDO NO ATUALIZAR CORREDOR:', idCorredor, setor, dadosCorredor)
+    idCorredor = idCorredor;
+    setor = setor;
 
-    fetch(`/dados/listarDadosCorredor/${idEmpresa}/${idCorredor}`, { cache: 'no-store' }).then(function (response) {
+    fetch(`/dados/listarDadosCorredor/${idEmpresa}/${idCorredor}/${setor}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             response.json().then(function (novoRegistro) {
 
@@ -343,29 +410,26 @@ function atualizarGraficoCorredor(idEmpresa, idCorredor, dadosCorredor, myChartC
                     // console.log('Já está atualizado!!!');
                 } else if ((novoRegistro[0].dtHora == dadosCorredor.labels[dadosCorredor.labels.length - 1]) && (dadosCorredor.datasets[0].data[dadosCorredor.labels.length - 1] != novoRegistro[0].totalFluxo)) {
                     // Entra aqui se o horário da captura do dado for igual mas o dado foi alterado (passou mais uma pessoa)
-
+                    
                     // Atualizamos o gráfico com o novo dado do banco
                     dadosCorredor.datasets[0].data[dadosCorredor.labels.length - 1] = novoRegistro[0].totalFluxo;
-
-                    dadosCorredor.datasets[1].data[dadosCorredor.labels.length - 1] = novoRegistro[0].totalFluxo;
-
+                    
                     myChartCorredor.update();
                 } else if ((novoRegistro[0].dtHora != dadosCorredor.labels[dadosCorredor.labels.length - 1]) && (dadosCorredor.datasets[0].data[dadosCorredor.labels.length - 1] != novoRegistro[0].totalFluxo)) {
                     // Entra aqui se o passou uma pessoa e o horário é diferente do gráfico
-
                     // dadosCorredor.labels.shift(); // apagar o primeiro
                     dadosCorredor.labels.push(novoRegistro[0].dtHora); // incluir um novo momento
 
                     myChartCorredor.update();
                 }
-
+                // console.log(`ESSA É A RESPOSTA DO ATUALIZAR CORREDOR:`, response)
                 // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-                proximaAtualizacaoCorredor = setTimeout(() => atualizarGraficoCorredor(idEmpresa, idCorredor, dadosCorredor, myChartCorredor), 2000);
+                proximaAtualizacaoCorredor = setTimeout(() => atualizarGraficoCorredor(idEmpresa, idCorredor, setor, dadosCorredor, myChartCorredor), 2000);
             });
         } else {
             console.error('Nenhum dado encontrado ou erro na API');
             // Altere aqui o valor em ms se quiser que o gráfico atualize mais rápido ou mais devagar
-            proximaAtualizacaoCorredor = setTimeout(() => atualizarGraficoCorredor(idEmpresa, idCorredor, dadosCorredor, myChartCorredor), 2000);
+            proximaAtualizacaoCorredor = setTimeout(() => atualizarGraficoCorredor(idEmpresa, idCorredor, setor, dadosCorredor, myChartCorredor), 2000);
         }
     })
         .catch(function (error) {
@@ -375,6 +439,7 @@ function atualizarGraficoCorredor(idEmpresa, idCorredor, dadosCorredor, myChartC
 
 
 // CONFIGURAÇÃO DOS GRÁFICOS DE >>>CALOR<<<
+
 var heatmapInstance = h337.create({
     container: document.getElementById('heatmapContainer'),
     radius: 70,
@@ -382,17 +447,24 @@ var heatmapInstance = h337.create({
     blur: 1,
 });
 
-function obterDadosGraficoCalor(idEmpresa, idCorredor) {
-    fetch(`/dados/listarDadosCorredor/${idEmpresa}/${idCorredor}`, { cache: 'no-store' }).then(function (response) {
+
+function obterDadosGraficoCalor(idEmpresa) {
+    
+    idCorredor = idCorredor;
+    setor = setor;
+    
+    fetch(`/dados/listarDadosCorredor/${idEmpresa}/${idCorredor}/${setor}`, { cache: 'no-store' }).then(function (response) {
         if (response.ok) {
             if (response.status == 204) {
-                setTimeout(() => obterDadosGraficoCalor(idEmpresa, idCorredor), 2000);
+                setTimeout(() => obterDadosGraficoCalor(idEmpresa, idCorredor, setor), 2000);
             } else {
+                console.log(`RESPONSE DO OBTER DADOS CALOR:`, response)
                 response.json().then(function (resposta) {
                     // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                     resposta.reverse();
-    
-                    plotarGraficoCalor(idEmpresa, idCorredor, resposta);
+
+                    plotarGraficoCalor(idEmpresa, idCorredor, setor, resposta);
+                    console.log(`RESPOSTA DO OBTER DADOS CALOR:`, resposta)
                 });
             }
         } else {
@@ -404,14 +476,16 @@ function obterDadosGraficoCalor(idEmpresa, idCorredor) {
         });
 }
 
-function plotarGraficoCalor(idEmpresa, idCorredor, resposta) {
+function plotarGraficoCalor(idEmpresa, idCorredor, setor, resposta) {
+
+   
     // dados (x, y, valor de intensidade)
     const dataHeatmap = {
         min: 0,
         max: 2,
         data: []
     };
-
+    // console.log("AQUI É O DATAHEATMAP",dataHeatmap)
     // Inserindo valores recebidos em estrutura para plotar o gráfico
     for (i = 0; i < resposta.length; i++) {
         var registro = resposta[i];
@@ -431,6 +505,10 @@ function plotarGraficoCalor(idEmpresa, idCorredor, resposta) {
 
     // adicionando os dados ao heatmap
     heatmapInstance.setData(dataHeatmap);
+    // console.log(`ESSA É A RESPOSTA DO CALOR :`, resposta)
 
-    setTimeout(() => obterDadosGraficoCalor(idEmpresa, idCorredor), 2000);
+        // console.log('IDCORREDOR E SETOR NO CALOR',idCorredor, setor)
+
+        setTimeout(() => obterDadosGraficoCalor(idEmpresa, idCorredor, setor), 5000);
 }
+

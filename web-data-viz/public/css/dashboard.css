@@ -229,7 +229,26 @@ body {
     
 }
 
-.graficoCalorConteudo .descricao .selecaoSetores select {
+.divSelecionarCorredor{
+    align-self: flex-start;
+    padding: 20px;
+    line-height: 30px;
+}
+
+.divSelecionarCorredor select{
+    width: 125px;
+}
+
+.divInformacoes{
+    align-self: flex-start;
+    line-height: 30px;
+}
+
+.divInformacoes select{
+    width: 260px;
+}
+
+.selects{
     width: 85px;
     height: 30px;
     padding: 5px;
@@ -238,7 +257,7 @@ body {
     color: #f9f9f9;
     background-color: #121A51;
     border: transparent;
-    border-radius: 20px;
+    border-radius: 20px; 
 }
 
 .graficoCalorConteudo .descricao img {

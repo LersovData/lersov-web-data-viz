@@ -7,12 +7,8 @@ router.get("/listarDadosSetor/:idEmpresa", function (req, res) {
     dadosController.listarDadosSetor(req, res);
 });
 
-router.get("/listarDadosCorredor/:idEmpresa/:idCorredor", function (req, res) {
+router.get("/listarDadosCorredor/:idEmpresa/:idCorredor/:setor", function (req, res) {
     dadosController.listarDadosCorredor(req, res);
 });
-
-// router.get("/listarDadosCalor/:idEmpresa", function (req, res) {
-//     dadosController.listarDadosCorredor(req, res);
-// });
 
 module.exports = router;
