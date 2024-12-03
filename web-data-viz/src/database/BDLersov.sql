@@ -65,13 +65,15 @@ CREATE TABLE contato(
     email VARCHAR(45),
     empresa VARCHAR(450),
     socioOuCeo VARCHAR(10),
-    mensagem VARCHAR(150)
+    mensagem VARCHAR(150),
+    dtContato TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    respondido BOOLEAN
 );
 
-INSERT INTO contato (nome, email, empresa, socioOuCeo, mensagem) VALUES
-	('Leandro Agosto', 'leandro@assaiCEO', 'Assaí', 'Ceo', 'Estou interessado no produto de vocês e gostaria de mais informações! Grato.'),
-    ('Fernando Julhos', 'Fernando@carrefourSOCIO', 'Carrefour Express', 'Sócio','Estou interessado no produto de vocês, quero mais informações por favor.'),
-    ('João Setembros', 'joao@atacadaoCEO', 'Atacadão', 'Ceo', 'Gostaria de mais informações de como prosseguir para contratá-los, grato.');
+INSERT INTO contato (nome, email, empresa, socioOuCeo, mensagem, respondido) VALUES
+	('Leandro Agosto', 'leandro@assaiCEO', 'Assaí', 'Ceo', 'Estou interessado no produto de vocês e gostaria de mais informações! Grato.', true),
+    ('Fernando Julhos', 'Fernando@carrefourSOCIO', 'Carrefour Express', 'Sócio','Estou interessado no produto de vocês, quero mais informações por favor.', false),
+    ('João Setembros', 'joao@atacadaoCEO', 'Atacadão', 'Ceo', 'Gostaria de mais informações de como prosseguir para contratá-los, grato.', false);
       
 CREATE TABLE corredor(
 	idCorredor INT PRIMARY KEY AUTO_INCREMENT,
@@ -191,9 +193,6 @@ INSERT INTO dadosSensor(fkSensor, fluxoDePessoas, fkAlerta, dtHora) VALUES
     (3, '1', 1, '2024-11-04 11:30:00'),
     (3, '1', 1, '2024-11-04 11:40:00');
     
-    truncate dadosSensor;
-    
-    
 CREATE TABLE administradores(
 	idAdm INT PRIMARY KEY AUTO_INCREMENT,
     email VARCHAR(45),
@@ -229,5 +228,3 @@ INSERT INTO manutencao VALUES
 	(default, 1, 4, 'Sensor não está com a manutenção em dia, fazer uma avaliação', 'Pendente'),
 	(default, 3, 7, 'Sensor não está trazendo os dados', 'Em andamento'),
 	(default, 4, 13, 'Sensor não tem dados condizentes', 'Concluída');
-
-            

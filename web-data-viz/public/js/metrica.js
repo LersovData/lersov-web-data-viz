@@ -20,6 +20,9 @@ function listarMetrica(pagina) {
                     // console.log("Dados recebidos: ", JSON.stringify(resposta));
 
                     var metrica = resposta[0];
+                    metricaAlto = metrica.alto;
+                    metricaMedio = metrica.medio;
+                    metricaBaixo = metrica.baixo;
 
                     if (pagina == 'metricas') {
                         input_alto.value = metrica.alto;

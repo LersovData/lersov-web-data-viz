@@ -445,17 +445,35 @@ function atualizarGraficoCorredor(idEmpresa, idCorredor, setor, dadosCorredor, m
 
 
 // CONFIGURAÇÃO DOS GRÁFICOS DE >>>CALOR<<<
+var corGrafico = 'blue'; 
+var metricaAlto;
+var metricaMedio;
+var metricaBaixo;
 
 var heatmapInstance = h337.create({
     container: document.getElementById('heatmapContainer'),
-    radius: 70,
-    maxOpacity: 0.5,
+    radius: 50,
+    maxOpacity: 0.7,
     blur: 1,
+    gradient: {
+        '.5': corGrafico,
+        '.8': corGrafico,
+        '.95': corGrafico
+    }
 });
 
+function atualizarCorGradient(cor) {
+    heatmapInstance.configure({
+        gradient: {
+            '.5': cor,
+            '.8': cor,
+            '.95': cor
+        }
+    });
+}
 
 function obterDadosGraficoCalor(idEmpresa) {
-    
+    // console.log('AQUIIII' + heatmapInstance.gradient[0]);
     idCorredor = idCorredor;
     setor = setor;
     
@@ -467,10 +485,21 @@ function obterDadosGraficoCalor(idEmpresa) {
                 console.log(`RESPONSE DO OBTER DADOS CALOR:`, response)
                 response.json().then(function (resposta) {
                     // console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                    resposta.reverse();
+                    // resposta.reverse();
+
+                    // console.log(' metricaaaaaa n ' + metricaAlto + 'bancooo ' + resposta[0].totalFluxo)
+                    if (resposta[0].totalFluxo < metricaMedio) {
+                        corGrafico = 'blue';
+                    } else if (resposta[0].totalFluxo < metricaAlto) {
+                        corGrafico = 'orange';
+                    } else {
+                        corGrafico = 'red';
+                    }
+
+                    atualizarCorGradient(corGrafico);
 
                     plotarGraficoCalor(idEmpresa, idCorredor, setor, resposta);
-                    console.log(`RESPOSTA DO OBTER DADOS CALOR:`, resposta)
+                    // console.log(`RESPOSTA DO OBTER DADOS CALOR:`, resposta)
                 });
             }
         } else {
@@ -483,12 +512,10 @@ function obterDadosGraficoCalor(idEmpresa) {
 }
 
 function plotarGraficoCalor(idEmpresa, idCorredor, setor, resposta) {
-
-   
     // dados (x, y, valor de intensidade)
     const dataHeatmap = {
         min: 0,
-        max: 2,
+        max: resposta.totalFluxo,
         data: []
     };
     // console.log("AQUI É O DATAHEATMAP",dataHeatmap)
@@ -496,8 +523,17 @@ function plotarGraficoCalor(idEmpresa, idCorredor, setor, resposta) {
     for (i = 0; i < resposta.length; i++) {
         var registro = resposta[i];
         // Informações para o mapa de calor, passando os eixos x,y e o value que possui o dado do banco
-        var x = 125;
-        var y = 100 + (i % 5) * 50;
+        
+        if (registro.setor == 'Adega') {
+            var posicao = 290;
+        } else if (registro.setor == 'Massas') {
+            var posicao = 450;
+        } else {
+            var posicao = 125;
+        }
+
+        var x = posicao;
+        var y = 100 + (i % 5) * 55;
         var value = registro.totalFluxo;
 
         // Aqui ele manda para o data do mapa de calor com as informações acima
