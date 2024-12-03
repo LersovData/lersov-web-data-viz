@@ -32,14 +32,13 @@ function selecionarSetor() {
         setor = 'Massas'
     }
 
-    chamarGraficos()
+    chamarGraficos();
 }
 
 function chamarGraficos() {
     // quando tiver login, substituir o 1 pelo id do sessionStorage
     var idEmpresa = 1;
     
-
     obterDadosGraficoSetor(idEmpresa);
     obterDadosGraficoCorredor(idEmpresa, idCorredor, setor);
     obterDadosGraficoCalor(idEmpresa);

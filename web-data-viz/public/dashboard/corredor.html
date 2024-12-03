@@ -23,28 +23,30 @@
             <div class="menu">
                 <a href="dashboard.html">
                     <span class="material-icons">home</span>
-                  </a>
-                  <a href="cadastroFuncionario.html">
+                </a>
+                <a href="cadastroFuncionario.html">
                     <span class="material-icons">person_add</span>
                 </a>
-                  
-                  <a href="metricas.html">
+
+                <a href="metricas.html">
                     <span class="material-icons">leaderboard</span>
-                  </a>
-                  <a href="formulario.html">
+                </a>
+                <a href="formulario.html">
                     <span class="material-icons">description</span>
-                  </a>
-                  <a href="corredor.html">
-                    <span class="material-icons">search</span>
-                  </a>
-                  
+                </a>
+                <a href="corredor.html">
+                    <span class="material-icons">reorder</span>
+                </a>
+                <a onclick="limparSessao()">
+                    <span class="material-icons">logout</span>
+                </a>
             </div>
         </div>
 
         <section class="content1">
             <div class="areaCabecalho">
                 <div class="tabelaCabecalho">
-                    <h1>Corredores</h1>
+                    <h1 class="titleMetrica">Corredores</h1>
                 </div>
             </div>
 
@@ -148,8 +150,6 @@
         fetch(`/corredores/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
                 if (resposta.status == 204) { // se não tiver formulario dessa empresa entra aqui
-                    div_modal.style.display = 'flex';
-                    btnFechar.style.display = 'none';
                     throw "Nenhum resultado encontrado!!";
                 } else {
                     resposta.json().then(function (resposta) {
@@ -184,15 +184,5 @@
             console.error(resposta);
             finalizarAguardar();
         });
-    }
-
-    function abrirModal() {
-        div_modal.style.display = 'flex';
-    }
-
-    function fecharModal() {
-        div_modal.style.display = 'none';
-        input_qtdCorredor.value = '';
-        input_dtImplementacao.value = '';
     }
 </script>

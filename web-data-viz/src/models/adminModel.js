@@ -8,6 +8,10 @@ function listarKpi() {
         COUNT(DISTINCT idSensor) 
             FROM sensor
         WHERE estadoSensor = 'Ativado') as qtdSensor,
+        (SELECT 
+        COUNT(DISTINCT idSensor) 
+            FROM sensor
+        WHERE estadoSensor = 'Desativado') as qtdSensorInativo,
         (SELECT
         COUNT(DISTINCT idEmpresa) 
             FROM empresa) AS qtdClientes;

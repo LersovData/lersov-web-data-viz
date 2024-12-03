@@ -23,28 +23,34 @@
             <div class="menu">
                 <a href="dashboard.html">
                     <span class="material-icons">home</span>
-                  </a>
-                  <a href="cadastroFuncionario.html">
+                </a>
+                <a href="cadastroFuncionario.html">
                     <span class="material-icons">person_add</span>
                 </a>
-                
+
                 <a href="metricas.html">
                     <span class="material-icons">leaderboard</span>
-                  </a>
-                  <a href="formulario.html">
+                </a>
+                <a href="formulario.html">
                     <span class="material-icons">description</span>
                 </a>
                 <a href="corredor.html">
-                    <span class="material-icons">search</span>
-                  </a>
-                
+                    <span class="material-icons">reorder</span>
+                </a>
+                <a onclick="limparSessao()">
+                    <span class="material-icons">logout</span>
+                </a>
             </div>
+        </div>
+
+        <div id="div_alerta">
+
         </div>
 
         <section class="content1">
             <div class="areaCabecalho">
-                <div class="tabelaCabecalho">
-                    <h1>Formulários</h1>
+                <div class="tabelaCabecalho2">
+                    <h1 class="titleMetrica">Formulários</h1>
                     <button onclick="abrirModal()">Novo formulário</button>
                 </div>
             </div>
@@ -140,6 +146,9 @@
 
 </html>
 
+
+<script src="../js/alerta.js"></script>
+
 <script>
     function listarFormulario() {
         // trocar para valor pelo sessionStorage quando login estiver feito
@@ -229,7 +238,7 @@
                         console.log("Formulario realizado com sucesso! Redirecionando para tela atualizada...");
 
                         listarFormulario();
-
+                        alerta('check', 'Formulário cadastrado com sucesso!')
                         setTimeout(() => {
                             fecharModal();
                             input_qtdCorredor.value = '';
@@ -239,6 +248,7 @@
                         // limparFormulario();
                         // finalizarAguardar();
                     } else {
+                        alerta('error', 'Houve um erro ao cadastrar formulário!')
                         throw "Houve um erro ao tentar realizar o salvamento do formulario!";
                     }
                 })

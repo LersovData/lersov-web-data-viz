@@ -10,6 +10,7 @@ function listarKpi() {
                     totalClientesKpi.innerText = `${kpiClientes.qtdClientes}`;
 
                     totalSensoresKpi.innerText = `${kpiClientes.qtdSensor}`;
+                    totalSensoresInativosKpi.innerText = `${kpiClientes.qtdSensorInativo}`;
 
                 });
                 setTimeout(() => listarKpi(), 2000);

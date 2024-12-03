@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lersvov Dashboard</title>
   <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="../js/sessao.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +21,7 @@
       <a href="dashboard.html">
         <span class="material-icons">home</span>
       </a>
-      
+
       <a href="metricas.html">
         <span class="material-icons">leaderboard</span>
       </a>
@@ -28,9 +29,11 @@
         <span class="material-icons">description</span>
       </a>
       <a href="corredor.html">
-        <span class="material-icons">search</span>
+        <span class="material-icons">reorder</span>
       </a>
-      
+      <a onclick="limparSessao()">
+        <span class="material-icons">logout</span>
+      </a>
     </div>
   </div>
 

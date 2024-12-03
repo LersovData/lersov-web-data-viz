@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lersvov Dashboard</title>
   <link rel="stylesheet" href="../css/dashboard.css">
+  <script src="../js/sessao.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/heatmap.js@2.0.5/build/heatmap.min.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +33,10 @@
         <span class="material-icons">description</span>
       </a>
       <a href="corredor.html">
-        <span class="material-icons">search</span>
+        <span class="material-icons">reorder</span>
+      </a>
+      <a onclick="limparSessao()">
+        <span class="material-icons">logout</span>
       </a>
     </div>
   </div>
@@ -94,7 +98,7 @@
               <h4>Número de pessoas no corredor selecionado (hora)</h4>
               <canvas id="lineChartCorredor" class="chart"></canvas>
 
-              
+
             </div>
           </div>
 
@@ -103,22 +107,22 @@
               <div class="selecaoSetores">
                 <div class="divInformacoes">
 
-                  
-                    <h4>Selecione para consulta:</h4>
-                    <select id="selecaoCorredores" onchange="selecionarCorredor(this.value)" class="selects">
-                      <option value="1">Corredor 1 - Limpeza e higiêne</option>
-                      <option value="2">Corredor 2 - Adega</option>
-                      <option value="3">Corredor 3 - Massas</option>
-                    </select>
-                    
-                  
-                  
+
+                  <h4>Selecione para consulta:</h4>
+                  <select id="selecaoCorredores" onchange="selecionarCorredor(this.value)" class="selects">
+                    <option value="1">Corredor 1 - Limpeza e higiêne</option>
+                    <option value="2">Corredor 2 - Adega</option>
+                    <option value="3">Corredor 3 - Massas</option>
+                  </select>
+
+
+
                 </div>
 
-                
+
               </div>
               <div class="legendas">
-                
+
                 <p>
                   <img src="https://cdn-icons-png.flaticon.com/512/595/595005.png" /> <span class="span1">Região com
                     fluxo alto <span id="metrica_alto"></span></span>
@@ -157,7 +161,7 @@
 
     <script>
 
-     
+
       function buscarPeloId() {
         fetch(`/usuarios/${buscaInput.value}`, {
           method: "GET"

@@ -9,6 +9,7 @@ body {
     font-family: "inter", sans-serif;
     position: relative;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* ALERTAS */
@@ -28,6 +29,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 #div_alerta span {
     font-size: 2rem;
 }
@@ -38,6 +40,8 @@ body {
     width: 5%;
     height: 100vh;
     position: fixed;
+    background: rgb(106, 106, 255);
+    background: linear-gradient(160deg, rgb(39, 32, 236) 27%, rgba(2, 0, 36, 1) 100%);
     background-image: url("https://i.pinimg.com/originals/31/87/3f/31873f581c7b05768d662fee1fa7b8c6.jpg");
 }
 
@@ -52,6 +56,7 @@ body {
 
 .sidebar .menu a {
     color: #d3d3d3;
+    cursor: pointer;
 }
 
 .sidebar .menu .material-icons {
@@ -224,31 +229,31 @@ body {
     height: 100%;
 }
 
-.graficoCalorConteudo .legendas p .span1{
+.graficoCalorConteudo .legendas p .span1 {
     margin-left: 10px;
-    
+
 }
 
-.divSelecionarCorredor{
+.divSelecionarCorredor {
     align-self: flex-start;
     padding: 20px;
     line-height: 30px;
 }
 
-.divSelecionarCorredor select{
+.divSelecionarCorredor select {
     width: 125px;
 }
 
-.divInformacoes{
+.divInformacoes {
     align-self: flex-start;
     line-height: 30px;
 }
 
-.divInformacoes select{
+.divInformacoes select {
     width: 260px;
 }
 
-.selects{
+.selects {
     width: 85px;
     height: 30px;
     padding: 5px;
@@ -257,7 +262,7 @@ body {
     color: #f9f9f9;
     background-color: #121A51;
     border: transparent;
-    border-radius: 20px; 
+    border-radius: 20px;
 }
 
 .graficoCalorConteudo .descricao img {
@@ -337,23 +342,33 @@ body {
 
 .areaCabecalho {
     width: 100%;
-    height: 10%;
+    height: 15%;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.tabelaCabecalho {
+.tabelaCabecalho2 {
     height: 100%;
     width: 95%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: auto;
-    font-size: 1.5rem;
 }
 
-.tabelaCabecalho button {
+.tabelaCabecalho {
+    height: 100%;
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin: auto;
+    flex-direction: column;
+}
+
+.tabelaCabecalho button,
+.tabelaCabecalho2 button {
     height: 40px;
     width: 150px;
     background-color: #121A51;
@@ -363,8 +378,13 @@ body {
     font-weight: bold;
 }
 
+.titleMetrica {
+    font-size: 3rem;
+}
+
 .areaTabela {
-    height: 90%;
+    height: 85%;
+    overflow: auto;
 }
 
 table {
@@ -417,7 +437,7 @@ tfoot td {
 /* MÉTRICAS */
 
 .areaFormulario {
-    height: 90%;
+    height: 85%;
     width: 95%;
     margin: auto;
     display: flex;
@@ -524,7 +544,8 @@ tfoot td {
     gap: 20px;
 }
 
-.footerModal, .areaFormulario button {
+.footerModal,
+.areaFormulario button {
     height: 45px;
     width: 100px;
     border-radius: 25px;
@@ -585,8 +606,8 @@ tfoot td {
 }
 
 .jira {
-    background: rgb(9,9,121) !important;
-    background: radial-gradient(circle,rgb(127, 127, 175) 14%, rgb(4, 0, 82) 80%) !important;
+    background: rgb(9, 9, 121) !important;
+    background: radial-gradient(circle, rgb(127, 127, 175) 14%, rgb(4, 0, 82) 80%) !important;
     display: flex;
     justify-content: center;
     align-items: center;

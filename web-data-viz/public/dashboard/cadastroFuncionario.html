@@ -23,27 +23,34 @@
             <div class="menu">
                 <a href="dashboard.html">
                     <span class="material-icons">home</span>
-                  </a>
-                  <a href="cadastroFuncionario.html">
+                </a>
+                <a href="cadastroFuncionario.html">
                     <span class="material-icons">person_add</span>
                 </a>
                 <a href="metricas.html">
                     <span class="material-icons">leaderboard</span>
-                  </a>
-                  <a href="formulario.html">
+                </a>
+                <a href="formulario.html">
                     <span class="material-icons">description</span>
                 </a>
                 <a href="corredor.html">
-                    <span class="material-icons">search</span>
-                  </a>
-                
+                    <span class="material-icons">reorder</span>
+                </a>
+                <a onclick="limparSessao()">
+                    <span class="material-icons">logout</span>
+                </a>
+
             </div>
+        </div>
+
+        <div id="div_alerta">
+
         </div>
 
         <section class="content1">
             <div class="areaCabecalho">
-                <div class="tabelaCabecalho">
-                    <h1>Funcionários</h1>
+                <div class="tabelaCabecalho2">
+                    <h1 class="titleMetrica">Funcionários</h1>
                     <button onclick="abrirModal()">Novo funcionário</button>
                 </div>
             </div>
@@ -64,8 +71,8 @@
 
                     <tfoot>
                         <tr>
-                            <th scope="row" colspan="2">Average age</th>
-                            <td>33</td>
+                            <th scope="row" colspan="2"></th>
+                            <td></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -104,6 +111,8 @@
 </body>
 
 </html>
+
+<script src="../js/alerta.js"></script>
 
 <script>
     function listar() {
@@ -180,7 +189,7 @@
                         console.log("Formulario realizado com sucesso! Redirecionando para tela atualizada...");
 
                         listar();
-
+                        alerta('check', 'Funcionário cadastrado com sucesso!')
                         setTimeout(() => {
                             fecharModal();
                             nome_input.value = '';
@@ -191,6 +200,7 @@
                         // limparFormulario();
                         // finalizarAguardar();
                     } else {
+                        alerta('error', 'Erro ao cadastrar funcionário!')
                         throw "Houve um erro ao tentar realizar o salvamento do formulario!";
                     }
                 })

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lersov Dashboard - Admin</title>
 
+    <script src="../js/sessao.js"></script>
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/bobIa.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -24,9 +25,11 @@
                 <span class="material-icons">home</span>
             </a>
             <a href="./conosco.html">
-                <span class="material-icons">person_add</span>
+                <span class="material-icons">forum</span>
             </a>
-
+            <a onclick="limparSessao()">
+                <span class="material-icons">logout</span>
+            </a>
         </div>
     </div>
 
@@ -45,21 +48,21 @@
 
                 <div class="kpis">
                     <div class="card">
-                        <span class="material-icons">people</span>
+                        <span class="material-icons">work</span>
                         <h3 class="cardsFormatacao">Clientes</h3>
                         <p class="cardsFormatacao"><span id="totalClientesKpi">3</span></p>
                     </div>
 
                     <div class="card">
-                        <span class="material-icons">storefront</span>
-                        <h3 class="cardsFormatacao">Setor mais popular (dia)</h3>
-                        <p class="cardsFormatacao"><span id="setorPopular">1</span></p>
-                    </div>
-
-                    <div class="card">
-                        <span class="material-icons">local_grocery_store</span>
+                        <span class="material-icons">sensors</span>
                         <h3 class="cardsFormatacao">Sensores ativos</h3>
                         <p class="cardsFormatacao"><span id="totalSensoresKpi">100</span></p>
+                    </div>
+                    
+                    <div class="card">
+                        <span class="material-icons">sensors_off</span>
+                        <h3 class="cardsFormatacao">Sensores inativos</h3>
+                        <p class="cardsFormatacao"><span id="totalSensoresInativosKpi">100</span></p>
                     </div>
                 </div>
 
