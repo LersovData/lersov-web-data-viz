@@ -100,23 +100,22 @@ CREATE TABLE sensor(
     CONSTRAINT fkSensorCorredor
 		FOREIGN KEY (fkCorredor) REFERENCES corredor(idCorredor)
 );
-ALTER TABLE sensor DROP COLUMN manutencaoEmDia;
 
-INSERT INTO sensor (tipo, estadoSensor, manutencaoEmDia, fkCorredor) VALUES
-	('TCRT5000', 'Ativado', 'Sim', 1),
-    ('TCRT5000', 'Ativado', 'Sim', 1),
-    ('TCRT5000', 'Ativado', 'Sim', 2),
-    ('TCRT5000', 'Ativado', 'Não', 2),
-    ('TCRT5000', 'Ativado', 'Sim', 3),
-    ('TCRT5000', 'Ativado', 'Sim', 3),
-    ('TCRT5000', 'Desativado', 'Não', 4),
-    ('TCRT5000', 'Desativado', 'Sim', 4),
-    ('TCRT5000', 'Ativado', 'Sim', 5),
-    ('TCRT5000', 'Ativado', 'Sim', 5),
-    ('TCRT5000', 'Ativado', 'Sim', 6),
-    ('TCRT5000', 'Ativado', 'Sim', 6),
-    ('TCRT5000', 'Ativado', 'Não', 7),
-    ('TCRT5000', 'Ativado', 'Sim', 7);
+INSERT INTO sensor (tipo, estadoSensor, fkCorredor) VALUES
+	('TCRT5000', 'Ativado', 1),
+    ('TCRT5000', 'Ativado', 1),
+    ('TCRT5000', 'Ativado', 2),
+    ('TCRT5000', 'Ativado', 2),
+    ('TCRT5000', 'Ativado', 3),
+    ('TCRT5000', 'Ativado', 3),
+    ('TCRT5000', 'Desativado', 4),
+    ('TCRT5000', 'Desativado', 4),
+    ('TCRT5000', 'Ativado', 5),
+    ('TCRT5000', 'Ativado', 5),
+    ('TCRT5000', 'Ativado', 6),
+    ('TCRT5000', 'Ativado', 6),
+    ('TCRT5000', 'Ativado', 7),
+    ('TCRT5000', 'Ativado', 7);
 
 CREATE TABLE alertas(
 	idAlerta INT PRIMARY KEY AUTO_INCREMENT,
@@ -230,35 +229,5 @@ INSERT INTO manutencao VALUES
 	(default, 1, 4, 'Sensor não está com a manutenção em dia, fazer uma avaliação', 'Pendente'),
 	(default, 3, 7, 'Sensor não está trazendo os dados', 'Em andamento'),
 	(default, 4, 13, 'Sensor não tem dados condizentes', 'Concluída');
-    
-    SELECT sum(fluxoDePessoas) as fluxoTotal, C.fkEmpresa
-        FROM dadosSensor as D JOIN sensor as S
-        ON D.fkSensor = S.idSensor JOIN corredor as C
-        ON S.fkCorredor = C.idCorredor
-        WHERE fkEmpresa = 1
-        GROUP BY C.fkEmpresa;
-        select * from dadosSensor;
-       SELECT
-			c.idCorredor,
-            c.setor,
-            SUM(d.fluxoDePessoas) AS totalFluxo,
-            HOUR(d.dtHora) AS dtHora
-        FROM dadosSensor AS d
-            JOIN sensor AS s 
-                ON d.fkSensor = s.idSensor
-            JOIN corredor AS c
-                ON s.fkCorredor = c.idCorredor
-			WHERE c.fkEmpresa = 1 AND c.idCorredor = 3 AND c.setor = 'Massas'
-            GROUP BY 
-            c.setor,
-            HOUR(d.dtHora)
-            ORDER BY HOUR(d.dtHora) DESC;
-            
-		SELECT C.setor, sum(fluxoDePessoas) as fluxoTotal, C.fkEmpresa
-        FROM dadosSensor as D JOIN sensor as S
-        ON D.fkSensor = S.idSensor JOIN corredor as C
-        ON S.fkCorredor = C.idCorredor
-        WHERE fkEmpresa = 1
-        GROUP BY C.setor, C.fkEmpresa
-        ORDER BY fluxoTotal DESC LIMIT 1;
+
             
