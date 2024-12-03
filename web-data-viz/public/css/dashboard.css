@@ -23,7 +23,6 @@ body {
     gap: 15px;
     background-color: #121A51;
     color: #fff;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.150);
     z-index: 1;
     display: none;
     justify-content: center;
@@ -77,7 +76,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 50px;
+    height: 8vh;
     border-bottom: 2px solid #121A51;
 }
 
@@ -136,7 +135,7 @@ body {
     flex-direction: column;
     align-content: center;
     width: 100%;
-    height: 160vh;
+    min-height: 91.5vh;
     background-color: #edebeb;
 }
 
@@ -160,6 +159,7 @@ body {
     border: transparent;
     border-radius: 10px;
     padding: 21px;
+    width: 27%;
 }
 
 .graficos .cardLineBar {
@@ -465,7 +465,6 @@ tfoot td {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.150);
 }
 
 .mainModal {
@@ -554,78 +553,83 @@ tfoot td {
     gap: 15px;
 }
 
-
 /* ADMIN */
+.graficosAdmin {
+    height: 66.5vh;
+    display: flex;
+    width: 97%;
+    margin: auto;
+}
 
-#div_btnBob {
-    width: 60px;
-    height: 60px;
-    border-radius: 100%;
-    background-color: #63B1BC;
-    position: absolute;
-    bottom: 15px;
-    right: 15px;
-    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.150);
+.graficosAdmin .ladoEsq {
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+.graficosAdmin .areaCard {
+    background-color: #F9F9F9;
+    width: 95%;
+    height: 90%;
+    border-radius: 10px;
+}
+
+.graficosAdmin .areaCard2 {
+    background-color: #F9F9F9;
+    width: 95%;
+    height: 42%;
+    border-radius: 10px;
+    display: flex;
+}
+
+.jira {
+    background-color: #121A51 !important;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
-#div_bobIa {
-    display: none;
-    height: fit-content;
-    max-height: 400px;
-    width: 350px;
-    position: absolute;
-    bottom: 90px;
-    right: 15px;
-    background-color: #63B1BC;
-    border-radius: 10px;
+.jira h1 {
+    font-size: 3.5rem;
+    color: #fff;
+}
+
+.cabecalhoMeio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 8vh;
+    border-bottom: 2px solid #121A51;
+}
+
+.sombra {
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.150);
 }
 
-
-#containerBob {
-    width: 80%;
-    margin: 50px auto;
-    text-align: center;
+#lineChartPizza {
+    height: 150px !important;
+    width: 150px !important;
 }
 
-h1 {
-    color: #1F2A44;
+.titleFale {
+    /* background-color: #121A51; */
+    width: 40%;
+    font-size: 2.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
 }
 
-textarea[type="text"] {
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 5px;
-    width: 90%;
-}
-
-select,
-button {
-    padding: 8px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button {
-    background-color: #ED145B;
-    color: #FFFFFF;
-    border: none;
-}
-
-button:hover {
-    background-color: #EFB661;
-}
-
-#resposta {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #D0D3D4;
-    border: 1px solid #63666A;
-    text-align: left;
-    display: none;
+.areaCard2 .areaGraficoPizza {
+    /* background-color: #ff0000; */
+    width: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -1,5 +1,5 @@
-var ambiente_processo = 'producao';
-// var ambiente_processo = 'desenvolvimento';
+// var ambiente_processo = 'producao';
+var ambiente_processo = 'desenvolvimento';
 
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 // Acima, temos o uso do operador ternário para definir o caminho do arquivo .env
@@ -31,6 +31,7 @@ var dadosRouter = require("./src/routes/dados");
 var funcionariosRouter = require("./src/routes/funcionario");
 var corredoresRouter = require("./src/routes/corredores");
 var kpiRouter = require("./src/routes/kpis");
+var adminRouter = require("./src/routes/admin");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -50,6 +51,7 @@ app.use("/dados", dadosRouter);
 app.use("/funcionario", funcionariosRouter);
 app.use("/corredores", corredoresRouter);
 app.use("/kpis", kpiRouter);
+app.use("/admin", adminRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`
@@ -88,7 +90,7 @@ async function gerarResposta(mensagem) {
 
     try {
         // gerando conteúdo com base na pergunta
-        const resultado = await modeloIA.generateContent(`Em um paragráfo responda, se houver tópico, resuma cada um em poucas palavras: ${mensagem}`);
+        const resultado = await modeloIA.generateContent(`Em um paragráfo responda: ${mensagem}`);
         const resposta = await resultado.response.text();
         
         console.log(resposta);

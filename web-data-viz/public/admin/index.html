@@ -4,19 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lersov Dashboard - Admin</title>
 
     <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/bobIa.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body onload="listarKpi(), obterDadosGraficoPizza()">
     <div class="sidebar">
         <div class="menu">
 
@@ -27,20 +28,81 @@
         </div>
     </div>
 
-    <div id="div_btnBob" onclick="bobIA()">BobIA</div>
+    <div class="content">
 
-    <div id="div_bobIa">
-        <div id="containerBob">
-            <h1>BobIA</h1>
-            <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
-            <br><br>
-            <button onclick="gerarResposta()">Gerar Resposta</button>
-            <h3>Resposta da IA:</h3>
-            <div id="resposta"></div>
+        <div class="header">
+            <div class="cabecalhoMeio">
+                <div class="titulo">
+                    <h1>Lersov Admin Dashboard</h1>
+                </div>
+            </div>
+
+
+
+            <div class="charts">
+
+                <div class="kpis">
+                    <div class="card">
+                        <span class="material-icons">people</span>
+                        <h3 class="cardsFormatacao">Clientes</h3>
+                        <p class="cardsFormatacao"><span id="totalClientesKpi">3</span></p>
+                    </div>
+
+                    <div class="card">
+                        <span class="material-icons">storefront</span>
+                        <h3 class="cardsFormatacao">Setor mais popular (dia)</h3>
+                        <p class="cardsFormatacao"><span id="setorPopular">1</span></p>
+                    </div>
+
+                    <div class="card">
+                        <span class="material-icons">local_grocery_store</span>
+                        <h3 class="cardsFormatacao">Sensores ativos</h3>
+                        <p class="cardsFormatacao"><span id="totalSensoresKpi">100</span></p>
+                    </div>
+                </div>
+
+                <div class="graficosAdmin">
+                    <div class="ladoEsq">
+                        <div class="areaCard2">
+                            <div class="titleFale">
+                                <h4>Fale conosco respondidos</h4>
+                            </div>
+                            <div class="areaGraficoPizza">
+                                <canvas id="lineChartPizza" class="chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="areaCard2 jira">
+                            <h1>Jira</h1>
+                        </div>
+                    </div>
+
+                    <div class="ladoEsq">
+                        <div class="areaCard bob">
+                            <div class="containerBob">
+                                <div class="headerBob">
+                                    <h1>BobIA</h1>
+                                    <textarea id="pergunta" type="text" placeholder="Digite a pergunta..."></textarea>
+                                    <button onclick="gerarResposta()">Gerar Resposta</button>
+                                </div>
+                                <div class="areaRespostaBob">
+                                    <h3>Resposta da IA:</h3>
+                                    <div id="resposta"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
+
     </div>
 </body>
 
 </html>
 
 <script src="../js/bobia.js"></script>
+<script src="../js/admin.js"></script>
