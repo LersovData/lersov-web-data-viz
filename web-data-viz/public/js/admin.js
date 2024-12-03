@@ -68,13 +68,10 @@ function plotarGraficoPizza(resposta) {
     };
 
     // Inserindo valores recebidos em estrutura para plotar o gráfico
-    for (i = 0; i < resposta.length; i++) {
-        var registro = resposta[i];
-        // console.log(registro.dtHora);
-        // labelsPizza.push(registro.dtHora); // Inserindo as legendas no label
+        var registro = resposta[0];
+
         dadosPizza.datasets[0].data.push(registro.qtdRespondido);
         dadosPizza.datasets[0].data.push(registro.qtdEspera);
-    }
 
     // Criando estrutura para plotar gráfico - config
     const configPizza = {

@@ -20,20 +20,40 @@ function listarKpi() {
 function listarConosco() {
     // console.log("ACESSEI O Conosco ADMIN MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function listar()");
     var instrucaoSql = `
-    SELECT
-        (SELECT 
-            COUNT(idContato)
-        FROM contato
+        SELECT
+            (SELECT 
+                COUNT(idContato)
+            FROM contato
             WHERE respondido = true) AS qtdRespondido,
-        (SELECT 
-            COUNT(idContato)
+            (SELECT 
+                COUNT(idContato)
+            FROM contato
+            WHERE respondido = false) AS qtdEspera,
+            idContato,
+            nome,
+            email,
+            socioOuCeo,
+            empresa,
+            mensagem,
+            respondido,
+            DATE_FORMAT(dtContato, '%d/%m/%Y') AS dtContato
         FROM contato
-            WHERE respondido = false) AS qtdEspera;
+        ORDER BY dtContato DESC;
     `;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
+
+// SELECT
+// (SELECT 
+//     COUNT(idContato)
+// FROM contato
+//     WHERE respondido = true) AS qtdRespondido,
+// (SELECT 
+//     COUNT(idContato)
+// FROM contato
+//     WHERE respondido = false) AS qtdEspera;
 
 module.exports = {
     listarKpi,

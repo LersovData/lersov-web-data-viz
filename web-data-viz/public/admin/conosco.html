@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lersov Dashboard</title>
+
+    <script src="../js/sessao.js"></script>
+
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body onload="listarConosco()">
+    <div class="areaTela">
+        <div class="sidebar1">
+            <div class="menu">
+                <a href="./index.html">
+                    <span class="material-icons">home</span>
+                </a>
+                <a href="./conosco.html">
+                    <span class="material-icons">person_add</span>
+                </a>
+            </div>
+        </div>
+
+        <section class="content1">
+            <div class="areaCabecalho">
+                <div class="tabelaCabecalho">
+                    <h1>Corredores</h1>
+                </div>
+            </div>
+
+            <div class="areaTabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="esq">ID</th>
+                            <th>Empresa</th>
+                            <th>Cargo</th>
+                            <th>Data</th>
+                            <th>Mensagem</th>
+                            <th class="dir">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="div_tabela">
+
+                    </tbody>
+
+                    <tfoot>
+                        <tr>
+                            <th scope="row" colspan="5"></th>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </section>
+    </div>
+</body>
+
+</html>
+
+<script>
+    function listarConosco() {
+        fetch(`/admin/listarConosco/`).then(function (resposta) {
+            if (resposta.ok) {
+                if (resposta.status == 204) { // se não tiver formulario dessa empresa entra aqui
+                    div_modal.style.display = 'flex';
+                    btnFechar.style.display = 'none';
+                    throw "Nenhum resultado encontrado!!";
+                } else {
+                    resposta.json().then(function (resposta) {
+                        console.log("Dados recebidos: ", JSON.stringify(resposta));
+                        var mensagem = ``;
+
+                        for (let i = 0; i < resposta.length; i++) {
+                            var contato = resposta[i];
+                            // console.log(contato.dtImplementacao);
+
+                            var respondido = contato.respondido;
+                            if (respondido == '1') {
+                                respondido = 'Respondido';
+                            } else {
+                                respondido = 'A responder';
+                            }
+
+                            mensagem += `
+                                <tr>
+                                    <td>${contato.idContato}</td>
+                                    <td>${contato.empresa}</td>
+                                    <td>${contato.socioOuCeo}</td>
+                                    <td>${contato.dtContato}</td>
+                                    <td>${contato.mensagem}</td>
+                                    <td>${respondido}</td>
+                                </tr>
+                            `;
+                        }
+
+                        div_tabela.innerHTML = `  
+                            ${mensagem}
+                        `;
+                    });
+                }
+            } else {
+                throw ('Houve um erro na API!');
+            }
+        }).catch(function (resposta) {
+            console.error(resposta);
+            finalizarAguardar();
+        });
+    }
+
+    function abrirModal() {
+        div_modal.style.display = 'flex';
+    }
+
+    function fecharModal() {
+        div_modal.style.display = 'none';
+        input_qtdCorredor.value = '';
+        input_dtImplementacao.value = '';
+    }
+</script>

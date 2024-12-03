@@ -585,16 +585,25 @@ tfoot td {
 }
 
 .jira {
-    background-color: #121A51 !important;
+    background: rgb(9,9,121) !important;
+    background: radial-gradient(circle,rgb(127, 127, 175) 14%, rgb(4, 0, 82) 80%) !important;
     display: flex;
     justify-content: center;
     align-items: center;
 
 }
 
-.jira h1 {
-    font-size: 3.5rem;
-    color: #fff;
+.jira a {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+}
+
+.jira img {
+    height: 50%;
 }
 
 .cabecalhoMeio {
