@@ -83,20 +83,12 @@ CREATE TABLE corredor(
 
 INSERT INTO corredor (setor, fkEmpresa) VALUES
 	('Limpeza e Higiene', 1),
-	('Limpeza e Higiene', 1),
     ('Adega', 1),
     ('Massas', 1),
     ('Doces', 1),
     ('Utensílios', 1),
     ('Congelados', 1),
-    ('Bebidas', 1),
-    ('Limpeza e Higiene', 2),
-    ('Adega', 2),
-    ('Massas', 2),
-    ('Doces', 2),
-    ('Utensílios', 2),
-    ('Congelados', 2),
-    ('Bebidas', 2);    
+    ('Bebidas', 1);    
 
 CREATE TABLE sensor(
 	idSensor INT PRIMARY KEY AUTO_INCREMENT,
@@ -104,13 +96,11 @@ CREATE TABLE sensor(
     estadoSensor VARCHAR(10),
 	CONSTRAINT chkEstadoSensor
 		CHECK (estadoSensor IN('Ativado', 'Desativado')),
-    manutencaoEmDia CHAR(3),
-	CONSTRAINT chkManutencao
-		CHECK (manutencaoEmDia IN('Sim', 'Não')),
     fkCorredor INT,
     CONSTRAINT fkSensorCorredor
 		FOREIGN KEY (fkCorredor) REFERENCES corredor(idCorredor)
 );
+ALTER TABLE sensor DROP COLUMN manutencaoEmDia;
 
 INSERT INTO sensor (tipo, estadoSensor, manutencaoEmDia, fkCorredor) VALUES
 	('TCRT5000', 'Ativado', 'Sim', 1),
@@ -140,6 +130,7 @@ INSERT INTO alertas (fluxo) VALUES
     ('Moderado'),
     ('Baixo');
     
+    
 CREATE TABLE dadosSensor(
 	idDados INT AUTO_INCREMENT,
     fkSensor INT,
@@ -168,3 +159,106 @@ INSERT INTO dadosSensor(fkSensor, fluxoDePessoas, fkAlerta, dtHora) VALUES
     (1, '1', 1, '2024-11-04 11:20:00'),
     (1, '1', 1, '2024-11-04 11:30:00'),
     (1, '1', 1, '2024-11-04 11:40:00');
+    
+    INSERT INTO dadosSensor(fkSensor, fluxoDePessoas, fkAlerta, dtHora) VALUES
+	(5, '10', 1, '2024-11-04 08:00:00'),
+    (5, '1', 1, '2024-11-04 08:30:00'),
+    (5, '1', 1, '2024-11-04 09:00:00'),
+    (5, '1', 1, '2024-11-04 09:20:00'),
+    (5, '1', 1, '2024-11-04 09:40:00'),
+    (5, '1', 1, '2024-11-04 10:00:00'),
+    (5, '1', 1, '2024-11-04 10:15:00'),
+    (5, '1', 1, '2024-11-04 10:30:00'),
+    (5, '1', 1, '2024-11-04 10:45:00'),
+    (5, '1', 1, '2024-11-04 11:00:00'),
+    (5, '1', 1, '2024-11-04 11:10:00'),
+    (5, '1', 1, '2024-11-04 11:20:00'),
+    (5, '1', 1, '2024-11-04 11:30:00'),
+    (5, '1', 1, '2024-11-04 11:40:00');
+    
+   INSERT INTO dadosSensor(fkSensor, fluxoDePessoas, fkAlerta, dtHora) VALUES
+	(3, '1', 1, '2024-11-04 08:00:00'),
+    (3, '1', 1, '2024-11-04 08:30:00'),
+    (3, '1', 1, '2024-11-04 09:00:00'),
+    (3, '1', 1, '2024-11-04 09:20:00'),
+    (3, '1', 1, '2024-11-04 09:40:00'),
+    (3, '1', 1, '2024-11-04 10:00:00'),
+    (3, '1', 1, '2024-11-04 10:15:00'),
+    (3, '1', 1, '2024-11-04 10:30:00'),
+    (3, '1', 1, '2024-11-04 10:45:00'),
+    (3, '1', 1, '2024-11-04 11:00:00'),
+    (3, '1', 1, '2024-11-04 11:10:00'),
+    (3, '1', 1, '2024-11-04 11:20:00'),
+    (3, '1', 1, '2024-11-04 11:30:00'),
+    (3, '1', 1, '2024-11-04 11:40:00');
+    
+    truncate dadosSensor;
+    
+    
+CREATE TABLE administradores(
+	idAdm INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(45),
+    senha VARCHAR(45)
+);
+
+INSERT INTO administradores (email, senha) VALUES
+	('caina.silva@lersov.adm', 'lersov11adm1'),
+	('moises.henry@lersov.adm', 'lersov22adm2'),
+	('mathias.zocca@lersov.adm', 'lersov33adm3'),
+	('natalia.almeida@lersov.adm', 'lersov44adm4');
+    
+    
+CREATE TABLE manutencao(
+	idManutencao INT AUTO_INCREMENT,
+    fkAdm INT,
+    fkSensor INT,
+    descricao VARCHAR(65),
+    situacao VARCHAR(45),
+    CONSTRAINT fkAdmManu
+		FOREIGN KEY (fkAdm) REFERENCES administradores(idAdm),
+    CONSTRAINT fkSensorManu
+		FOREIGN KEY (fkSensor) REFERENCES sensor(idSensor),
+	CONSTRAINT chkSituacaoManutencao
+		CHECK(situacao IN('Concluída', 'Em andamento', 'Pendente')),
+	PRIMARY KEY(idManutencao, fkAdm, fkSensor)
+);
+
+INSERT INTO manutencao VALUES
+	(1, 1, 4, 'Sensor não está com a manutenção em dia, fazer uma avaliação', 'Pendente');
+    
+INSERT INTO manutencao VALUES
+	(default, 1, 4, 'Sensor não está com a manutenção em dia, fazer uma avaliação', 'Pendente'),
+	(default, 3, 7, 'Sensor não está trazendo os dados', 'Em andamento'),
+	(default, 4, 13, 'Sensor não tem dados condizentes', 'Concluída');
+    
+    SELECT sum(fluxoDePessoas) as fluxoTotal, C.fkEmpresa
+        FROM dadosSensor as D JOIN sensor as S
+        ON D.fkSensor = S.idSensor JOIN corredor as C
+        ON S.fkCorredor = C.idCorredor
+        WHERE fkEmpresa = 1
+        GROUP BY C.fkEmpresa;
+        select * from dadosSensor;
+       SELECT
+			c.idCorredor,
+            c.setor,
+            SUM(d.fluxoDePessoas) AS totalFluxo,
+            HOUR(d.dtHora) AS dtHora
+        FROM dadosSensor AS d
+            JOIN sensor AS s 
+                ON d.fkSensor = s.idSensor
+            JOIN corredor AS c
+                ON s.fkCorredor = c.idCorredor
+			WHERE c.fkEmpresa = 1 AND c.idCorredor = 3 AND c.setor = 'Massas'
+            GROUP BY 
+            c.setor,
+            HOUR(d.dtHora)
+            ORDER BY HOUR(d.dtHora) DESC;
+            
+		SELECT C.setor, sum(fluxoDePessoas) as fluxoTotal, C.fkEmpresa
+        FROM dadosSensor as D JOIN sensor as S
+        ON D.fkSensor = S.idSensor JOIN corredor as C
+        ON S.fkCorredor = C.idCorredor
+        WHERE fkEmpresa = 1
+        GROUP BY C.setor, C.fkEmpresa
+        ORDER BY fluxoTotal DESC LIMIT 1;
+            
