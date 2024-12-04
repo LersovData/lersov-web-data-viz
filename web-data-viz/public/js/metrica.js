@@ -3,7 +3,7 @@
 function listarMetrica(pagina) {
     // trocar para valor pelo sessionStorage quando login estiver feito
     // var idEmpresa = sessionStorage.ID_EMPRESA;
-    var idEmpresa = 1;
+    var idEmpresa = sessionStorage.ID_USUARIO;
 
     fetch(`/metricas/listar/${idEmpresa}`).then(function (resposta) {
         if (resposta.ok) {
@@ -52,7 +52,7 @@ function cadastrarMetrica() {
 
     // trocar para valor pelo sessionStorage quando login estiver feito
     // var idEmpresa = sessionStorage.ID_EMPRESA;
-    var idEmpresa = 1;
+    var idEmpresa = sessionStorage.ID_USUARIO;
 
     if (altoVar == '' || medioVar == '' || baixoVar == '') {
         return false;
@@ -101,7 +101,7 @@ function atualizarMetrica() {
 
     // trocar para valor pelo sessionStorage quando login estiver feito
     // var idEmpresa = sessionStorage.ID_EMPRESA;
-    var idEmpresa = 1;
+    var idEmpresa = sessionStorage.ID_USUARIO;
     var idMetricaVar = 1;
 
     if (altoVar == '' || medioVar == '' || baixoVar == '') {

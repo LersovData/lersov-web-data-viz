@@ -20,21 +20,17 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
 
-                        aquarioModel.buscarAquariosPorEmpresa(resultadoAutenticar[0].empresaId)
-                            .then((resultadoAquarios) => {
-                                if (resultadoAquarios.length > 0) {
-                                    res.json({
-                                        idEmpresa: resultadoAutenticar[0].id,
-                                        email: resultadoAutenticar[0].email,
-                                        nome: resultadoAutenticar[0].nome,
-                                        senha: resultadoAutenticar[0].senha,
-                                        confirmarSenha: resultadoAutenticar[0].confirmar_senha,
-                                        
-                                    });
-                                } else {
-                                    res.status(204).json({ aquarios: [] });
-                                }
-                            })
+
+                        if (resultadoAutenticar.length > 0) {
+                            res.json({
+                                idEmpresa: resultadoAutenticar[0].idEmpresa,
+                                cnpj: resultadoAutenticar[0].cnpj,
+                                email: resultadoAutenticar[0].email,
+                                nome: resultadoAutenticar[0].nome,
+                                senha: resultadoAutenticar[0].senha,
+
+                            });
+                        }
                     } else if (resultadoAutenticar.length == 0) {
                         res.status(403).send("Email e/ou senha inválido(s)");
                     } else {
@@ -69,7 +65,7 @@ function cadastrar(req, res) {
         res.status(400).send("Sua senha está undefined!");
     } else if (confirmar_senha == undefined) {
         res.status(400).send("a confirmação de senha está undefined!");
-    }else if (cnpj == undefined) {
+    } else if (cnpj == undefined) {
         res.status(400).send("o cnpj está undefined!");
     } else {
 

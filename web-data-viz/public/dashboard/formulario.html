@@ -154,7 +154,7 @@
     function listarFormulario() {
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
+        var idEmpresa = sessionStorage.ID_USUARIO;
 
         fetch(`/formularios/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {
@@ -210,7 +210,7 @@
 
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
+        var idEmpresa = sessionStorage.ID_USUARIO;
 
         if (qtdCorredorVar == '' || dtImplementacaoVar == '') {
             return false;

@@ -37,7 +37,7 @@ function selecionarSetor() {
 
 function chamarGraficos() {
     // quando tiver login, substituir o 1 pelo id do sessionStorage
-    var idEmpresa = 1;
+    var idEmpresa = sessionStorage.ID_USUARIO;
     
     obterDadosGraficoSetor(idEmpresa);
     obterDadosGraficoCorredor(idEmpresa, idCorredor, setor);
@@ -54,8 +54,8 @@ function listarTotalPessoasKpi(idEmpresa) {
         if (resposta.ok) {
             if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
                 console.log('DEU PROBLEMA NA KPI')
-                throw "Nenhum resultado encontrado!!";
-                setTimeout(listarTotalPessoasKpi(idEmpresa), 2000);
+                setTimeout(() => listarTotalPessoasKpi(idEmpresa), 2000);
+                // throw "Nenhum resultado encontrado!!";
 
             } else {
                 resposta.json().then(function (resposta) {
@@ -87,8 +87,8 @@ function listarSetorPopularKpi(idEmpresa) {
         if (resposta.ok) {
             if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
                 console.log('DEU PROBLEMA NA KPI SETOR')
-                throw "Nenhum resultado encontrado!!";
                 setTimeout(() => listarSetorPopularKpi(idEmpresa), 2000);
+                // throw "Nenhum resultado encontrado!!";
 
             } else {
                 resposta.json().then(function (resposta) {
@@ -120,8 +120,8 @@ function listarCorredorMaiorFluxoKpi(idEmpresa) {
         if (resposta.ok) {
             if (resposta.status == 204) { // se não tiver métrica dessa empresa entra aqui
                 console.log('DEU PROBLEMA NA KPI SETOR')
-                throw "Nenhum resultado encontrado!!";
                 setTimeout(() => listarCorredorMaiorFluxoKpi(idEmpresa), 2000);
+                // throw "Nenhum resultado encontrado!!";
 
             } else {
                 resposta.json().then(function (resposta) {

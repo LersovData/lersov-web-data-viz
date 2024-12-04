@@ -146,7 +146,7 @@
     function listarCorredor() {
         // trocar para valor pelo sessionStorage quando login estiver feito
         // var idEmpresa = sessionStorage.ID_EMPRESA;
-        var idEmpresa = 1;
+        var idEmpresa = sessionStorage.ID_USUARIO;
 
         fetch(`/corredores/listar/${idEmpresa}`).then(function (resposta) {
             if (resposta.ok) {

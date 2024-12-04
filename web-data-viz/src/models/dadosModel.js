@@ -12,7 +12,7 @@ function listarDadosSetor(idEmpresa) {
             ON d.fkSensor = s.idSensor
         JOIN corredor AS c
             ON s.fkCorredor = c.idCorredor
-        WHERE c.fkEmpresa = 1
+        WHERE c.fkEmpresa = ${idEmpresa}
         GROUP BY HOUR(d.dtHora)
         ORDER BY dtHora DESC;
 
