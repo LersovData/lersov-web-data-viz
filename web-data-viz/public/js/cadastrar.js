@@ -84,7 +84,7 @@ function validarInformacoes() {
         var emailVar = document.getElementById('email').value;
         var cnpjVar = document.getElementById('cnpj').value;
         var senhaVar = document.getElementById('senha').value;
-        var confirmarSenhaVar = document.getElementById('confirmar_senha').value;
+        // var confirmarSenhaVar = document.getElementById('confirmar_senha').value;
 
         // Enviando os dados via fetch
         fetch("/usuarios/cadastrar", {
@@ -97,7 +97,6 @@ function validarInformacoes() {
                 cnpjServer: cnpjVar,
                 emailServer: emailVar,
                 senhaServer: senhaVar,
-                confirmarSenhaServer: confirmarSenhaVar
             }),
         })
         .then(function (resposta) {

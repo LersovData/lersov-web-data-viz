@@ -10,9 +10,9 @@ CREATE TABLE empresa(
 ); 
 
 INSERT INTO empresa (nome, cnpj, email, senha) VALUES
-		('Assaí', '06.057.223/0001-71', 'assai@empresa', '123456ASSAI'),
-        ('Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '090909CARREFOUR'),
-        ('Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '76767ATACADAO');
+		('Assaí', '06.057.223/0001-71', 'assai@empresa', '123456'),
+        ('Carrefour Express', '45.543.915/0873-68', 'carrefour@empresa', '123456'),
+        ('Atacadão', '75.315.333/0049-53', 'atacadao@empresa', '123456');
     
 CREATE TABLE metricas(
 	idMetrica INT AUTO_INCREMENT,
@@ -200,7 +200,7 @@ CREATE TABLE administradores(
 );
 
 INSERT INTO administradores (email, senha) VALUES
-	('caina.silva@lersov.adm', 'lersov11adm1'),
+	('caina.silva@lersov.adm', '123456'),
 	('moises.henry@lersov.adm', 'lersov22adm2'),
 	('mathias.zocca@lersov.adm', 'lersov33adm3'),
 	('natalia.almeida@lersov.adm', 'lersov44adm4');
