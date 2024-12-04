@@ -285,23 +285,23 @@
 
                 <div class="inputs">
                     <div>
-                        <input type="text" class="input" placeholder="Nome">
-                        <input type="email" class="input" placeholder="E-mail">
+                        <input type="text" class="input" placeholder="Nome" id="input_nome">
+                        <input type="email" class="input" placeholder="E-mail" id="input_email">
                     </div>
                     <div>
-                        <input type="text" class="input" placeholder="Empresa">
-                        <select class="input select" id="">
-                            <option value="">CEO</option>
-                            <option value="">Estagiario</option>
-                            <option value="">Gerente</option>
+                        <input type="text" class="input" placeholder="Empresa" id="input_empresa">
+                        <select class="input select" id="select_cargo">
+                            <option>CEO</option>
+                            <option>Estagiario</option>
+                            <option>Gerente</option>
                         </select>
                     </div>
                     <div>
-                        <textarea type="text" class="input inputMensagem"
+                        <textarea type="text" class="input inputMensagem" id="input_mensagem"
                             placeholder="Gostaria de comentar alguma coisa para nossa conversa ser objetiva?"></textarea>
                     </div>
                     <div>
-                        <button class="btnContato">Enviar</button>
+                        <button class="btnContato" onclick="cadastrarContato()">Enviar</button>
                     </div>
                 </div>
             </div>
@@ -328,3 +328,5 @@
 </body>
 
 </html>
+
+<script src="./js/faleConosco.js"></script>

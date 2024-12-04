@@ -1,3 +1,64 @@
+function limparSessao() {
+    sessionStorage.clear();
+    window.location = "./login.html";
+}
+
+function validarSessao() {
+    var email = sessionStorage.EMAIL_USUARIO;
+
+    if (email != null) {
+        // user_nome.innerHTML = nome;
+        // user_username.innerHTML = username;
+    } else {
+        window.location = "./login.html";
+    }
+}
+
+function entrar() {
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+
+    fetch("/admin/autenticar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            emailServer: emailVar,
+            senhaServer: senhaVar
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
+
+        if (resposta.ok) {
+            console.log(resposta);
+
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                // sessionStorage.ID_USUARIO = json.idAdm;
+                sessionStorage.EMAIL_USUARIO = json.email;
+
+                setTimeout(function () {
+                    window.location = "./index.html";
+                }, 1000); // apenas para exibir o loading
+
+            });
+
+        } else {
+            resposta.text().then(texto => {
+                console.error(texto);
+                finalizarAguardar(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+}
+
 function listarKpi() {
     fetch(`/admin/listarKpi/`).then(function (resposta) {
         if (resposta.ok) {
@@ -69,10 +130,10 @@ function plotarGraficoPizza(resposta) {
     };
 
     // Inserindo valores recebidos em estrutura para plotar o gráfico
-        var registro = resposta[0];
+    var registro = resposta[0];
 
-        dadosPizza.datasets[0].data.push(registro.qtdRespondido);
-        dadosPizza.datasets[0].data.push(registro.qtdEspera);
+    dadosPizza.datasets[0].data.push(registro.qtdRespondido);
+    dadosPizza.datasets[0].data.push(registro.qtdEspera);
 
     // Criando estrutura para plotar gráfico - config
     const configPizza = {

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lersov Dashboard - Admin</title>
+    <link rel="shortcut icon" href="../assets/cadastro/carrinho-de-compras (1).png" type="image/x-icon">
 
-    <script src="../js/sessao.js"></script>
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/bobIa.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -18,7 +18,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body onload="listarKpi(), obterDadosGraficoPizza()">
+<body onload="validarSessao(), listarKpi(), obterDadosGraficoPizza()">
     <div class="sidebar">
         <div class="menu">
             <a href="./index.html">

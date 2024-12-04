@@ -49,17 +49,28 @@ function listarConosco() {
     return database.executar(instrucaoSql);
 }
 
-// SELECT
-// (SELECT 
-//     COUNT(idContato)
-// FROM contato
-//     WHERE respondido = true) AS qtdRespondido,
-// (SELECT 
-//     COUNT(idContato)
-// FROM contato
-//     WHERE respondido = false) AS qtdEspera;
+function cadastrarConosco(email, nome, empresa, cargo, mensagem) {
+    console.log("ACESSEI O CADASTRAR MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():");
+    
+    var instrucaoSql = `
+        INSERT INTO contato (nome, email, empresa, socioOuCeo, mensagem, respondido) VALUES ('${nome}' ,'${email}', '${empresa}', '${cargo}', '${mensagem}', false);
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function autenticar(email, senha) {
+    console.log("ACESSEI O ADMIN MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
+    var instrucaoSql = `
+        SELECT idAdm, email, senha FROM administradores WHERE email = '${email}' AND senha = '${senha}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
 
 module.exports = {
     listarKpi,
-    listarConosco
+    listarConosco,
+    cadastrarConosco,
+    autenticar
 };
