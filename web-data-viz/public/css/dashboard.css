@@ -376,6 +376,7 @@ body {
     border: none;
     color: #fff;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .titleMetrica {
@@ -487,6 +488,7 @@ tfoot td {
     align-items: center;
 }
 
+
 .mainModal {
     height: 83%;
     width: 95%;
@@ -544,8 +546,10 @@ tfoot td {
     gap: 20px;
 }
 
-.footerModal,
-.areaFormulario button {
+.footerModal button,
+.areaFormulario
+button {
+    cursor: pointer;
     height: 45px;
     width: 100px;
     border-radius: 25px;
@@ -557,11 +561,22 @@ tfoot td {
 #btnSalvar {
     background-color: #121A51;
     color: #fff;
+    height: 45px;
+    width: 100px !important;
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 #btnFechar {
     border: solid 3px #00000160;
     background: none;
+    height: 45px;
+    width: 100px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 .mainModal .colunaCadastro {
